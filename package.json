@@ -20,5 +20,8 @@
   "engines": {
     "node": ">=14.0.0"
   },
-  "packageManager": "npm@8.19.2"
+  "packageManager": "npm@8.19.2",
+  "dependencies": {
+    "next-transpile-modules": "^9.0.0"
+  }
 }
