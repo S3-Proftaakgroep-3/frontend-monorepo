@@ -1,10 +1,18 @@
-import { Button } from "ui";
+import type { NextPage } from 'next'
+import Head from 'next/head'
+import Image from 'next/image'
+import styles from '../styles/Home.module.css'
 
-export default function Docs() {
+const Home: NextPage = () => {
   return (
-    <div>
-      <h1>Docs 1</h1>
-      <Button />
+    <div className={styles.container}>
+      <Head>
+        <title>Customers</title>
+        <meta name="description" content="This is for the customers in the restaurant, here they can order food and eat." />
+        <link rel="icon" href="burger.ico" />
+      </Head>
     </div>
-  );
+  )
 }
+
+export default Home
