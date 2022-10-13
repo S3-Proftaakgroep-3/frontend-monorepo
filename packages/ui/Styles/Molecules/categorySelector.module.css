@@ -1,0 +1,10 @@
+.selectorContainer {
+    display: flex;
+    overflow: auto;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.selectorContainer::-webkit-scrollbar {
+    display: none;
+}

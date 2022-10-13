@@ -1,4 +1,5 @@
 import { useState } from "react"
+import styles from '../../Styles/Molecules/categorySelector.module.css';
 
 interface PropTypes {
     children: JSX.Element | JSX.Element[]
@@ -7,7 +8,7 @@ interface PropTypes {
 export const CategorySelector = ({ children }: PropTypes) => {
 
     return (
-        <div>
+        <div className={styles.selectorContainer}>
             {children}
         </div>
     )
