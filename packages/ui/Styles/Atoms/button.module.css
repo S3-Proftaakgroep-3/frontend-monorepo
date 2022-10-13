@@ -12,7 +12,7 @@
 }
 
 .btn__style_primary {
-    color: var(--color-primary);
+    color: var(--fontColor-primary);
     background-color: var(--background-primary);
 }
 

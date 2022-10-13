@@ -1,3 +1,6 @@
 export * from './categorySelector'
 export * from './dropdownMenu'
 export * from './bottomMenu'
+export * from './allergies'
+export * from './searchBar'
+export * from './newOrderMenu'

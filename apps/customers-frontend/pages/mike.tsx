@@ -2,8 +2,10 @@ import type {NextPage} from 'next'
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import * as React from "react";
-import { CategoryBtn, CategorySelector, MenuBtn, DropdownMenu, Button, BottomMenu } from 'ui'
+import { Allergies, CategoryBtn, CategorySelector, MenuBtn, DropdownMenu, Button, BottomMenu, Textarea } from 'ui'
 import { useState } from 'react';
+import {FoodCard} from "ui/Components/Atoms/foodCard";
+
 
 enum Categories {
     Alles,
@@ -21,6 +23,9 @@ const Mike: NextPage = () => {
     // State - menu active
     const [menuActive, setMenuActive] = useState(false)
 
+    // State - food or drinks selector
+    const [isFood, setIsFood] = useState(true)
+
     return (
         <div className={styles.container}>
             <CategorySelector>
@@ -32,8 +37,11 @@ const Mike: NextPage = () => {
             </CategorySelector>
             <DropdownMenu menuActive={menuActive}/>
             <MenuBtn menuActive={menuActive} setMenuActive={setMenuActive}/>
+            <FoodCard/>
             <Button label='MyButton' style="primary"/>
-            <BottomMenu/>
+            <Textarea id='massage' label='Add massage (optional)' placeholder='Uw bericht...' rows={5}/>
+            <Allergies/>
+            <BottomMenu isFood={isFood} setIsFood={setIsFood}/>
         </div>
     )
 }

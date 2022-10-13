@@ -2,7 +2,7 @@ import type {NextPage} from 'next'
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import * as React from "react";
-import {FoodCard} from "ui/Components/Atoms/foodCard";
+import {HorizontalFoodCard} from "ui/Components/Atoms/horizontalFoodCard";
 
 const Home: NextPage = () => {
     return (
@@ -13,7 +13,7 @@ const Home: NextPage = () => {
                       content="This is for the customers in the restaurant, here they can order food and eat."/>
                 <link rel="icon" href="burger.ico"/>
             </Head>
-            <FoodCard/>
+            <HorizontalFoodCard/>
         </div>
     )
 }

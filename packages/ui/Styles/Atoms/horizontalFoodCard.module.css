@@ -1,0 +1,31 @@
+.column{
+    float: left;
+    width: 100%;
+}
+
+.card{
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    border-radius: 5%;
+}
+
+.image{
+    width: 20%;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.5);
+}
+
+.container{
+    margin: 2%;
+    width: 100%;
+    display: flex;
+}
+
+.text{
+    margin-left: 3%;
+}
+
+.price{
+    text-align: center;
+    margin-left: 3%;
+    margin-right: 5%;
+}
