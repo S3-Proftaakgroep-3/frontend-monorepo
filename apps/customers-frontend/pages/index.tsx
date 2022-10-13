@@ -44,6 +44,7 @@ const Index: NextPage = () => {
             </CategorySelector>
             <div>
             <FoodCard/>
+            <FoodCard/>
             </div>
             <BottomMenu isFood={isFood} setIsFood={setIsFood}/>
         </div>

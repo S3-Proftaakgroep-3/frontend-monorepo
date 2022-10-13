@@ -4,6 +4,10 @@
     margin-top: 3%;
 }
 
+.column:last-of-type {
+    padding-bottom: 100px;
+}
+
 .card{
  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     border-radius: 5%;
@@ -37,3 +41,4 @@
     flex-flow: column;
     align-items: flex-start;
 }
+
