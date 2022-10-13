@@ -1,0 +1,49 @@
+.container {
+    --menu-width: 30px;
+    --stripe-height: 2px;
+    
+    z-index: 9999999; 
+    position: relative;
+    width: var(--menu-width);
+    height: var(--menu-width);
+    border: none;
+    background: transparent;
+}
+
+.container:hover {
+    cursor: pointer;
+}
+
+.one, .two {
+    position: absolute;
+    left: 0;
+    display: inline-block;
+    width: var(--menu-width);
+    height: var(--stripe-height);
+    background-color: black;
+    transition-property: top, transform;
+    transition-duration: 250ms;
+    transition-timing-function: ease-out;
+}
+
+.one {
+    top: calc(50% - 3px);
+    transform: translateY(-50%);
+}
+
+.two {
+    top: calc(50% + 3px);
+    transform: translateY(-50%);
+}
+
+.menu__state_active .one {
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+    transform-origin: center;
+}
+
+.menu__state_active .two {
+    top: 50%;
+    transform: translateY(-50%) rotate(-45deg);
+    transform-origin: center;
+}

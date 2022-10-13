@@ -1,0 +1,12 @@
+.bottomMenu {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: var(--bottomMenu-height);
+    background-color: white;
+}
+
+.bottomMenuContentWrap {
+    
+}

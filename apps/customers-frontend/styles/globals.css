@@ -5,10 +5,11 @@
   box-sizing: border-box;
 }
 /*
-  2. Remove default margin
+  2. Remove default margin & padding
 */
 * {
   margin: 0;
+  padding: 0;
 }
 /*
   3. Allow percentage-based heights in the application
@@ -49,4 +50,28 @@ p, h1, h2, h3, h4, h5, h6 {
 */
 #root, #__next {
   isolation: isolate;
+}
+
+/*
+  Font
+*/
+
+* {
+  font-family: 'Kanit', sans-serif;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/*
+  CSS Variables
+*/
+
+:root {
+  --border-radius: 3px;
+
+  --background-light: #F1F1F1;
+  --background-light-hover: #E0E0E0;
+
+  --background-primary: black;
+  --background-primary-hover: #1E1E1E;
+  --color-primary: white;
 }
