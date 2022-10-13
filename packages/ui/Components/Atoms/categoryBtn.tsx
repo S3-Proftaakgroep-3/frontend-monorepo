@@ -1,15 +1,26 @@
 import styles from '../../Styles/Atoms/categoryBtn.module.css'
+import fonts from '../../Styles/Utils/fonts.module.css'
+import classNames from 'classNames'
 
 interface PropTypes {
-    label: string
+    label: string,
+    active: boolean,
+    onClick: () => void
 }
 
-export const CategoryBtn = ({ label }: PropTypes) => {
+export const CategoryBtn = ({ label, active, onClick }: PropTypes) => {
     
     return (
-        <button className={styles.test}>
-            {label}
+        <button 
+            className={classNames(
+                styles.btn,
+                active && styles.btn__state_active
+            )}
+            onClick={onClick}
+        >
+            <p className={fonts.s_secondary}>{label}</p>
         </button>
     )
 }
+
 
