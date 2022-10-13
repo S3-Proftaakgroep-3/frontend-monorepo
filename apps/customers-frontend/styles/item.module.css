@@ -1,0 +1,20 @@
+#page {
+    padding: 0 25px;
+}
+
+#imgWrap {
+    position: relative;
+    margin-bottom: 30px;
+    width: calc(100vw - 50px);
+    height: calc(100vw - 50px);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+}
+
+.title {
+   margin-bottom: 5px; 
+}
+
+.description {
+    margin-bottom: 30px;
+}
