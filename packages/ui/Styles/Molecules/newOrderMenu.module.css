@@ -1,0 +1,16 @@
+.newOrderMenu {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    padding: 1em 0;
+    width: 100%;
+}
+
+.priceSection{
+    width: 30%;
+    text-align: center;
+}
+
+.buttonSection{
+    width: 70%;
+}

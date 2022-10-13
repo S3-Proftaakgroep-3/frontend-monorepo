@@ -1,0 +1,8 @@
+.bottomLine{
+    width: 100%;
+    height: 3px;
+    background: var(--background-light);
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
