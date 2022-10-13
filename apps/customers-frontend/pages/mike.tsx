@@ -2,7 +2,7 @@ import type {NextPage} from 'next'
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import * as React from "react";
-import { Allergies, CategoryBtn, CategorySelector, MenuBtn, DropdownMenu, Button, BottomMenu, Textarea } from 'ui'
+import { Allergies, CategoryBtn, CategorySelector, MenuBtn, DropdownMenu, Button, BottomMenu, Textarea, OrderCard } from 'ui'
 import { useState } from 'react';
 import {FoodCard} from "ui/Components/Atoms/foodCard";
 
@@ -37,11 +37,12 @@ const Mike: NextPage = () => {
             </CategorySelector>
             <DropdownMenu menuActive={menuActive}/>
             <MenuBtn menuActive={menuActive} setMenuActive={setMenuActive}/>
-            <FoodCard/>
             <Button label='MyButton' style="primary"/>
             <Textarea id='massage' label='Add massage (optional)' placeholder='Uw bericht...' rows={5}/>
             <Allergies/>
+            <OrderCard title='Pizza Fungi' quantity={2} price={15}/>
             <BottomMenu isFood={isFood} setIsFood={setIsFood}/>
+            <FoodCard/>
         </div>
     )
 }
