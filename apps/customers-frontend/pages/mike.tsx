@@ -21,6 +21,9 @@ const Mike: NextPage = () => {
     // State - menu active
     const [menuActive, setMenuActive] = useState(false)
 
+    // State - food or drinks selector
+    const [isFood, setIsFood] = useState(true)
+
     return (
         <div className={styles.container}>
             <CategorySelector>
@@ -33,7 +36,7 @@ const Mike: NextPage = () => {
             <DropdownMenu menuActive={menuActive}/>
             <MenuBtn menuActive={menuActive} setMenuActive={setMenuActive}/>
             <Button label='MyButton' style="primary"/>
-            <BottomMenu/>
+            <BottomMenu isFood={isFood} setIsFood={setIsFood}/>
         </div>
     )
 }
