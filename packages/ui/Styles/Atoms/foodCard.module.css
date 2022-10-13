@@ -1,0 +1,36 @@
+.column{
+    float: left;
+    width: 70%;
+    margin-top: 3%;
+    margin-left: 15%;
+    margin-right: 15%;
+}
+
+.card{
+ box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    border-radius: 5%;
+}
+
+.image{
+    width: 100%;
+    border-radius: 3px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.5);
+}
+
+.container{
+    position: relative;
+    text-align: center;
+    color: white;
+}
+
+.title{
+    position: absolute;
+    bottom: 10%;
+    left: 5%;
+}
+
+.description {
+    position: absolute;
+    bottom: 5%;
+    left: 5%;
+}
