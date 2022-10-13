@@ -1,15 +1,24 @@
 import { IconBtn } from "../Atoms/iconBtn"
 import styles from '../../Styles/Molecules/bottomMenu.module.css'
-import { CSSProperties } from "react"
+import { CSSProperties, Dispatch, SetStateAction } from "react"
 import { Button } from "../Atoms"
 
-export const BottomMenu = () => {
+interface PropTypes {
+    isFood: boolean,
+    setIsFood: Dispatch<SetStateAction<boolean>>
+}
+
+export const BottomMenu = ({ isFood, setIsFood }: PropTypes) => {
     return (
-        <div className={styles.bottomMenu} style={{"--bottomMenu-height": "80px"} as CSSProperties}>
+        <div className={styles.bottomMenu}>
             <div className={styles.bottomMenuContentWrap}>
-                <IconBtn type="food" btnActive={true}/>
-                <IconBtn type="drinks" btnActive={false}/>
-                <Button label="Go to order" style="primary"/>
+                <div id={styles.iconContainer}>
+                    <IconBtn type="food" isFood={isFood} setIsFood={setIsFood}/>
+                    <IconBtn type="drinks" isFood={isFood} setIsFood={setIsFood}/>
+                </div>
+                <div id={styles.btnWrap}>
+                    <Button label="Go to order" style="primary"/>
+                </div>                
             </div>
         </div>
     )

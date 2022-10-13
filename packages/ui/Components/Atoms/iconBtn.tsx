@@ -1,18 +1,33 @@
 import styles from '../../Styles/Atoms/iconBtn.module.css'
 import classNames from 'classNames'
+import { Dispatch, SetStateAction, useEffect } from 'react'
 
 interface PropTypes {
     type: "food" | "drinks",
-    btnActive: boolean
+    isFood: boolean,
+    setIsFood: Dispatch<SetStateAction<boolean>>
 }
 
-export const IconBtn = ({ type, btnActive }: PropTypes) => {
+export const IconBtn = ({ isFood, type, setIsFood }: PropTypes) => {
+
+    const handleClick = () => {
+        setIsFood(type === "food")
+    }
+
+    useEffect(() => {
+        console.log(`Type: ${type}`)
+        console.log(`Is food: ${isFood}`)
+        console.log(type === "food" && isFood)
+    })
+
     return (
         <button 
         className={classNames(
             styles.btn,
-            btnActive && styles.btn__state_active
-        )}           
+            (type === "food" && isFood) && styles.btn__state_active, 
+            (type === "drinks" && !isFood) && styles.btn__state_active
+        )}       
+        onClick={handleClick}    
         >
             {
                 type === "food"

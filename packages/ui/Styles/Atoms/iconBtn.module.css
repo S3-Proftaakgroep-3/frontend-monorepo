@@ -1,8 +1,8 @@
 .btn {
     display: inline-flex;
     justify-content: center;
-    width: var(--bottomMenu-height);
-    height: var(--bottomMenu-height);
+    width: 65px;
+    height: 65px;
     border: none;
     background-color: white;
     opacity: .3;
