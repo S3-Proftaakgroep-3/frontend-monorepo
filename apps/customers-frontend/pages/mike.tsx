@@ -4,6 +4,7 @@ import styles from '../styles/Home.module.css'
 import * as React from "react";
 import { CategoryBtn, CategorySelector, MenuBtn, DropdownMenu, Button, BottomMenu } from 'ui'
 import { useState } from 'react';
+import {FoodCard} from "ui/Components/Atoms/foodCard";
 
 enum Categories {
     Alles,
@@ -32,6 +33,7 @@ const Mike: NextPage = () => {
             </CategorySelector>
             <DropdownMenu menuActive={menuActive}/>
             <MenuBtn menuActive={menuActive} setMenuActive={setMenuActive}/>
+            <FoodCard/>
             <Button label='MyButton' style="primary"/>
             <BottomMenu/>
         </div>
