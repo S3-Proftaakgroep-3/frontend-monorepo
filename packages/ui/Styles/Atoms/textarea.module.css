@@ -1,0 +1,25 @@
+.label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.textarea {
+    border: none;
+    border-radius: var(--border-radius);
+    width: 100%;
+    padding: 22px 25px;
+    background-color: var(--background-light);
+    font-size: 16px;
+    font-weight: 500;
+    color: black;
+}
+
+.textarea::placeholder {
+    font-size: 16px;
+    font-weight: 500;
+    color: #A2A2A2;
+}
+
+.textarea:focus {
+    outline-color: var(--color-primary);
+}
