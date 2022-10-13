@@ -23,14 +23,19 @@
     color: white;
 }
 
-.title{
+.darkContainer {
     position: absolute;
-    bottom: 15%;
-    left: 3%;
+    bottom: 0;
+    width: 100%;
+    height: auto;
+    background: linear-gradient(to bottom, transparent 0%, black 100%);
+    padding: 0.5em 1em;
 }
 
-.description {
-    position: absolute;
-    bottom: 10%;
+.titleContainer {
+    bottom: 5%;
     left: 3%;
+    display: flex;
+    flex-flow: column;
+    align-items: flex-start;
 }
