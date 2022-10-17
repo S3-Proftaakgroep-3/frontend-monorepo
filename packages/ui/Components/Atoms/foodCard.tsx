@@ -1,7 +1,7 @@
 import * as React from "react";
 import styles from '../../Styles/Atoms/foodCard.module.css'
 import fonts from '../../Styles/Utils/fonts.module.css'
-import classNames from "classNames";
+import classNames from "classnames/dedupe";
 
 export const FoodCard = (props: any) => {
     return <div className={styles.column}>
