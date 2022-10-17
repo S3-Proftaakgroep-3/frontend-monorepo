@@ -1,6 +1,5 @@
 import styles from '../../Styles/Atoms/orderCard.module.css'
 import fonts from '../../Styles/Utils/fonts.module.css'
-import { OrderBackButton } from './Buttons/orderBackButton'
 
 interface PropTypes {
     title: string,

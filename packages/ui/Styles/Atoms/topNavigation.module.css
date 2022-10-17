@@ -1,0 +1,10 @@
+.container{
+    width: 100%;
+    display: flex;
+}
+
+.image{
+    width: 7rem;
+    margin-left: auto;
+    margin-right: auto;
+}
