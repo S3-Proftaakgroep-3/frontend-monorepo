@@ -35,7 +35,7 @@ const Index: NextPage = () => {
             <SearchBar/>
             <br/>
             <h4>Categories</h4>
-            <CategorySelector>
+            <CategorySelector label={"Size"}>
                 <CategoryBtn label='Alles' active={category === Categories.Alles} onClick={() => setCategory(Categories.Alles)}/>
                 <CategoryBtn label='Popular' active={category === Categories.Popular} onClick={() => setCategory(Categories.Popular)}/>
                 <CategoryBtn label='Pasta' active={category === Categories.Pasta} onClick={() => setCategory(Categories.Pasta)}/>

@@ -32,6 +32,7 @@ const Item: NextPage = () => {
                     src='/Images/pizza.jpg'
                     layout='fill'
                     objectFit='cover'
+                    alt={"Pizza"}
                 />
             </div>
             <p className={fonts.s_secondary}>{`€${price}`}</p>
