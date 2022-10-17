@@ -1,0 +1,18 @@
+#topMenuSecondary {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 15px 45px;
+    display: grid;
+    grid-template-columns: 3em 1fr 3em;
+    font-size: 16px;
+    font-weight: 500;
+    color: black;
+    background-color: white;
+}
+
+#label {
+    align-self: center;
+    justify-self: center;
+}
