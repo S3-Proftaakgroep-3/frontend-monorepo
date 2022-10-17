@@ -5,6 +5,7 @@ import * as React from "react";
 import { Allergies, CategoryBtn, CategorySelector, MenuBtn, DropdownMenu, SearchBar, BottomMenu, Textarea } from 'ui'
 import { useState } from 'react';
 import {FoodCard} from "ui/Components/Atoms/foodCard";
+import {TopNavigation} from "ui/Components/Atoms/topNavigation";
 
 
 enum Categories {
@@ -20,18 +21,13 @@ const Index: NextPage = () => {
     // State - Active category
     const [category, setCategory] = useState(Categories.Alles)
 
-    // State - menu active
-    const [menuActive, setMenuActive] = useState(false)
-
     // State - food or drinks selector
     const [isFood, setIsFood] = useState(true)
 
     return (
         <div className={styles.page}>
-            <div>
-                <DropdownMenu menuActive={menuActive}/>
-                <MenuBtn menuActive={menuActive} setMenuActive={setMenuActive}/>
-            </div>
+            <TopNavigation/>
+            <br/>
             <SearchBar/>
             <br/>
             <h4>Categories</h4>
