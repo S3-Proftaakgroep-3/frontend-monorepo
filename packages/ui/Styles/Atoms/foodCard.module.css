@@ -1,9 +1,11 @@
 .column{
     float: left;
-    width: 70%;
+    width: 100%;
     margin-top: 3%;
-    margin-left: 15%;
-    margin-right: 15%;
+}
+
+.column:last-of-type {
+    padding-bottom: 100px;
 }
 
 .card{
@@ -39,3 +41,4 @@
     flex-flow: column;
     align-items: flex-start;
 }
+
