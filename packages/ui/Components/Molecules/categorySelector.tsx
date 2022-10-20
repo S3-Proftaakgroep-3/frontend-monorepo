@@ -3,7 +3,7 @@ import fonts from '../../Styles/Utils/fonts.module.css'
 
 interface PropTypes {
     label: string,
-    children: JSX.Element | JSX.Element[]
+    children: JSX.Element | JSX.Element[] | any // any as quickfix
 }
 
 export const CategorySelector = ({ label, children }: PropTypes) => {

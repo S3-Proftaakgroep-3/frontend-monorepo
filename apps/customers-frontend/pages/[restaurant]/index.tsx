@@ -22,7 +22,7 @@ export async function getServerSideProps({ query }: ContextTypes) {
 
     return {
         props: {
-            items: data.menu.products
+            restaurant: data
         }
     }
 }
@@ -47,13 +47,17 @@ interface Item {
 }
 
 interface PropTypes {
-    items: Item[]
+    restaurant: any
 }
 
-const Index: NextPage<PropTypes> = ({ items }: PropTypes) => {
+const Index: NextPage<PropTypes> = ({ restaurant }: PropTypes) => {
+
+    // Restaurant data
+    const items: Item[] = restaurant.menu.products
+    const categories: string[] = restaurant.categories
 
     // State - Active category
-    const [category, setCategory] = useState(Categories.Alles)
+    const [category, setCategory] = useState("Alles")
 
     // State - food or drinks selector
     const [isFood, setIsFood] = useState(true)
@@ -75,17 +79,24 @@ const Index: NextPage<PropTypes> = ({ items }: PropTypes) => {
             <SearchBar/>
             <br/>
             <CategorySelector label='Categoriën'>
-                <CategoryBtn label='Alles' active={category === Categories.Alles} onClick={() => setCategory(Categories.Alles)}/>
-                <CategoryBtn label='Popular' active={category === Categories.Popular} onClick={() => setCategory(Categories.Popular)}/>
-                <CategoryBtn label='Pasta' active={category === Categories.Pasta} onClick={() => setCategory(Categories.Pasta)}/>
-                <CategoryBtn label='Pizza' active={category === Categories.Pizza} onClick={() => setCategory(Categories.Pizza)}/>
-                <CategoryBtn label='Burgers' active={category === Categories.Burgers} onClick={() => setCategory(Categories.Burgers)}/>
+                <CategoryBtn label="Alles" active={category === "Alles"} onClick={() => setCategory("Alles")}/>
+                {
+                    categories.map((categorie: string, key: number) => {
+                        return <CategoryBtn label={categorie} active={category === categorie} onClick={() => setCategory(categorie)} key={key}/>
+                    })
+                }
             </CategorySelector>
             <div id={styles.foodCardContainer}>
                 {
-                    items.map((item: Item, index: number) => {
-                        return <FoodCard name={item.name} description={item.description} key={index} onClick={() => router.push(`/${restaurantId}/${item.id}`)}/>
-                    })
+                    category === "Alles"
+                    ?   items.map((item: Item, index: number) => {
+                            return <FoodCard name={item.name} description={item.description} key={index} onClick={() => router.push(`/${restaurantId}/${item.id}`)}/>
+                        })
+                    :   items.map((item: Item, index: number) => {
+                            if(item.category === category){
+                                return <FoodCard name={item.name} description={item.description} key={index} onClick={() => router.push(`/${restaurantId}/${item.id}`)}/>
+                            }
+                        })
                 }
             </div>
             <BottomMenu isFood={isFood} setIsFood={setIsFood}/>
