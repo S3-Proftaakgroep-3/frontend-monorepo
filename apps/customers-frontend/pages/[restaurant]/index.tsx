@@ -82,7 +82,7 @@ const Index: NextPage<PropTypes> = ({ restaurant }: PropTypes) => {
             <br/>
             <SearchBar/>
             <br/>
-            <CategorySelector label='Categoriën'>
+            <CategorySelector label='Categorieën'>
                 <CategoryBtn label="Alles" active={category === "Alles"} onClick={() => setCategory("Alles")}/>
                 {
                     categories.map((categorie: string, key: number) => {
