@@ -1,8 +1,8 @@
 import type {NextPage} from 'next'
 import * as React from "react";
 import Image from 'next/image'
-import styles from '../styles/item.module.css'
-import fonts from '../styles/fonts.module.css'
+import styles from '../../styles/item.module.css'
+import fonts from '../../styles/fonts.module.css'
 import classNames from 'classnames/dedupe'
 import { Allergies, Button, CategoryBtn, CategorySelector, Textarea } from 'ui';
 import { useState } from 'react';
