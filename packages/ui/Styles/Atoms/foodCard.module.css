@@ -4,6 +4,10 @@
     margin-top: 3%;
 }
 
+.column:hover {
+    cursor: pointer;
+}
+
 .column:last-of-type {
     padding-bottom: 100px;
 }

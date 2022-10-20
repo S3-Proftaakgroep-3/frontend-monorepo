@@ -1,12 +1,33 @@
 import type {NextPage} from 'next'
 import * as React from "react";
 import Image from 'next/image'
-import styles from '../styles/item.module.css'
-import fonts from '../styles/fonts.module.css'
+import styles from '../../styles/item.module.css'
+import fonts from '../../styles/fonts.module.css'
 import classNames from 'classNames'
 import { Allergies, Button, CategoryBtn, CategorySelector, Textarea } from 'ui';
 import { useState } from 'react';
 import { AllergieCard } from 'ui/Components/Atoms/allergieCard';
+
+interface ContextTypes {
+    query: any
+}
+
+export async function getServerSideProps({ query }: ContextTypes) {
+
+    // Query
+    const restaurantId = query.restaurant
+    const itemId = query.item
+
+    // Fetch
+    const res = await fetch(`https://mdma-restaurant-service.herokuapp.com/api/restaurant/get/product?restaurantId=${restaurantId}&id=${itemId}`)
+    const data = await res.json()
+
+    return {
+        props: {
+            item: data
+        }
+    }
+}
 
 enum Sizes {
     small,
@@ -14,12 +35,26 @@ enum Sizes {
     large
 }
 
-const Item: NextPage = () => {
+interface Item {
+    active: boolean,
+    category: string,
+    description: string,
+    id: string,
+    name: string,
+    price: number,
+    size: string
+}
+
+interface PropTypes {
+    item: Item
+}
+
+const Item: NextPage<PropTypes> = ({ item }: PropTypes) => {
 
     // Placeholder data
-    const price: number = 15
-    const title: string = "Pizza fungi"
-    const description: string = "Krokante huisgemaakte pizza gemaakt met de beste lokale ingedriënten en deeg uit eigen keuken."
+    const price: number = item.price
+    const title: string = item.name
+    const description: string = item.description
 
     // State - size
     const [size, setSize] = useState(Sizes.small)

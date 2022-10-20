@@ -14,12 +14,6 @@ export const IconBtn = ({ isFood, type, setIsFood }: PropTypes) => {
         setIsFood(type === "food")
     }
 
-    useEffect(() => {
-        console.log(`Type: ${type}`)
-        console.log(`Is food: ${isFood}`)
-        console.log(type === "food" && isFood)
-    })
-
     return (
         <button 
         className={classNames(

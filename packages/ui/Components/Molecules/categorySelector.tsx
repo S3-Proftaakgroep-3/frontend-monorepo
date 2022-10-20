@@ -11,7 +11,7 @@ export const CategorySelector = ({ label, children }: PropTypes) => {
     return (
         <div>
             <h4 id={styles.label} className={fonts.s_primary}>{label}</h4>
-            <div>
+            <div className={styles.selectorContainer}>
                 {children}
             </div>
         </div>
