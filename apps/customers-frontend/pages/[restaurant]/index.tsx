@@ -26,7 +26,15 @@ export async function getServerSideProps({ query }: ContextTypes) {
         }
     }
 }
+  
 
+enum Categories {
+    Alles,
+    Popular,
+    Pasta,
+    Pizza,
+    Burgers
+}
 
 interface Item {
     active: boolean,
