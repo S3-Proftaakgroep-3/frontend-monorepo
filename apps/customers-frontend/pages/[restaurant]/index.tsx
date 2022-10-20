@@ -62,14 +62,18 @@ const Index: NextPage<PropTypes> = ({ restaurant }: PropTypes) => {
     // State - food or drinks selector
     const [isFood, setIsFood] = useState(true)
 
+    // State - restaurant id
+    const [restaurantId, setRestaurantId] = useState('')
+
     // Router
     const router = useRouter()
 
-    // Restaurant id
-    let restaurantId: string | string[]
     useEffect(() => {
-        const query = router.query
-        restaurantId = query.restaurant!
+        const tempRestaurantId = router.query.restaurant
+
+        if (typeof tempRestaurantId === 'string'){
+            setRestaurantId(tempRestaurantId)
+        }
     }, [router.query])
 
     return (
