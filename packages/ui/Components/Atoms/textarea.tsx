@@ -1,4 +1,4 @@
-import classNames from 'classNames'
+import classNames from 'classnames/dedupe'
 import styles from '../../Styles/Atoms/textarea.module.css'
 import fonts from '../../Styles/Utils/fonts.module.css'
 

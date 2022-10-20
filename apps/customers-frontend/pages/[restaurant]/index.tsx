@@ -55,9 +55,6 @@ const Index: NextPage<PropTypes> = ({ items }: PropTypes) => {
     // State - Active category
     const [category, setCategory] = useState(Categories.Alles)
 
-    // State - menu active
-    const [menuActive, setMenuActive] = useState(false)
-
     // State - food or drinks selector
     const [isFood, setIsFood] = useState(true)
 
@@ -73,11 +70,11 @@ const Index: NextPage<PropTypes> = ({ items }: PropTypes) => {
 
     return (
         <div className={styles.page}>
-            <div>
-                <DropdownMenu menuActive={menuActive}/>
-                <MenuBtn menuActive={menuActive} setMenuActive={setMenuActive}/>
-            </div>
+            <TopNavigation/>
+            <br/>
             <SearchBar/>
+            <br/>
+            <h4>Categories</h4>
             <CategorySelector label='Categoriën'>
                 <CategoryBtn label='Alles' active={category === Categories.Alles} onClick={() => setCategory(Categories.Alles)}/>
                 <CategoryBtn label='Popular' active={category === Categories.Popular} onClick={() => setCategory(Categories.Popular)}/>

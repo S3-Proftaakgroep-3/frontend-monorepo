@@ -1,5 +1,5 @@
 import styles from '../../Styles/Atoms/iconBtn.module.css'
-import classNames from 'classNames'
+import classNames from 'classnames/dedupe'
 import { Dispatch, SetStateAction, useEffect } from 'react'
 
 interface PropTypes {

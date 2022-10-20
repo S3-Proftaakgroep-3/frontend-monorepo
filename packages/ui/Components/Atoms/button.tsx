@@ -1,4 +1,4 @@
-import classNames from 'classNames'
+import classNames from 'classnames/dedupe'
 import styles from '../../Styles/Atoms/button.module.css'
 
 interface PropTypes {

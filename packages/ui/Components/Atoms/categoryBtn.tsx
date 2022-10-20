@@ -1,6 +1,6 @@
 import styles from '../../Styles/Atoms/categoryBtn.module.css'
 import fonts from '../../Styles/Utils/fonts.module.css'
-import classNames from 'classNames'
+import classNames from 'classnames/dedupe'
 
 interface PropTypes {
     label: string,

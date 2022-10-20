@@ -5,3 +5,11 @@
 #foodCardContainer {
     padding: 15px 0;
 }
+
+.orderMenu{
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin-right: 5%;
+}

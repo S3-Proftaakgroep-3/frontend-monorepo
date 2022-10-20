@@ -1,7 +1,7 @@
 import styles from "../../Styles/Atoms/horizontalFoodCard.module.css"
 import * as React from "react";
 import fonts from "../../Styles/Utils/fonts.module.css";
-import classNames from "classNames";
+import classNames from "classnames/dedupe";
 
 export const HorizontalFoodCard = (props: any) => {
     return <div>

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import styles from '../../Styles/Atoms/menuBtn.module.css'
-import classNames from 'classNames'
+import classNames from 'classnames/dedupe'
 
 interface PropTypes {
     menuActive: boolean,

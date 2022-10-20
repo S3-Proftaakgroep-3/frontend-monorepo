@@ -1,9 +1,9 @@
 import type {NextPage} from 'next'
 import * as React from "react";
 import Image from 'next/image'
-import styles from '../../styles/item.module.css'
-import fonts from '../../styles/fonts.module.css'
-import classNames from 'classNames'
+import styles from '../styles/item.module.css'
+import fonts from '../styles/fonts.module.css'
+import classNames from 'classnames/dedupe'
 import { Allergies, Button, CategoryBtn, CategorySelector, Textarea } from 'ui';
 import { useState } from 'react';
 import { AllergieCard } from 'ui/Components/Atoms/allergieCard';
@@ -67,6 +67,7 @@ const Item: NextPage<PropTypes> = ({ item }: PropTypes) => {
                     src='/Images/pizza.jpg'
                     layout='fill'
                     objectFit='cover'
+                    alt={"Pizza"}
                 />
             </div>
             <p className={fonts.s_secondary}>{`€${price}`}</p>
@@ -80,7 +81,7 @@ const Item: NextPage<PropTypes> = ({ item }: PropTypes) => {
                     <CategoryBtn label='Large' active={size === Sizes.large} onClick={() => setSize(Sizes.large)}></CategoryBtn>
                 </CategorySelector>
             </div>
-            
+
             <div className={styles.optionWrap}>
                 <Allergies>
                     <AllergieCard label="Lactose"/>

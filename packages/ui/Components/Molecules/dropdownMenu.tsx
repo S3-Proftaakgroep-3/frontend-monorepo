@@ -1,4 +1,4 @@
-import classNames from 'classNames'
+import classNames from 'classnames/dedupe'
 import styles from '../../Styles/Molecules/dropdownMenu.module.css'
 
 interface PropTypes {

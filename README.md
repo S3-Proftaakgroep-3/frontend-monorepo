@@ -71,3 +71,12 @@ Learn more about the power of Turborepo:
 - [Scoped Tasks](https://turborepo.org/docs/core-concepts/scopes)
 - [Configuration Options](https://turborepo.org/docs/reference/configuration)
 - [CLI Usage](https://turborepo.org/docs/reference/command-line-reference)
+
+# Vercel
+Hoe werkt het.
+
+1. Installeer [vercel cli](https://vercel.com/docs/cli)
+2. Binnen in je project in de command line type ```vercel```
+3. Hier worden een aantal stappen gevraagd voor het initialiseren van je project etc
+4. Om je nieuwe versie live te zetten type je ```vercel --prod```
+5. Vervolgens duurt het even en staat je nieuwe versie online
