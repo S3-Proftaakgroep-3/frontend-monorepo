@@ -2,7 +2,7 @@ import type {NextPage} from 'next'
 import Head from 'next/head'
 import styles from '../../styles/Home.module.css'
 import * as React from "react";
-import { Allergies, CategoryBtn, CategorySelector, MenuBtn, DropdownMenu, SearchBar, BottomMenu, Textarea } from 'ui'
+import { Allergies, CategoryBtn, CategorySelector, MenuBtn, DropdownMenu, SearchBar, BottomMenu, Textarea, TopNavigation } from 'ui'
 import { useEffect, useState } from 'react';
 import {FoodCard} from "ui/Components/Atoms/foodCard";
 import { useRouter } from 'next/router';
@@ -74,7 +74,6 @@ const Index: NextPage<PropTypes> = ({ items }: PropTypes) => {
             <br/>
             <SearchBar/>
             <br/>
-            <h4>Categories</h4>
             <CategorySelector label='Categoriën'>
                 <CategoryBtn label='Alles' active={category === Categories.Alles} onClick={() => setCategory(Categories.Alles)}/>
                 <CategoryBtn label='Popular' active={category === Categories.Popular} onClick={() => setCategory(Categories.Popular)}/>
