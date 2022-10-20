@@ -15,7 +15,7 @@ export const TopNavigation = (props: any) => {
         <MenuBtn menuActive={menuActive} setMenuActive={setMenuActive}/>
         </div>
         <div className={styles.image}>
-            <img src="https://www.creativefabrica.com/wp-content/uploads/2022/04/17/Pizza-Logo-Design-Graphics-29132095-1.jpg" alt=""/>
+            <img src="https://www.sosfactory.com/wp-content/uploads/2016/12/restaurant-logo-mr-bolat.png" alt=""/>
         </div>
         <div>
         </div>

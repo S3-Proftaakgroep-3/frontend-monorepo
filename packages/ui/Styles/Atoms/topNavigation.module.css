@@ -12,3 +12,8 @@
     top: 50%;
     transform: translate(-50%, -50%);
 }
+
+/* Quick fix */
+.image img {
+    transform: scale(.7); 
+}
