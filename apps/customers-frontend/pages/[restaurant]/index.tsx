@@ -1,23 +1,17 @@
 import type {NextPage} from 'next'
-import Head from 'next/head'
 import styles from '../../styles/Home.module.css'
 import * as React from "react";
 import {
-    Allergies,
     CategoryBtn,
     CategorySelector,
-    MenuBtn,
-    DropdownMenu,
     SearchBar,
     BottomMenu,
-    Textarea,
     TopNavigation,
-    IRestaurant, IProduct
+    ICategory, IProduct, IRestaurant
 } from 'ui'
 import { useEffect, useState } from 'react';
 import {FoodCard} from "ui/Components/Atoms/foodCard";
 import { useRouter } from 'next/router';
-import item from "./[item]";
 
 interface ContextTypes {
     query: any
@@ -38,9 +32,6 @@ export async function getServerSideProps({ query }: ContextTypes) {
         }
     }
 }
-  
-
-
 
 interface PropTypes {
     restaurant: IRestaurant
@@ -50,7 +41,9 @@ const Index: NextPage<PropTypes> = ({ restaurant }: PropTypes) => {
     // Restaurant data
     const allItems = restaurant.menu?.products;
     const [items, setItems] = useState(restaurant.menu?.products)
-    const categories: string[] = restaurant.categories
+    const categories: ICategory[] = restaurant.categories
+
+    console.log(categories)
 
     // State - Active category
     const [category, setCategory] = useState("Alles")
@@ -100,8 +93,15 @@ const Index: NextPage<PropTypes> = ({ restaurant }: PropTypes) => {
             <CategorySelector label='Categorieën'>
                 <CategoryBtn label="Alles" active={category === "Alles"} onClick={() => setCategory("Alles")}/>
                 {
-                    categories?.map((categorie: string, key: number) => {
-                        return <CategoryBtn label={categorie} active={category === categorie} onClick={() => setCategory(categorie)} key={key}/>
+                    categories?.map((categorie: ICategory, key: number) => {
+
+                        // Beverage categories
+                        if(isBeverage && categorie.beverage){
+                            return <CategoryBtn label={categorie.category} active={category === categorie.category} onClick={() => setCategory(categorie.category)} key={key}/>
+                        } else if (!isBeverage && !categorie.beverage){ // Food categories
+                            return <CategoryBtn label={categorie.category} active={category === categorie.category} onClick={() => setCategory(categorie.category)} key={key}/>
+                        }
+                        
                     })
                 }
             </CategorySelector>
