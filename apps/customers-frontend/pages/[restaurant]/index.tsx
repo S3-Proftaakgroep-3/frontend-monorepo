@@ -149,9 +149,9 @@ const Index: NextPage<PropTypes> = ({ restaurant }: PropTypes) => {
 
                             // Is beverage
                             if(isBeverage && item.isBeverage) {
-                                return <FoodCard name={item.name} description={item.description} key={index} onClick={() => router.push(`/${restaurantId}/${item.id}`)}/>
+                                return <FoodCard name={item.name} image={item.image} description={item.description} key={index} onClick={() => router.push(`/${restaurantId}/${item.id}`)}/>
                             } else if (!isBeverage && !item.isBeverage) { // Is food
-                                return <FoodCard name={item.name} description={item.description} key={index} onClick={() => router.push(`/${restaurantId}/${item.id}`)}/>
+                                return <FoodCard name={item.name} image={item.image} description={item.description} key={index} onClick={() => router.push(`/${restaurantId}/${item.id}`)}/>
                             }
                             
                         })
