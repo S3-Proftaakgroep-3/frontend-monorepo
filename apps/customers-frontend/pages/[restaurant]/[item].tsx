@@ -89,8 +89,8 @@ const Item: NextPage<PropTypes> = ({ item }: PropTypes) => {
             <div className={styles.optionWrap}>
                 <Allergies>
                     { allergies != null
-                        ? allergies.map((allergy: string) => {
-                            return <AllergieCard label={allergy}></AllergieCard>
+                        ? allergies.map((allergy: string, key: number) => {
+                            return <AllergieCard label={allergy} key={key}></AllergieCard>
                         })
                         : <p className={classNames(fonts.s_secondary)}>No allergies</p>
                     }
