@@ -1,12 +1,17 @@
 import type {NextPage} from 'next'
-import Head from 'next/head'
 import styles from '../../styles/Home.module.css'
 import * as React from "react";
-import { Allergies, CategoryBtn, CategorySelector, MenuBtn, DropdownMenu, SearchBar, BottomMenu, Textarea, TopNavigation } from 'ui'
+import {
+    CategoryBtn,
+    CategorySelector,
+    SearchBar,
+    BottomMenu,
+    TopNavigation,
+    ICategory, IProduct, IRestaurant
+} from 'ui'
 import { useEffect, useState } from 'react';
 import {FoodCard} from "ui/Components/Atoms/foodCard";
 import { useRouter } from 'next/router';
-import item from "./[item]";
 
 interface ContextTypes {
     query: any
@@ -23,46 +28,26 @@ export async function getServerSideProps({ query }: ContextTypes) {
 
     return {
         props: {
-            restaurant: data
+            restaurant: data as IRestaurant
         }
     }
 }
-  
-
-enum Categories {
-    Alles,
-    Popular,
-    Pasta,
-    Pizza,
-    Burgers
-}
-
-interface Item {
-    active: boolean,
-    category: string,
-    description: string,
-    id: string,
-    name: string,
-    price: number,
-    size: string
-}
 
 interface PropTypes {
-    restaurant: any
+    restaurant: IRestaurant
 }
 
 const Index: NextPage<PropTypes> = ({ restaurant }: PropTypes) => {
-
     // Restaurant data
-    const allItems = restaurant.menu.products;
-    const [items, setItems] = useState(restaurant.menu.products)
-    const categories: string[] = restaurant.categories
+    const allItems = restaurant.menu?.products;
+    const [items, setItems] = useState(restaurant.menu?.products)
+    const categories: ICategory[] = restaurant.categories
 
     // State - Active category
     const [category, setCategory] = useState("Alles")
 
     // State - food or drinks selector
-    const [isFood, setIsFood] = useState(true)
+    const [isBeverage, setIsBeverage] = useState(false)
 
     // State - restaurant id
     const [restaurantId, setRestaurantId] = useState('')
@@ -74,7 +59,8 @@ const Index: NextPage<PropTypes> = ({ restaurant }: PropTypes) => {
     const router = useRouter()
 
     useEffect(() => {
-        const filteredItem = allItems.filter((el: Item) => {
+
+        const filteredItem = allItems.filter((el: IProduct) => {
             if (inputValue === '') {
                 return allItems;
             }
@@ -101,28 +87,46 @@ const Index: NextPage<PropTypes> = ({ restaurant }: PropTypes) => {
                 setInputValue(e.target.value);
             }}/>
             
+            {/* Category selector */}
             <CategorySelector label='Categorieën'>
                 <CategoryBtn label="Alles" active={category === "Alles"} onClick={() => setCategory("Alles")}/>
                 {
-                    categories.map((categorie: string, key: number) => {
-                        return <CategoryBtn label={categorie} active={category === categorie} onClick={() => setCategory(categorie)} key={key}/>
+                    categories?.map((categorie: ICategory, key: number) => {
+
+                        // Beverage categories
+                        if(isBeverage && categorie.beverage){
+                            return <CategoryBtn label={categorie.category} active={category === categorie.category} onClick={() => setCategory(categorie.category)} key={key}/>
+                        } else if (!isBeverage && !categorie.beverage){ // Food categories
+                            return <CategoryBtn label={categorie.category} active={category === categorie.category} onClick={() => setCategory(categorie.category)} key={key}/>
+                        }
+                        
                     })
                 }
             </CategorySelector>
+
+            {/* Food cards */}
             <div id={styles.foodCardContainer}>
                 {
                     category === "Alles"
-                    ?   items.map((item: Item, index: number) => {
-                            return <FoodCard name={item.name} description={item.description} key={index} onClick={() => router.push(`/${restaurantId}/${item.id}`)}/>
+                    ?   items?.map((item: IProduct, index: number) => {
+
+                            // Is beverage
+                            if(isBeverage && item.isBeverage) {
+                                return <FoodCard name={item.name} image={item.image} description={item.description} key={index} onClick={() => router.push(`/${restaurantId}/${item.id}`)}/>
+                            } else if (!isBeverage && !item.isBeverage) { // Is food
+                                return <FoodCard name={item.name} image={item.image} description={item.description} key={index} onClick={() => router.push(`/${restaurantId}/${item.id}`)}/>
+                            }
+                            
                         })
-                    :   items.map((item: Item, index: number) => {
+
+                    :   items?.map((item: IProduct, index: number) => {
                             if(item.category === category){
-                                return <FoodCard name={item.name} description={item.description} key={index} onClick={() => router.push(`/${restaurantId}/${item.id}`)}/>
+                                return <FoodCard name={item.name} image={item.image} description={item.description} key={index} onClick={() => router.push(`/${restaurantId}/${item.id}`)}/>
                             }
                         })
                 }
             </div>
-            <BottomMenu isFood={isFood} setIsFood={setIsFood}/>
+            <BottomMenu isBeverage={isBeverage} setIsBeverage={setIsBeverage}/>
         </div>
     )
 }

@@ -4,7 +4,7 @@ import Image from 'next/image'
 import styles from '../../styles/item.module.css'
 import fonts from '../../styles/fonts.module.css'
 import classNames from 'classnames/dedupe'
-import { Allergies, Button, CategoryBtn, CategorySelector, Textarea } from 'ui';
+import {Allergies, Button, CategoryBtn, CategorySelector, IProduct, Sizes, Textarea} from 'ui';
 import { useState } from 'react';
 import { AllergieCard } from 'ui/Components/Atoms/allergieCard';
 
@@ -24,30 +24,13 @@ export async function getServerSideProps({ query }: ContextTypes) {
 
     return {
         props: {
-            item: data
+            item: data as IProduct
         }
     }
 }
 
-enum Sizes {
-    small,
-    medium,
-    large
-}
-
-interface Item {
-    active: boolean,
-    category: string,
-    description: string,
-    id: string,
-    name: string,
-    price: number,
-    size: string
-    allergies: string[]
-}
-
 interface PropTypes {
-    item: Item
+    item: IProduct
 }
 
 interface CartItem {
@@ -108,17 +91,15 @@ const Item: NextPage<PropTypes> = ({ item }: PropTypes) => {
     const allergies: string[] = item.allergies;
 
     // State - size
-    const [size, setSize] = useState(Sizes.small)
+    const [size, setSize] = useState(Sizes.Small)
 
     return (
         <div id={styles.page}>
             <div>Top navigation</div>
             <div id={styles.imgWrap}>
-                <Image
-                    src='/Images/pizza.jpg'
-                    layout='fill'
-                    objectFit='cover'
-                    alt={"Pizza"}
+                <img
+                    src={item.image} className={styles.img}
+                    alt={item.name}
                 />
             </div>
             <p className={fonts.s_secondary}>{`€${price}`}</p>
@@ -127,17 +108,17 @@ const Item: NextPage<PropTypes> = ({ item }: PropTypes) => {
 
             <div className={styles.optionWrap}>
                 <CategorySelector label='Size'>
-                    <CategoryBtn label='Small' active={size === Sizes.small} onClick={() => setSize(Sizes.small)}></CategoryBtn>
-                    <CategoryBtn label='Medium' active={size === Sizes.medium} onClick={() => setSize(Sizes.medium)}></CategoryBtn>
-                    <CategoryBtn label='Large' active={size === Sizes.large} onClick={() => setSize(Sizes.large)}></CategoryBtn>
+                    <CategoryBtn label='Small' active={size === Sizes.Small} onClick={() => setSize(Sizes.Small)}></CategoryBtn>
+                    <CategoryBtn label='Medium' active={size === Sizes.Medium} onClick={() => setSize(Sizes.Medium)}></CategoryBtn>
+                    <CategoryBtn label='Large' active={size === Sizes.Big} onClick={() => setSize(Sizes.Big)}></CategoryBtn>
                 </CategorySelector>
             </div>
 
             <div className={styles.optionWrap}>
                 <Allergies>
                     { allergies != null
-                        ? allergies.map((allergy: string) => {
-                            return <AllergieCard label={allergy}></AllergieCard>
+                        ? allergies.map((allergy: string, key: number) => {
+                            return <AllergieCard label={allergy} key={key}></AllergieCard>
                         })
                         : <p className={classNames(fonts.s_secondary)}>No allergies</p>
                     }
