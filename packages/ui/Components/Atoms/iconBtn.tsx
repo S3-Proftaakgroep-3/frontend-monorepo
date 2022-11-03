@@ -5,13 +5,15 @@ import { Dispatch, SetStateAction, useEffect } from 'react'
 interface PropTypes {
     type: "food" | "drinks",
     isBeverage: boolean,
-    setIsBeverage: Dispatch<SetStateAction<boolean>>
+    setIsBeverage: Dispatch<SetStateAction<boolean>>,
+    setCategory: Dispatch<SetStateAction<string>>
 }
 
-export const IconBtn = ({ isBeverage, type, setIsBeverage }: PropTypes) => {
+export const IconBtn = ({ isBeverage, type, setIsBeverage, setCategory }: PropTypes) => {
 
     const handleClick = () => {
-        setIsBeverage(type === "drinks")
+        setIsBeverage(type === "drinks"),
+        setCategory("Alles")
     }
 
     return (

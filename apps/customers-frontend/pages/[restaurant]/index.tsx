@@ -126,7 +126,7 @@ const Index: NextPage<PropTypes> = ({ restaurant }: PropTypes) => {
                         })
                 }
             </div>
-            <BottomMenu isBeverage={isBeverage} setIsBeverage={setIsBeverage}/>
+            <BottomMenu setCategory={setCategory} isBeverage={isBeverage} setIsBeverage={setIsBeverage}/>
         </div>
     )
 }
