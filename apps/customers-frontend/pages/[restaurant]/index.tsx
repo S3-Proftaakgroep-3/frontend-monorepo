@@ -43,8 +43,6 @@ const Index: NextPage<PropTypes> = ({ restaurant }: PropTypes) => {
     const [items, setItems] = useState(restaurant.menu?.products)
     const categories: ICategory[] = restaurant.categories
 
-    console.log(categories)
-
     // State - Active category
     const [category, setCategory] = useState("Alles")
 
