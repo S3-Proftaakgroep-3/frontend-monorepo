@@ -91,7 +91,7 @@ const Index: NextPage<PropTypes> = ({ restaurant }: PropTypes) => {
     const [category, setCategory] = useState("Alles")
 
     // State - food or drinks selector
-    const [isFood, setIsFood] = useState(true)
+    const [isBeverage, setIsBeverage] = useState(false)
 
     // State - restaurant id
     const [restaurantId, setRestaurantId] = useState('')
@@ -131,6 +131,7 @@ const Index: NextPage<PropTypes> = ({ restaurant }: PropTypes) => {
                 setInputValue(e.target.value);
             }}/>
             
+            {/* Category selector */}
             <CategorySelector label='Categorieën'>
                 <CategoryBtn label="Alles" active={category === "Alles"} onClick={() => setCategory("Alles")}/>
                 {
@@ -139,12 +140,22 @@ const Index: NextPage<PropTypes> = ({ restaurant }: PropTypes) => {
                     })
                 }
             </CategorySelector>
+
+            {/* Food cards */}
             <div id={styles.foodCardContainer}>
                 {
                     category === "Alles"
                     ?   items?.map((item: Product, index: number) => {
-                            return <FoodCard name={item.name} image={item.image} description={item.description} key={index} onClick={() => router.push(`/${restaurantId}/${item.id}`)}/>
+
+                            // Is beverage
+                            if(isBeverage && item.isBeverage) {
+                                return <FoodCard name={item.name} description={item.description} key={index} onClick={() => router.push(`/${restaurantId}/${item.id}`)}/>
+                            } else if (!isBeverage && !item.isBeverage) { // Is food
+                                return <FoodCard name={item.name} description={item.description} key={index} onClick={() => router.push(`/${restaurantId}/${item.id}`)}/>
+                            }
+                            
                         })
+
                     :   items?.map((item: Product, index: number) => {
                             if(item.category === category){
                                 return <FoodCard name={item.name} image={item.image} description={item.description} key={index} onClick={() => router.push(`/${restaurantId}/${item.id}`)}/>
@@ -152,7 +163,7 @@ const Index: NextPage<PropTypes> = ({ restaurant }: PropTypes) => {
                         })
                 }
             </div>
-            <BottomMenu isFood={isFood} setIsFood={setIsFood}/>
+            <BottomMenu isBeverage={isBeverage} setIsBeverage={setIsBeverage}/>
         </div>
     )
 }
