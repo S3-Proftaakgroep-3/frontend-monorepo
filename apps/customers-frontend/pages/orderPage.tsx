@@ -5,28 +5,6 @@ import {NewOrderMenu} from "ui/Components/Molecules/newOrderMenu";
 import {OrderCard} from "ui";
 import {useEffect, useState} from "react";
 
-
-interface ContextTypes {
-    query: any
-}
-
-export async function getServerSideProps({ query }: ContextTypes) {
-
-    // Query
-    const restaurantId = query.restaurant
-    const itemId = query.item
-
-    // Fetch
-    const res = await fetch(`https://mdma-restaurant-service.herokuapp.com/api/restaurant/get/product?restaurantId=${restaurantId}&id=${itemId}`)
-    const data = await res.json()
-
-    return {
-        props: {
-            item: data
-        }
-    }
-}
-
 interface PropTypes {
     item: any
 }
@@ -40,7 +18,7 @@ const orderPage: NextPage<PropTypes> = ({ item }: PropTypes) => {
 
         if (cs != null) {
             const order = JSON.parse(cs)
-
+            console.log(order)
 
         }
     }, [])
