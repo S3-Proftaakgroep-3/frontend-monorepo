@@ -1,17 +1,19 @@
-#container {
-    display: grid;
-    grid-template-columns: 30px 1fr auto 1fr 30px;
-    align-items: center;
-    padding: 15px 0;
+.container{
+    position: relative;
     width: 100%;
+    display: flex;
+    margin-top: 5%;
 }
 
-#menuBtnWrap {
-    grid-area: 1 / 1;
+.image{
+    width: 5rem;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 
-#imgWrap {
-    grid-area: 1 / 3;
-    width: 60px;
-    height: 60px;
+/* Quick fix */
+.image img {
+    transform: scale(.7); 
 }

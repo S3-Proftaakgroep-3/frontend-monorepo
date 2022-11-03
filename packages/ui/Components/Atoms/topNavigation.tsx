@@ -9,15 +9,15 @@ export const TopNavigation = (props: any) => {
     // State - menu active
     const [menuActive, setMenuActive] = useState(false)
 
-    return (
-        <div id={styles.container}>
-            <div id={styles.menuBtnWrap}>
-                <DropdownMenu menuActive={menuActive}/>
-                <MenuBtn menuActive={menuActive} setMenuActive={setMenuActive}/>
-            </div>
-            <div id={styles.imgWrap}>
-                <img src="https://www.sosfactory.com/wp-content/uploads/2016/12/restaurant-logo-mr-bolat.png" alt=""/>
-            </div>
+    return <div className={styles.container}>
+        <div>
+        <DropdownMenu menuActive={menuActive}/>
+        <MenuBtn menuActive={menuActive} setMenuActive={setMenuActive}/>
         </div>
-    )
+        <div className={styles.image}>
+            <img src="https://www.sosfactory.com/wp-content/uploads/2016/12/restaurant-logo-mr-bolat.png" alt=""/>
+        </div>
+        <div>
+        </div>
+    </div>
 }

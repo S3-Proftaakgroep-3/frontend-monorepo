@@ -4,17 +4,17 @@ import { CSSProperties, Dispatch, SetStateAction } from "react"
 import { Button } from "../Atoms"
 
 interface PropTypes {
-    isBeverage: boolean,
-    setIsBeverage: Dispatch<SetStateAction<boolean>>
+    isFood: boolean,
+    setIsFood: Dispatch<SetStateAction<boolean>>
 }
 
-export const BottomMenu = ({ isBeverage, setIsBeverage }: PropTypes) => {
+export const BottomMenu = ({ isFood, setIsFood }: PropTypes) => {
     return (
         <div className={styles.bottomMenu}>
             <div className={styles.bottomMenuContentWrap}>
                 <div id={styles.iconContainer}>
-                    <IconBtn type="food" isBeverage={isBeverage} setIsBeverage={setIsBeverage}/>
-                    <IconBtn type="drinks" isBeverage={isBeverage} setIsBeverage={setIsBeverage}/>
+                    <IconBtn type="food" isFood={isFood} setIsFood={setIsFood}/>
+                    <IconBtn type="drinks" isFood={isFood} setIsFood={setIsFood}/>
                 </div>
                 <div id={styles.btnWrap}>
                     <Button label="Go to order" style="primary"/>
