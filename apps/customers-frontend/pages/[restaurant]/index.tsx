@@ -6,6 +6,7 @@ import { Allergies, CategoryBtn, CategorySelector, MenuBtn, DropdownMenu, Search
 import { useEffect, useState } from 'react';
 import {FoodCard} from "ui/Components/Atoms/foodCard";
 import { useRouter } from 'next/router';
+import item from "./[item]";
 
 interface ContextTypes {
     query: any
@@ -53,7 +54,8 @@ interface PropTypes {
 const Index: NextPage<PropTypes> = ({ restaurant }: PropTypes) => {
 
     // Restaurant data
-    const items: Item[] = restaurant.menu.products
+    const allItems = restaurant.menu.products;
+    const [items, setItems] = useState(restaurant.menu.products)
     const categories: string[] = restaurant.categories
 
     // State - Active category
@@ -65,8 +67,23 @@ const Index: NextPage<PropTypes> = ({ restaurant }: PropTypes) => {
     // State - restaurant id
     const [restaurantId, setRestaurantId] = useState('')
 
+    // State - searchbar text
+    const [inputValue, setInputValue] = useState("");
+    
     // Router
     const router = useRouter()
+
+    useEffect(() => {
+        const filteredItem = allItems.filter((el: Item) => {
+            if (inputValue === '') {
+                return allItems;
+            }
+            else {
+                return el.name.toLowerCase().includes(inputValue.toLowerCase())
+            }
+        })
+        setItems(filteredItem);
+    }, [inputValue]);
 
     useEffect(() => {
         const tempRestaurantId = router.query.restaurant
@@ -79,9 +96,11 @@ const Index: NextPage<PropTypes> = ({ restaurant }: PropTypes) => {
     return (
         <div className={styles.page}>
             <TopNavigation/>
-            <br/>
-            <SearchBar/>
-            <br/>
+
+            <SearchBar onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setInputValue(e.target.value);
+            }}/>
+            
             <CategorySelector label='Categorieën'>
                 <CategoryBtn label="Alles" active={category === "Alles"} onClick={() => setCategory("Alles")}/>
                 {
