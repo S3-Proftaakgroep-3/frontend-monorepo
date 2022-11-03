@@ -4,22 +4,22 @@ import { Dispatch, SetStateAction, useEffect } from 'react'
 
 interface PropTypes {
     type: "food" | "drinks",
-    isBeverage: boolean,
-    setIsBeverage: Dispatch<SetStateAction<boolean>>
+    isFood: boolean,
+    setIsFood: Dispatch<SetStateAction<boolean>>
 }
 
-export const IconBtn = ({ isBeverage, type, setIsBeverage }: PropTypes) => {
+export const IconBtn = ({ isFood, type, setIsFood }: PropTypes) => {
 
     const handleClick = () => {
-        setIsBeverage(type === "drinks")
+        setIsFood(type === "food")
     }
 
     return (
         <button 
         className={classNames(
             styles.btn,
-            (type === "food" && !isBeverage) && styles.btn__state_active, 
-            (type === "drinks" && isBeverage) && styles.btn__state_active
+            (type === "food" && isFood) && styles.btn__state_active, 
+            (type === "drinks" && !isFood) && styles.btn__state_active
         )}       
         onClick={handleClick}    
         >
