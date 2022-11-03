@@ -7,6 +7,7 @@ import classNames from 'classnames/dedupe'
 import { Allergies, Button, CategoryBtn, CategorySelector, Textarea } from 'ui';
 import { useState } from 'react';
 import { AllergieCard } from 'ui/Components/Atoms/allergieCard';
+import {ALL} from "dns";
 
 interface ContextTypes {
     query: any
@@ -43,6 +44,7 @@ interface Item {
     name: string,
     price: number,
     size: string
+    allergies: string[]
 }
 
 interface PropTypes {
@@ -55,6 +57,8 @@ const Item: NextPage<PropTypes> = ({ item }: PropTypes) => {
     const price: number = item.price
     const title: string = item.name
     const description: string = item.description
+
+    const allergies: string[] = item.allergies;
 
     // State - size
     const [size, setSize] = useState(Sizes.small)
@@ -84,8 +88,12 @@ const Item: NextPage<PropTypes> = ({ item }: PropTypes) => {
 
             <div className={styles.optionWrap}>
                 <Allergies>
-                    <AllergieCard label="Lactose"/>
-                    <AllergieCard label="Gluten"/>
+                    { allergies != null
+                        ? allergies.map((allergy: string) => {
+                            return <AllergieCard label={allergy}></AllergieCard>
+                        })
+                        : <p className={classNames(fonts.s_secondary)}>No allergies</p>
+                    }
                 </Allergies>
             </div>
 
