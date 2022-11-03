@@ -7,7 +7,6 @@ import classNames from 'classnames/dedupe'
 import { Allergies, Button, CategoryBtn, CategorySelector, Textarea } from 'ui';
 import { useState } from 'react';
 import { AllergieCard } from 'ui/Components/Atoms/allergieCard';
-import {ALL} from "dns";
 
 interface ContextTypes {
     query: any
@@ -51,7 +50,55 @@ interface PropTypes {
     item: Item
 }
 
+interface CartItem {
+    items: Array<{
+        id: string
+        name: string
+        quantity: number
+    }>
+}
+
+
 const Item: NextPage<PropTypes> = ({ item }: PropTypes) => {
+
+    function addToCart() : void{
+
+        const cs = localStorage.getItem('order')
+        let order:CartItem
+        let isSameItem = false
+
+        if (!cs){
+                order = {
+                    items:[{
+                        id: item.id,
+                        name: item.name,
+                        quantity: 1
+                    }]
+            }
+        }
+        else {
+            order = JSON.parse(cs)
+            order.items = order.items.map(ci => {
+                if (ci.id == item.id) {
+                    isSameItem = true
+                    return {id: ci.id,name: ci.name, quantity: ci.quantity + 1}
+                }
+
+                return {id: ci.id,name: ci.name, quantity: ci.quantity}
+            })
+
+            if (!isSameItem){
+                order.items.push({
+                    id: item.id,
+                    name: item.name,
+                    quantity: 1
+                })
+            }
+        }
+
+        localStorage.setItem('order', JSON.stringify(order))
+        console.log('order', order)
+    }
 
     // Placeholder data
     const price: number = item.price
@@ -102,7 +149,7 @@ const Item: NextPage<PropTypes> = ({ item }: PropTypes) => {
             </div>
 
             <div id={styles.bottomMenu}>
-                <Button label='Add to order' style='primary'/>
+                <Button onClick={addToCart()} label='Add to order' style='primary'/>
             </div>
 
         </div>

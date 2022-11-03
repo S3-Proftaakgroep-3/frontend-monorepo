@@ -4,9 +4,10 @@ import styles from '../../Styles/Atoms/button.module.css'
 interface PropTypes {
     label: string,
     style: "primary" | "secondary"
+    onClick: void
 }
 
-export const Button = ({ label, style }: PropTypes) => {
+export const Button = ({ label, style, onClick }: PropTypes) => {
     return (
         <button
             className={classNames(
