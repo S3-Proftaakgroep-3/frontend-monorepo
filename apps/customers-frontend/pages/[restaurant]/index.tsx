@@ -61,6 +61,7 @@ interface Menu{
 interface Product{
     id: string,
     name: string,
+    image: string,
     description: string,
     price: number,
     size: Size,
@@ -82,8 +83,8 @@ interface PropTypes {
 
 const Index: NextPage<PropTypes> = ({ restaurant }: PropTypes) => {
     // Restaurant data
-    const allItems = restaurant.menu.products;
-    const [items, setItems] = useState(restaurant.menu.products)
+    const allItems = restaurant.menu?.products;
+    const [items, setItems] = useState(restaurant.menu?.products)
     const categories: string[] = restaurant.categories
 
     // State - Active category
@@ -102,6 +103,7 @@ const Index: NextPage<PropTypes> = ({ restaurant }: PropTypes) => {
     const router = useRouter()
 
     useEffect(() => {
+
         const filteredItem = allItems.filter((el: Product) => {
             if (inputValue === '') {
                 return allItems;
@@ -132,7 +134,7 @@ const Index: NextPage<PropTypes> = ({ restaurant }: PropTypes) => {
             <CategorySelector label='Categorieën'>
                 <CategoryBtn label="Alles" active={category === "Alles"} onClick={() => setCategory("Alles")}/>
                 {
-                    categories.map((categorie: string, key: number) => {
+                    categories?.map((categorie: string, key: number) => {
                         return <CategoryBtn label={categorie} active={category === categorie} onClick={() => setCategory(categorie)} key={key}/>
                     })
                 }
@@ -140,12 +142,12 @@ const Index: NextPage<PropTypes> = ({ restaurant }: PropTypes) => {
             <div id={styles.foodCardContainer}>
                 {
                     category === "Alles"
-                    ?   items.map((item: Product, index: number) => {
-                            return <FoodCard name={item.name} description={item.description} key={index} onClick={() => router.push(`/${restaurantId}/${item.id}`)}/>
+                    ?   items?.map((item: Product, index: number) => {
+                            return <FoodCard name={item.name} image={item.image} description={item.description} key={index} onClick={() => router.push(`/${restaurantId}/${item.id}`)}/>
                         })
-                    :   items.map((item: Product, index: number) => {
+                    :   items?.map((item: Product, index: number) => {
                             if(item.category === category){
-                                return <FoodCard name={item.name} description={item.description} key={index} onClick={() => router.push(`/${restaurantId}/${item.id}`)}/>
+                                return <FoodCard name={item.name} image={item.image} description={item.description} key={index} onClick={() => router.push(`/${restaurantId}/${item.id}`)}/>
                             }
                         })
                 }
