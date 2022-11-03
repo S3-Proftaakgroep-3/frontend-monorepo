@@ -2,7 +2,18 @@ import type {NextPage} from 'next'
 import Head from 'next/head'
 import styles from '../../styles/Home.module.css'
 import * as React from "react";
-import { Allergies, CategoryBtn, CategorySelector, MenuBtn, DropdownMenu, SearchBar, BottomMenu, Textarea, TopNavigation } from 'ui'
+import {
+    Allergies,
+    CategoryBtn,
+    CategorySelector,
+    MenuBtn,
+    DropdownMenu,
+    SearchBar,
+    BottomMenu,
+    Textarea,
+    TopNavigation,
+    IRestaurant, IProduct
+} from 'ui'
 import { useEffect, useState } from 'react';
 import {FoodCard} from "ui/Components/Atoms/foodCard";
 import { useRouter } from 'next/router';
@@ -23,62 +34,16 @@ export async function getServerSideProps({ query }: ContextTypes) {
 
     return {
         props: {
-            restaurant: data as Restaurant
+            restaurant: data as IRestaurant
         }
     }
 }
   
 
-enum Categories {
-    Alles,
-    Popular,
-    Pasta,
-    Pizza,
-    Burgers
-}
 
-// interface Item {
-//     active: boolean,
-//     category: string,
-//     description: string,
-//     id: string,
-//     name: string,
-//     price: number,
-//     size: string
-// }
-
-interface Restaurant {
-    id: string,
-    name: string,
-    menu: Menu,
-    categories: string[]
-}
-
-interface Menu{
-    products: Product[]
-}
-
-interface Product{
-    id: string,
-    name: string,
-    image: string,
-    description: string,
-    price: number,
-    size: Size,
-    category: string,
-    active: boolean,
-    isBeverage: boolean,
-    allergies: string[]
-}
-
-enum Size {
-    Small,
-    Medium,
-    Big
-}
 
 interface PropTypes {
-    restaurant: Restaurant
+    restaurant: IRestaurant
 }
 
 const Index: NextPage<PropTypes> = ({ restaurant }: PropTypes) => {
@@ -104,7 +69,7 @@ const Index: NextPage<PropTypes> = ({ restaurant }: PropTypes) => {
 
     useEffect(() => {
 
-        const filteredItem = allItems.filter((el: Product) => {
+        const filteredItem = allItems.filter((el: IProduct) => {
             if (inputValue === '') {
                 return allItems;
             }
@@ -145,7 +110,7 @@ const Index: NextPage<PropTypes> = ({ restaurant }: PropTypes) => {
             <div id={styles.foodCardContainer}>
                 {
                     category === "Alles"
-                    ?   items?.map((item: Product, index: number) => {
+                    ?   items?.map((item: IProduct, index: number) => {
 
                             // Is beverage
                             if(isBeverage && item.isBeverage) {
@@ -156,7 +121,7 @@ const Index: NextPage<PropTypes> = ({ restaurant }: PropTypes) => {
                             
                         })
 
-                    :   items?.map((item: Product, index: number) => {
+                    :   items?.map((item: IProduct, index: number) => {
                             if(item.category === category){
                                 return <FoodCard name={item.name} image={item.image} description={item.description} key={index} onClick={() => router.push(`/${restaurantId}/${item.id}`)}/>
                             }
