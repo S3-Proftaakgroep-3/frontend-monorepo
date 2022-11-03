@@ -28,30 +28,16 @@ export async function getServerSideProps({ query }: ContextTypes) {
     }
 }
   
-
-enum Categories {
-    Alles,
-    Popular,
-    Pasta,
-    Pizza,
-    Burgers
+interface Category {
+    category: string,
+    beverage: boolean
 }
-
-// interface Item {
-//     active: boolean,
-//     category: string,
-//     description: string,
-//     id: string,
-//     name: string,
-//     price: number,
-//     size: string
-// }
 
 interface Restaurant {
     id: string,
     name: string,
     menu: Menu,
-    categories: string[]
+    categories: Category[]
 }
 
 interface Menu{
@@ -85,7 +71,9 @@ const Index: NextPage<PropTypes> = ({ restaurant }: PropTypes) => {
     // Restaurant data
     const allItems = restaurant.menu?.products;
     const [items, setItems] = useState(restaurant.menu?.products)
-    const categories: string[] = restaurant.categories
+    const categories: Category[] = restaurant.categories
+
+    console.log(categories)
 
     // State - Active category
     const [category, setCategory] = useState("Alles")
@@ -135,8 +123,15 @@ const Index: NextPage<PropTypes> = ({ restaurant }: PropTypes) => {
             <CategorySelector label='Categorieën'>
                 <CategoryBtn label="Alles" active={category === "Alles"} onClick={() => setCategory("Alles")}/>
                 {
-                    categories?.map((categorie: string, key: number) => {
-                        return <CategoryBtn label={categorie} active={category === categorie} onClick={() => setCategory(categorie)} key={key}/>
+                    categories?.map((categorie: Category, key: number) => {
+
+                        // Beverage categories
+                        if(isBeverage && categorie.beverage){
+                            return <CategoryBtn label={categorie.category} active={category === categorie.category} onClick={() => setCategory(categorie.category)} key={key}/>
+                        } else if (!isBeverage && !categorie.beverage){ // Food categories
+                            return <CategoryBtn label={categorie.category} active={category === categorie.category} onClick={() => setCategory(categorie.category)} key={key}/>
+                        }
+                        
                     })
                 }
             </CategorySelector>
