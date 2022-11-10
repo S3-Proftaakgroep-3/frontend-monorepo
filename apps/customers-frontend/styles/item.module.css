@@ -38,3 +38,7 @@
 #bottomMenu button {
     grid-area: 2/1;
 }
+
+.img{
+    object-fit: cover;
+}
