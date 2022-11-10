@@ -4,7 +4,7 @@ import Image from 'next/image'
 import styles from '../../styles/item.module.css'
 import fonts from '../../styles/fonts.module.css'
 import classNames from 'classnames/dedupe'
-import {Allergies, Button, CategoryBtn, CategorySelector, IProduct, Sizes, Textarea} from 'ui';
+import {Allergies, Button, CategoryBtn, CategorySelector, IProduct, Sizes, Textarea, TopNavigation} from 'ui';
 import { useState } from 'react';
 import { AllergieCard } from 'ui/Components/Atoms/allergieCard';
 import {ALL} from "dns";
@@ -48,7 +48,7 @@ const Item: NextPage<PropTypes> = ({ item }: PropTypes) => {
 
     return (
         <div id={styles.page}>
-            <div>Top navigation</div>
+            <TopNavigation/>
             <div id={styles.imgWrap}>
                 <img
                     src={item.image} className={styles.img}
