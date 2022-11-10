@@ -11,17 +11,6 @@ interface PropTypes {
 
 const orderPage: NextPage<PropTypes> = ({ item }: PropTypes) => {
 
-    const [orderItems, setOrderItems] = useState()
-
-    useEffect(() => {
-        const cs = localStorage.getItem('order')
-
-        if (cs != null) {
-            const order = JSON.parse(cs)
-            console.log(order)
-
-        }
-    }, [])
     return(
         <div className={styles.page}>
             <OrderCard title={"Pizza Pepperoni"} price={19.99} quantity={5}/>

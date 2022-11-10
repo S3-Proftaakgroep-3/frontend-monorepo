@@ -34,64 +34,39 @@ interface PropTypes {
 }
 
 interface CartItem {
-    items: Array<{
-        id: string
-        name: string
-        quantity: number
-    }>
+    product: string,
+    message: string | null,
+    size: string
 }
 
 
 const Item: NextPage<PropTypes> = ({ item }: PropTypes) => {
+    let order = [] as CartItem[]
 
-    function addToCart() : void{
+    function addToCart() {
+        let cartItem: CartItem
 
-        const cs = localStorage.getItem('order')
-        let order:CartItem
-        let isSameItem = false
-
-        if (!cs){
-                order = {
-                    items:[{
-                        id: item.id,
-                        name: item.name,
-                        quantity: 1
-                    }]
-            }
-        }
-        else {
-            order = JSON.parse(cs)
-            order.items = order.items.map(ci => {
-                if (ci.id == item.id) {
-                    isSameItem = true
-                    return {id: ci.id,name: ci.name, quantity: ci.quantity + 1}
-                }
-
-                return {id: ci.id,name: ci.name, quantity: ci.quantity}
-            })
-
-            if (!isSameItem){
-                order.items.push({
-                    id: item.id,
-                    name: item.name,
-                    quantity: 1
-                })
-            }
+        cartItem = {
+            product: item.name,
+            message: message,
+            size: size
         }
 
-        localStorage.setItem('order', JSON.stringify(order))
-        console.log('order', order)
+        order.push(cartItem)
+        console.log(order)
     }
 
     // Placeholder data
     const price: number = item.price
     const title: string = item.name
+    const sizes: string[] = item.sizes
     const description: string = item.description
 
     const allergies: string[] = item.allergies;
 
     // State - size
-    const [size, setSize] = useState(Sizes.Small)
+    const [size, setSize] = useState("")
+    const [message, setMessage] = useState(null)
 
     return (
         <div id={styles.page}>
@@ -108,9 +83,11 @@ const Item: NextPage<PropTypes> = ({ item }: PropTypes) => {
 
             <div className={styles.optionWrap}>
                 <CategorySelector label='Size'>
-                    <CategoryBtn label='Small' active={size === Sizes.Small} onClick={() => setSize(Sizes.Small)}></CategoryBtn>
-                    <CategoryBtn label='Medium' active={size === Sizes.Medium} onClick={() => setSize(Sizes.Medium)}></CategoryBtn>
-                    <CategoryBtn label='Large' active={size === Sizes.Big} onClick={() => setSize(Sizes.Big)}></CategoryBtn>
+                    {
+                        sizes.map((possibleSize: string, key: number) => {
+                            return <CategoryBtn key={key} label={possibleSize} active={size === possibleSize} onClick={() => setSize(possibleSize)}></CategoryBtn>
+                        })
+                    }
                 </CategorySelector>
             </div>
 
@@ -126,11 +103,14 @@ const Item: NextPage<PropTypes> = ({ item }: PropTypes) => {
             </div>
 
             <div className={styles.optionWrap}>
-                <Textarea id='message' label='Message' placeholder='Uw bericht...' rows={5} />
+                <Textarea onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    setMessage(e.target.value)
+                }}
+                id='message' label='Message' placeholder='Uw bericht...' rows={5} />
             </div>
 
             <div id={styles.bottomMenu}>
-                <Button onClick={addToCart()} label='Add to order' style='primary'/>
+                <Button onClick={() => {addToCart()}} label='Add to order' style='primary'/>
             </div>
 
         </div>
