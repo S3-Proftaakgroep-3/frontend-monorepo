@@ -4,5 +4,5 @@ export interface IOrder {
     tableId: string,
     restaurantId: string,
     products: ICartItem[],
-    orderStatus: "Received" | "Making" | "Done"
+    orderStatus: "Received" | "Preparing" | "Done"
 }
