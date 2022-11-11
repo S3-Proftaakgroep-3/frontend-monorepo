@@ -58,7 +58,7 @@ const Index: NextPage<null> = () => {
                     return <OrderCard key={key} title={orderItem.product} price={orderItem.price} quantity={orderItem.quantity}/>
                 })
             }
-            <NewOrderMenu onClick={() => {createOrder()}} price={totalPrice}/>
+            <NewOrderMenu onClick={async () => {await createOrder()}} price={totalPrice}/>
         </div>
     )
 }
