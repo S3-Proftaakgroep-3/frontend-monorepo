@@ -37,7 +37,7 @@ const Index: NextPage<null> = () => {
     }
 
     const postOrder = async (order: IOrder) => {
-        const rawResponse = await fetch(`http://localhost:8080/api/order/create`, {
+        const rawResponse = await fetch(`https://mdma-order-service.herokuapp.com/api/order/create`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
