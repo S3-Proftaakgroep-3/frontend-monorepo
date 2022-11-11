@@ -40,8 +40,12 @@ const Item: NextPage<PropTypes> = ({ item }: PropTypes) => {
         let cartItem: ICartItem
         order = JSON.parse(localStorage.getItem("order")!)
         
+        if (order == null) {
+            order = [];
+        }
+        
         cartItem = {
-            product: item.name,
+            name: item.name,
             price: item.price,
             message: message,
             size: size,
@@ -51,9 +55,9 @@ const Item: NextPage<PropTypes> = ({ item }: PropTypes) => {
         let sameProductFound: boolean = false;
         let sameProductIndex: number = 0;
         
-        if (order != null) {
+        if (order.length > 0) {
             for (let i = 0; i < order.length; i++) {
-                if (cartItem.product == order[i].product && cartItem.size == order[i].size && cartItem.price == order[i].price && cartItem.message == order[i].message) {
+                if (cartItem.name == order[i].name && cartItem.size == order[i].size && cartItem.price == order[i].price && cartItem.message == order[i].message) {
                     sameProductFound = true;
                     sameProductIndex = i;
                 }

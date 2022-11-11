@@ -29,7 +29,7 @@ const Index: NextPage<null> = () => {
         newOrder = {
             tableId: sessionStorage.getItem("tableId")!,
             restaurantId: sessionStorage.getItem("restaurantId")!,
-            products: order,
+            productList: order,
             orderStatus: "Received"
         }
         
@@ -37,7 +37,7 @@ const Index: NextPage<null> = () => {
     }
 
     const postOrder = async (order: IOrder) => {
-        const rawResponse = await fetch(`https://mdma-order-service.herokuapp.com/api/order/create`, {
+        const rawResponse = await fetch(`http://localhost:8080/api/order/create`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -45,9 +45,7 @@ const Index: NextPage<null> = () => {
             },
             body: JSON.stringify(order)
         });
-        const content = await rawResponse.json();
-
-        console.log(content);
+        console.log(rawResponse)
     }
     
     return (
@@ -55,7 +53,7 @@ const Index: NextPage<null> = () => {
             <TopNavigation/>
             {
                 order.map((orderItem: ICartItem, key: number) => {
-                    return <OrderCard key={key} title={orderItem.product} price={orderItem.price} quantity={orderItem.quantity}/>
+                    return <OrderCard key={key} title={orderItem.name} price={orderItem.price} quantity={orderItem.quantity}/>
                 })
             }
             <NewOrderMenu onClick={async () => {await createOrder()}} price={totalPrice}/>
