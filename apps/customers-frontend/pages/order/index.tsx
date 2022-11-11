@@ -37,15 +37,16 @@ const Index: NextPage<null> = () => {
     }
 
     const postOrder = async (order: IOrder) => {
-        const rawResponse = await fetch(`https://mdma-order-service.herokuapp.com/api/order/create`, {
+        await fetch(`https://mdma-order-service.herokuapp.com/api/order/create`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(order)
+        }).finally(() => {
+            localStorage.removeItem("order")
         });
-        console.log(rawResponse)
     }
     
     return (
