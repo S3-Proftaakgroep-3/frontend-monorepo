@@ -1,9 +1,10 @@
 ﻿import type {NextPage} from 'next'
 import * as React from "react";
 import styles from '../../styles/item.module.css'
-import {CategoryBtn, ICategory, NewOrderMenu, OrderCard, TopNavigation} from 'ui';
+import {NewOrderMenu, OrderCard, TopNavigation} from 'ui';
 import {ICartItem} from "ui/Interfaces/ICartItem";
 import {useEffect, useState} from "react";
+import {IOrder} from "ui/Interfaces/IOrder";
 
 
 const Index: NextPage<null> = () => {
@@ -22,8 +23,31 @@ const Index: NextPage<null> = () => {
         setTotalPrice(productPrice);
     }, [order])
     
-    function createOrder() {
+    const createOrder = async () => {
+        let newOrder: IOrder
         
+        newOrder = {
+            tableId: sessionStorage.getItem("tableId")!,
+            restaurantId: sessionStorage.getItem("restaurantId")!,
+            products: order,
+            orderStatus: "Received"
+        }
+        
+        await postOrder(newOrder)
+    }
+
+    const postOrder = async (order: IOrder) => {
+        const rawResponse = await fetch(`https://mdma-order-service.herokuapp.com/api/order/create`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(order)
+        });
+        const content = await rawResponse.json();
+
+        console.log(content);
     }
     
     return (
