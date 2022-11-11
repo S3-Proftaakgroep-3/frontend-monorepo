@@ -7,13 +7,13 @@ import classNames from 'classnames/dedupe'
 import {Allergies, Button, CategoryBtn, CategorySelector, IProduct, Sizes, Textarea, TopNavigation} from 'ui';
 import { useState } from 'react';
 import { AllergieCard } from 'ui/Components/Atoms/allergieCard';
+import {ICartItem} from "ui/Interfaces/ICartItem";
 
 interface ContextTypes {
     query: any
 }
 
 export async function getServerSideProps({ query }: ContextTypes) {
-
     // Query
     const restaurantId = query.restaurant
     const itemId = query.item
@@ -33,27 +33,40 @@ interface PropTypes {
     item: IProduct
 }
 
-interface CartItem {
-    product: string,
-    message: string | null,
-    size: string
-}
-
-
 const Item: NextPage<PropTypes> = ({ item }: PropTypes) => {
-    let order = [] as CartItem[]
+    let order = [] as ICartItem[]
 
     function addToCart() {
-        let cartItem: CartItem
-
+        let cartItem: ICartItem
+        order = JSON.parse(localStorage.getItem("order")!)
+        
         cartItem = {
             product: item.name,
+            price: item.price,
             message: message,
-            size: size
+            size: size,
+            quantity: 1
         }
-
-        order.push(cartItem)
-        console.log(order)
+        
+        let sameProductFound: boolean = false;
+        let sameProductIndex: number = 0;
+        
+        if (order != null) {
+            for (let i = 0; i < order.length; i++) {
+                if (cartItem.product == order[i].product && cartItem.size == order[i].size && cartItem.price == order[i].price && cartItem.message == order[i].message) {
+                    sameProductFound = true;
+                    sameProductIndex = i;
+                }
+            }
+        }
+        
+        if (sameProductFound) {
+            order[sameProductIndex].quantity += 1;
+        } else {
+            order?.push(cartItem)
+        }
+        
+        localStorage.setItem("order", JSON.stringify(order));
     }
 
     // Placeholder data
@@ -66,7 +79,7 @@ const Item: NextPage<PropTypes> = ({ item }: PropTypes) => {
 
     // State - size
     const [size, setSize] = useState("")
-    const [message, setMessage] = useState(null)
+    const [message, setMessage] = useState("")
 
     return (
         <div id={styles.page}>

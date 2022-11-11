@@ -3,11 +3,13 @@ import {Button} from "../Atoms";
 import styles from "../../Styles/Molecules/newOrderMenu.module.css"
 import {BottomLine} from "../Atoms/bottomLine";
 
-interface PropTypes {
-    price: number
-}
-
-export const NewOrderMenu = ({price}: PropTypes) => {
+export const NewOrderMenu = ({
+    onClick,
+    price
+}: {
+    onClick: React.MouseEventHandler;
+    price: number;
+}) => {
     return <div>
         <div className={styles.newOrderMenu}>
             <div className={styles.priceSection}>
@@ -15,7 +17,7 @@ export const NewOrderMenu = ({price}: PropTypes) => {
                 <p>&euro;{price}</p>
             </div>
             <div className={styles.buttonSection}>
-                <Button label={"Order"} style={"primary"}/>
+                <Button onClick={onClick} label={"Order"} style={"primary"}/>
             </div>
         </div>
         <BottomLine/>
