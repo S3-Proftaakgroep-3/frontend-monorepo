@@ -2,6 +2,7 @@ import styles from '../../Styles/Atoms/orderCard.module.css'
 import fonts from '../../Styles/Utils/fonts.module.css'
 import {useState} from "react";
 import classNames from "classnames/dedupe";
+import {ICartItem} from "../../Interfaces/ICartItem";
 
 interface PropTypes {
     item: ICartItem
