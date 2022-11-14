@@ -7,14 +7,13 @@ import classNames from 'classnames/dedupe'
 import {Allergies, Button, CategoryBtn, CategorySelector, IProduct, Sizes, Textarea, TopNavigation} from 'ui';
 import { useState } from 'react';
 import { AllergieCard } from 'ui/Components/Atoms/allergieCard';
-import {ALL} from "dns";
+import {ICartItem} from "ui/Interfaces/ICartItem";
 
 interface ContextTypes {
     query: any
 }
 
 export async function getServerSideProps({ query }: ContextTypes) {
-
     // Query
     const restaurantId = query.restaurant
     const itemId = query.item
@@ -35,16 +34,56 @@ interface PropTypes {
 }
 
 const Item: NextPage<PropTypes> = ({ item }: PropTypes) => {
+    let order = [] as ICartItem[]
+
+    function addToCart() {
+        let cartItem: ICartItem
+        order = JSON.parse(localStorage.getItem("order")!)
+        
+        if (order == null) {
+            order = [];
+        }
+        
+        cartItem = {
+            name: item.name,
+            price: item.price,
+            message: message,
+            size: size,
+            quantity: 1
+        }
+        
+        let sameProductFound: boolean = false;
+        let sameProductIndex: number = 0;
+        
+        if (order.length > 0) {
+            for (let i = 0; i < order.length; i++) {
+                if (cartItem.name == order[i].name && cartItem.size == order[i].size && cartItem.price == order[i].price && cartItem.message == order[i].message) {
+                    sameProductFound = true;
+                    sameProductIndex = i;
+                }
+            }
+        }
+        
+        if (sameProductFound) {
+            order[sameProductIndex].quantity += 1;
+        } else {
+            order?.push(cartItem)
+        }
+        
+        localStorage.setItem("order", JSON.stringify(order));
+    }
 
     // Placeholder data
     const price: number = item.price
     const title: string = item.name
+    const sizes: string[] = item.sizes
     const description: string = item.description
 
     const allergies: string[] = item.allergies;
 
     // State - size
-    const [size, setSize] = useState(Sizes.Small)
+    const [size, setSize] = useState("")
+    const [message, setMessage] = useState("")
 
     return (
         <div id={styles.page}>
@@ -61,9 +100,11 @@ const Item: NextPage<PropTypes> = ({ item }: PropTypes) => {
 
             <div className={styles.optionWrap}>
                 <CategorySelector label='Size'>
-                    <CategoryBtn label='Small' active={size === Sizes.Small} onClick={() => setSize(Sizes.Small)}></CategoryBtn>
-                    <CategoryBtn label='Medium' active={size === Sizes.Medium} onClick={() => setSize(Sizes.Medium)}></CategoryBtn>
-                    <CategoryBtn label='Large' active={size === Sizes.Big} onClick={() => setSize(Sizes.Big)}></CategoryBtn>
+                    {
+                        sizes.map((possibleSize: string, key: number) => {
+                            return <CategoryBtn key={key} label={possibleSize} active={size === possibleSize} onClick={() => setSize(possibleSize)}></CategoryBtn>
+                        })
+                    }
                 </CategorySelector>
             </div>
 
@@ -79,11 +120,14 @@ const Item: NextPage<PropTypes> = ({ item }: PropTypes) => {
             </div>
 
             <div className={styles.optionWrap}>
-                <Textarea id='message' label='Message' placeholder='Uw bericht...' rows={5} />
+                <Textarea onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    setMessage(e.target.value)
+                }}
+                id='message' label='Message' placeholder='Uw bericht...' rows={5} />
             </div>
 
             <div id={styles.bottomMenu}>
-                <Button label='Add to order' style='primary'/>
+                <Button onClick={() => {addToCart()}} label='Add to order' style='primary'/>
             </div>
 
         </div>

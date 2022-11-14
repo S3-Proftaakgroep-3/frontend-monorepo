@@ -1,19 +1,25 @@
 import classNames from 'classnames/dedupe'
 import styles from '../../Styles/Atoms/textarea.module.css'
 import fonts from '../../Styles/Utils/fonts.module.css'
+import React from "react";
 
-interface PropTypes {
+export const Textarea = ({
+    onChange,
+    id,
+    label,
+    placeholder,
+    rows
+}: {
+    onChange: React.ChangeEventHandler,
     id: string,
     label: string,
     placeholder: string,
     rows: number
-}
-
-export const Textarea = ({ id, label, placeholder, rows }: PropTypes) => {
+}) => {
     return (
         <div id={styles.textareaContainer}>
             <label className={classNames(styles.label, fonts.s_primary)} htmlFor={id}>{label}</label>
-            <textarea className={styles.textarea} id={id} rows={rows} placeholder={placeholder}/>
+            <textarea onChange={onChange} className={styles.textarea} id={id} rows={rows} placeholder={placeholder}/>
         </div>
     )
 }

@@ -1,14 +1,19 @@
 import classNames from 'classnames/dedupe'
 import styles from '../../Styles/Atoms/button.module.css'
+import React from "react";
 
-interface PropTypes {
+export const Button = ({
+    label,
+    style,
+    onClick,
+}: {
     label: string,
     style: "primary" | "secondary"
-}
-
-export const Button = ({ label, style }: PropTypes) => {
+    onClick: React.MouseEventHandler;
+}) => {
     return (
         <button
+            onClick={onClick}
             className={classNames(
                 styles.btn,
                 style === "primary" && styles.btn__style_primary,

@@ -6,7 +6,7 @@ export interface IProduct{
     image: string,
     description: string,
     price: number,
-    size: Sizes,
+    sizes: string[],
     category: string,
     active: boolean,
     isBeverage: boolean,
