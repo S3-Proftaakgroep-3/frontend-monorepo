@@ -35,7 +35,13 @@ export const OrderCard = ({ item }: PropTypes) => {
                 openMenu && styles.open_menu
             )} >
                 <p className={fonts.s_secondary}>Size: {item.size}</p>
-                <p className={fonts.s_secondary}>Message: {item.message}</p>
+                {(() => {
+                    if (item.message != "") {
+                        return <p className={fonts.s_secondary}>Message: {item.message}</p>
+                    } else {
+                        return <p className={fonts.s_secondary}>Message: No message</p>
+                    }
+                })()}
             </div>
         </div>
     )

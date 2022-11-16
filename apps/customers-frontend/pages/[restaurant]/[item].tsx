@@ -82,7 +82,7 @@ const Item: NextPage<PropTypes> = ({ item }: PropTypes) => {
     const allergies: string[] = item.allergies;
 
     // State - size
-    const [size, setSize] = useState("")
+    const [size, setSize] = useState(sizes[0])
     const [message, setMessage] = useState("")
 
     return (
@@ -102,7 +102,11 @@ const Item: NextPage<PropTypes> = ({ item }: PropTypes) => {
                 <CategorySelector label='Size'>
                     {
                         sizes.map((possibleSize: string, key: number) => {
-                            return <CategoryBtn key={key} label={possibleSize} active={size === possibleSize} onClick={() => setSize(possibleSize)}></CategoryBtn>
+                            if (key == 0) {
+                                return <CategoryBtn key={key} label={possibleSize} active={size === possibleSize} onClick={() => setSize(possibleSize)}></CategoryBtn>
+                            } else {
+                                return <CategoryBtn key={key} label={possibleSize} active={size === possibleSize} onClick={() => setSize(possibleSize)}></CategoryBtn>
+                            }
                         })
                     }
                 </CategorySelector>
