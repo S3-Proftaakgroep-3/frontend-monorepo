@@ -54,7 +54,7 @@ const Index: NextPage<null> = () => {
             <TopNavigation/>
             {
                 order.map((orderItem: ICartItem, key: number) => {
-                    return <OrderCard key={key} title={orderItem.name} price={orderItem.price} quantity={orderItem.quantity}/>
+                    return <OrderCard key={key} item={orderItem}/>
                 })
             }
             <NewOrderMenu onClick={async () => {await createOrder()}} price={totalPrice}/>

@@ -1,10 +1,14 @@
+#orderContainer {
+    border-bottom: 2px solid var(--background-light);
+}
+
 #orderCard {
     display: flex;
     justify-content: space-between;
     align-items: center;
     grid-template-columns: 1fr 35px 40px;
     grid-template-rows: auto auto;
-    border-bottom: 2px solid var(--background-light);
+
 }
 
 #title {
@@ -24,6 +28,7 @@
     position: absolute;
     top: 50%;
     left: 50%;
+    transition: .5s;
     transform: translateX(-50%) translateY(-50%) rotate(-90deg);
     opacity: .35;
 }
@@ -42,4 +47,34 @@
     position: fixed;
     left: 0;
     bottom: 0;
+}
+
+.menu {
+    visibility: hidden;
+    pointer-events: none;
+    opacity: 0;
+    height: 0;
+    transition: height .5s, opacity .5s;
+    display: flex;
+    justify-content: center;
+    flex-flow: column;;
+}
+
+.open_menu {
+    visibility: visible;
+    pointer-events: visible;
+    opacity: 1;
+    height: 50px;
+    transition: height .5s;
+}
+
+.open_menu p {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.rotate_arrow {
+    transform: translateX(-50%) translateY(-50%) rotate(90deg)!important;
+    transition: .5s;
 }

@@ -82,7 +82,7 @@ const Item: NextPage<PropTypes> = ({ item }: PropTypes) => {
     const allergies: string[] = item.allergies;
 
     // State - size
-    const [size, setSize] = useState("")
+    const [size, setSize] = useState(sizes[0])
     const [message, setMessage] = useState("")
 
     return (
