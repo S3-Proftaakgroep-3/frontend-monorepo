@@ -102,11 +102,7 @@ const Item: NextPage<PropTypes> = ({ item }: PropTypes) => {
                 <CategorySelector label='Size'>
                     {
                         sizes.map((possibleSize: string, key: number) => {
-                            if (key == 0) {
-                                return <CategoryBtn key={key} label={possibleSize} active={size === possibleSize} onClick={() => setSize(possibleSize)}></CategoryBtn>
-                            } else {
-                                return <CategoryBtn key={key} label={possibleSize} active={size === possibleSize} onClick={() => setSize(possibleSize)}></CategoryBtn>
-                            }
+                            return <CategoryBtn key={key} label={possibleSize} active={size === possibleSize} onClick={() => setSize(possibleSize)}></CategoryBtn>
                         })
                     }
                 </CategorySelector>
