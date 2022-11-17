@@ -1,7 +1,7 @@
 ﻿import type {NextPage} from 'next'
 import * as React from "react";
 import styles from '../../styles/item.module.css'
-import {NewOrderMenu, OrderCard, TopNavigation} from 'ui';
+import {NewOrderMenu, OrderCard, TopMenuSecondary, TopNavigation} from 'ui';
 import {ICartItem} from "ui/Interfaces/ICartItem";
 import {useEffect, useState} from "react";
 import {IOrder} from "ui/Interfaces/IOrder";
@@ -10,7 +10,9 @@ import {IOrder} from "ui/Interfaces/IOrder";
 const Index: NextPage<null> = () => {
     const [order, setOrder] = useState<any[]>([])
     const [totalPrice, setTotalPrice] = useState(0);
-    
+    const tableId = sessionStorage.getItem("tableId");
+    const restaurantId = sessionStorage.getItem("restaurantId")
+
     useEffect(() => {
         setOrder(JSON.parse(localStorage.getItem("order")!))
     }, [])
@@ -29,7 +31,7 @@ const Index: NextPage<null> = () => {
         newOrder = {
             tableId: sessionStorage.getItem("tableId")!,
             restaurantId: sessionStorage.getItem("restaurantId")!,
-            productList: order,
+            products: order,
             orderStatus: "Received"
         }
         
@@ -51,7 +53,7 @@ const Index: NextPage<null> = () => {
     
     return (
         <div id={styles.page}>
-            <TopNavigation/>
+            <TopMenuSecondary restaurantId={restaurantId!} tableId={tableId!} label={"New order"}/>
             {
                 order.map((orderItem: ICartItem, key: number) => {
                     return <OrderCard key={key} item={orderItem}/>

@@ -3,6 +3,6 @@
 export interface IOrder {
     tableId: string,
     restaurantId: string,
-    productList: ICartItem[],
+    products: ICartItem[],
     orderStatus: "Received" | "Preparing" | "Done"
 }
