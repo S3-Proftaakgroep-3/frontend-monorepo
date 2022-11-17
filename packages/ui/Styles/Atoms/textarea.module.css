@@ -4,6 +4,7 @@
 }
 
 .textarea {
+    height: 100px;
     border: none;
     border-radius: var(--border-radius);
     width: 100%;
