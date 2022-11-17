@@ -27,7 +27,7 @@ export const FoodCard = ({ name, description, onClick, image }: PropTypes) => {
                         </svg>
                     </div>
                 </div>
-                <p className={fonts.m_card}>{description}</p>
+                <p className={classNames(fonts.m_card, styles.description)}>{description}</p>
             </div>
         </div>
     )
