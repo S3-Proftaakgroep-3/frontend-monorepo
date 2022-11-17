@@ -94,9 +94,9 @@ const Item: NextPage<PropTypes> = ({ item }: PropTypes) => {
                     alt={item.name}
                 />
             </div>
-            <p className={fonts.s_secondary}>{`€${price}`}</p>
             <p className={classNames(fonts.xl_primary, styles.title)}>{title}</p>
             <p className={classNames(fonts.m_secondary, styles.description)}>{description}</p>
+            <p className={classNames(styles.price)}>{`€${price}`}</p>
 
             <div className={styles.optionWrap}>
                 <CategorySelector label='Size'>
