@@ -1,20 +1,17 @@
-#orderContainer {
+.container{
     border-bottom: 2px solid var(--background-light);
-    padding: 10px 20px;
 }
 
-#orderCard {
+.orderTop {
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     grid-template-columns: 1fr 35px 40px;
     grid-template-rows: auto auto;
-
-}
-
-#title {
-    font-size: 18px;
-    font-weight: 600;
+    background: black;
+    color: white;
+    padding: 10px 20px;
 }
 
 #btn {
@@ -52,21 +49,20 @@
 
 .menu {
     visibility: hidden;
-    pointer-events: none;
     opacity: 0;
-    height: 0;
-    transition: height .5s, opacity .5s;
+    pointer-events: none;
     display: flex;
     justify-content: center;
-    flex-flow: column;;
+    flex-flow: column;
+    height: 0;
+    transition: height .5s;
 }
 
 .open_menu {
-    pointer-events: all;
-    visibility: visible;
     opacity: 1;
-    height: 50px;
-    transition: height .5s;
+    visibility: visible;
+    height: auto;
+    pointer-events: all;
 }
 
 .open_menu p {

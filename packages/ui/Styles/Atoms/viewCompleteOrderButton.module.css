@@ -1,0 +1,15 @@
+﻿.buttonBackground {
+    width: 3em;
+    height: 3em;
+    background-color: var(--background-light);
+    border: none;
+    border-radius: var(--border-radius);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.receipt {
+    fill: var(--foreground-dark);
+    transform: scale(.7);
+}

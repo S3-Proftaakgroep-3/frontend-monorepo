@@ -18,13 +18,11 @@ interface ContextTypes {
 }
 
 export async function getServerSideProps({ query }: ContextTypes) {
-
-    // Query
     const restaurantId = query.restaurant
 
     // Fetch
     const res = await fetch(`https://mdma-restaurant-service.herokuapp.com/api/restaurant/get?id=${restaurantId}`)
-    const data = await res.json()
+    const data = await res.json();
 
     return {
         props: {
