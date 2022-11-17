@@ -18,7 +18,7 @@ export const BottomMenu = ({ isBeverage, setIsBeverage, setCategory }: PropTypes
                     <IconBtn type="drinks" setCategory={setCategory} isBeverage={isBeverage} setIsBeverage={setIsBeverage}/>
                 </div>
                 <div id={styles.btnWrap}>
-                    <Button label="Go to order" style="primary"/>
+                    <Button onClick={() => {}} label="Go to order" style="primary"/>
                 </div>                
             </div>
         </div>
