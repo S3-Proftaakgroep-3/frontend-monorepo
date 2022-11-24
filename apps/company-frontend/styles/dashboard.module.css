@@ -1,0 +1,11 @@
+#cardsContainer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: min-content min-content min-content;
+    column-gap: 15px;
+    row-gap: 15px;
+    width: 100%;
+    min-height: 100vh;
+    padding: 10px;
+    background-color: #F9F9F9;
+}
