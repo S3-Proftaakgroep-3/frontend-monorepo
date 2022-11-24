@@ -3,7 +3,17 @@ import * as React from "react";
 import styles from '../../styles/item.module.css'
 import fonts from '../../styles/fonts.module.css'
 import classNames from 'classnames/dedupe'
-import {Allergies, Button, CategoryBtn, CategorySelector, IProduct, Sizes, Textarea, TopNavigation} from 'ui';
+import {
+    Allergies,
+    Button,
+    CategoryBtn,
+    CategorySelector,
+    IProduct,
+    Sizes,
+    Textarea,
+    TopMenuBackLogo,
+    TopNavigation
+} from 'ui';
 import { useState } from 'react';
 import { AllergieCard } from 'ui/Components/Atoms/allergieCard';
 import {ICartItem} from "ui/Interfaces/ICartItem";
@@ -95,7 +105,7 @@ const Item: NextPage<PropTypes> = ({ item }: PropTypes) => {
             <Toaster toastOptions={{
                 className: classNames(styles.toast, fonts.m_primary)
             }} />
-            <TopNavigation/>
+            <TopMenuBackLogo/>
             <div id={styles.imgWrap}>
                 <img
                     src={item.image} className={styles.img}
