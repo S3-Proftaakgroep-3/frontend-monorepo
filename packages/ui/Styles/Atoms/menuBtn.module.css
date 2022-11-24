@@ -1,8 +1,7 @@
 .container {
     --menu-width: 30px;
     --stripe-height: 2px;
-    
-    z-index: 9999999; 
+    z-index: 2; 
     position: relative;
     width: var(--menu-width);
     height: var(--menu-width);

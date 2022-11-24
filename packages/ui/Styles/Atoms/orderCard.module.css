@@ -1,6 +1,6 @@
 #orderContainer {
     border-bottom: 2px solid var(--background-light);
-    padding: 10px 20px;
+    padding: 10px 0;
 }
 
 #orderCard {

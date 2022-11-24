@@ -1,5 +1,5 @@
 .menu {
-    z-index: 999999;
+    z-index: 1;
     position: fixed;
     top: -100%;
     left: 0;

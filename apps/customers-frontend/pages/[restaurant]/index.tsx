@@ -57,7 +57,6 @@ const Index: NextPage<PropTypes> = ({ restaurant }: PropTypes) => {
     const router = useRouter()
 
     useEffect(() => {
-
         const filteredItem = allItems.filter((el: IProduct) => {
             if (inputValue === '') {
                 return allItems;

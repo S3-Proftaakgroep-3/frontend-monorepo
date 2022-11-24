@@ -36,18 +36,23 @@ const All: NextPage<PropTypes> = ({orders}: PropTypes) => {
     let totalPrice = 0;
 
     useEffect(() => {
-        orders.map((order: IOrder, key: number) => {
-            order.products.map((product: ICartItem, key: number) => {
-                totalPrice += (product.price * product.quantity);
+        if (orders.length > 0) {
+            orders.map((order: IOrder, key: number) => {
+                if (order.products != null) {
+                    order.products.map((product: ICartItem, key: number) => {
+                        totalPrice += (product.price * product.quantity);
+                    })
+                }
             })
-        })
-        setTotalPrice(totalPrice);
+            setTotalPrice(totalPrice);
+        }
     }, [])
 
     return (
         <div id={styles.page}>
-            <TopMenuSecondary restaurantId={""} tableId={""} label={"Your orders"}/>
+            <TopMenuSecondary allOrderHidden={true} label={"Your orders"}/>
             {
+                orders != null && orders.length > 0 &&
                 orders.map((order: IOrder, key: number) => {
                     return <SectionProductsPerOrder key={key} products={order.products} orderName={"Order 1"}/>
                 })

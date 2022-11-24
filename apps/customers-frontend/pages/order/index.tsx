@@ -5,24 +5,31 @@ import {NewOrderMenu, OrderCard, TopMenuSecondary, TopNavigation} from 'ui';
 import {ICartItem} from "ui/Interfaces/ICartItem";
 import {useEffect, useState} from "react";
 import {IOrder} from "ui/Interfaces/IOrder";
+import toast, {Toaster} from "react-hot-toast";
+import classNames from "classnames/dedupe";
+import {router} from "next/client";
 
 
 const Index: NextPage<null> = () => {
     const [order, setOrder] = useState<any[]>([])
     const [totalPrice, setTotalPrice] = useState(0);
-    const tableId = sessionStorage.getItem("tableId");
-    const restaurantId = sessionStorage.getItem("restaurantId")
+    const [tableId, setTableId] = useState("");
+    const [restaurantId, setRestaurantId] = useState("");
 
     useEffect(() => {
-        setOrder(JSON.parse(localStorage.getItem("order")!))
+        setOrder(JSON.parse(localStorage.getItem("order")!));
+        setTableId(sessionStorage.getItem("tableId")!);
+        setRestaurantId(sessionStorage.getItem("restaurantId")!);
     }, [])
     
     useEffect(() => {
-        let productPrice = 0;
-        for (let i = 0; i < order.length; i++) {
-            productPrice += (order[i].price * order[i].quantity);
+        if (order != null) {
+            let productPrice = 0;
+            for (let i = 0; i < order.length; i++) {
+                productPrice += (order[i].price * order[i].quantity);
+            }
+            setTotalPrice(productPrice);
         }
-        setTotalPrice(productPrice);
     }, [order])
     
     const createOrder = async () => {
@@ -35,11 +42,15 @@ const Index: NextPage<null> = () => {
             orderStatus: "Received"
         }
         
-        await postOrder(newOrder)
+        if (newOrder.products != null) {
+            await postOrder(newOrder)
+        } else {
+            notifyError("Nothing to order.");
+        }
     }
 
     const postOrder = async (order: IOrder) => {
-        await fetch(`https://mdma-order-service.herokuapp.com/api/order/create`, {
+        await fetch(`http://localhost:8080/api/order/create`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -48,13 +59,28 @@ const Index: NextPage<null> = () => {
             body: JSON.stringify(order)
         }).finally(() => {
             localStorage.removeItem("order")
+            notifySuccess();
+        }).catch(() => {
+            notifyError("Something went wrong.");
         });
+    }
+
+    const notifySuccess = () => {
+        toast.success(`Order successfully placed.`);
+    }
+
+    const notifyError = (message: string) => {
+        toast.error(`${message}`);
     }
     
     return (
         <div id={styles.page}>
-            <TopMenuSecondary restaurantId={restaurantId!} tableId={tableId!} label={"New order"}/>
+            <Toaster toastOptions={{
+                className: classNames(styles.toast)
+            }}/>
+            <TopMenuSecondary allOrderVisible={false} restaurantId={restaurantId!} tableId={tableId!} label={"New order"}/>
             {
+                order != null &&
                 order.map((orderItem: ICartItem, key: number) => {
                     return <OrderCard key={key} item={orderItem}/>
                 })
