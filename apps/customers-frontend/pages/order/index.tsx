@@ -75,17 +75,14 @@ const Index: NextPage<null> = () => {
     
     return (
         <div id={styles.page}>
-            <Toaster toastOptions={{
-                className: classNames(styles.toast)
-            }}/>
-            <TopMenuSecondary allOrderVisible={false} restaurantId={restaurantId!} tableId={tableId!} label={"New order"}/>
+            <TopMenuSecondary allOrderHidden={false} restaurantId={restaurantId!} tableId={tableId!} label={"New order"}/>
             {
                 order != null &&
                 order.map((orderItem: ICartItem, key: number) => {
                     return <OrderCard key={key} item={orderItem}/>
                 })
             }
-            <NewOrderMenu onClick={async () => {await createOrder()}} price={totalPrice}/>
+            <NewOrderMenu onClick={async () => {await createOrder()}} label={"Order"} price={totalPrice}/>
         </div>
     )
 }
