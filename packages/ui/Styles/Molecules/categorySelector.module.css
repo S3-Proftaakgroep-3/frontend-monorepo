@@ -3,10 +3,25 @@
 }
 
 .selectorContainer {
+    position: relative;
+    flex-wrap: nowrap;
     display: flex;
     overflow: auto;
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
+    border-right: 10px solid white;
+    z-index: 999;
+}
+
+.selectorContainer::after{
+    content: "";
+    display: block;
+    position: sticky;
+    right: 0;
+    width: 20%;
+    flex-shrink:0;
+    background-image: linear-gradient(to right, rgba(0,0,0,0), rgba(255,255,255,1));
+    padding-right: -10px;
 }
 
 .selectorContainer::-webkit-scrollbar {

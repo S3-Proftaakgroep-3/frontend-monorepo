@@ -32,10 +32,10 @@ interface PropTypes {
 
 const All: NextPage<PropTypes> = ({orders}: PropTypes) => {
     const [orderTotalPrice, setTotalPrice] = useState(0)
-
-    let totalPrice = 0;
-
+    
     useEffect(() => {
+        let totalPrice = 0;
+        
         if (orders.length > 0) {
             orders.map((order: IOrder, key: number) => {
                 if (order.products != null) {
@@ -54,10 +54,10 @@ const All: NextPage<PropTypes> = ({orders}: PropTypes) => {
             {
                 orders != null && orders.length > 0 &&
                 orders.map((order: IOrder, key: number) => {
-                    return <SectionProductsPerOrder key={key} products={order.products} orderName={"Order 1"}/>
+                    return <SectionProductsPerOrder key={key} products={order.products} orderName={`Order ${key + 1}`}/>
                 })
             }
-            <NewOrderMenu onClick={() => {}} price={orderTotalPrice}/>
+            <NewOrderMenu onClick={() => {}} label={"Request bill"} price={orderTotalPrice}/>
         </div>
     )
 }

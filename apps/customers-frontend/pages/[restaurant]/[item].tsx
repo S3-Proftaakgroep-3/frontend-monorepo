@@ -9,15 +9,14 @@ import {
     CategoryBtn,
     CategorySelector,
     IProduct,
-    Sizes,
     Textarea,
-    TopMenuBackLogo,
-    TopNavigation
+    TopMenuBackLogo
 } from 'ui';
 import { useState } from 'react';
 import { AllergieCard } from 'ui/Components/Atoms/allergieCard';
 import {ICartItem} from "ui/Interfaces/ICartItem";
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
+import {useRouter} from "next/router";
 
 interface ContextTypes {
     query: any
@@ -44,6 +43,7 @@ interface PropTypes {
 }
 
 const Item: NextPage<PropTypes> = ({ item }: PropTypes) => {
+    const router = useRouter();
     let order = [] as ICartItem[]
 
     function addToCart() {
@@ -81,6 +81,7 @@ const Item: NextPage<PropTypes> = ({ item }: PropTypes) => {
         }
         
         localStorage.setItem("order", JSON.stringify(order));
+        router.back();
         notify(cartItem.name);
     }
 
@@ -102,9 +103,6 @@ const Item: NextPage<PropTypes> = ({ item }: PropTypes) => {
 
     return (
         <div id={styles.page}>
-            <Toaster toastOptions={{
-                className: classNames(styles.toast, fonts.m_primary)
-            }} />
             <TopMenuBackLogo/>
             <div id={styles.imgWrap}>
                 <img
@@ -114,7 +112,7 @@ const Item: NextPage<PropTypes> = ({ item }: PropTypes) => {
             </div>
             <p className={classNames(fonts.xl_primary, styles.title)}>{title}</p>
             <p className={classNames(fonts.m_secondary, styles.description)}>{description}</p>
-            <p className={classNames(styles.price)}>{`€${price}`}</p>
+            <p className={classNames(styles.price)}>{`€${price.toFixed(2)}`}</p>
 
             <div className={styles.optionWrap}>
                 <CategorySelector label='Size'>
