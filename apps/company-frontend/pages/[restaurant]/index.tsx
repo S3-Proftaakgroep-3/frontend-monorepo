@@ -38,7 +38,6 @@ const Home: NextPage<PropTypes> = ( {restaurant}: PropTypes ) => {
         const orders = await fetch(`https://mdma-order-service.herokuapp.com/api/order/${restaurantId}/all`)
         const data = await orders.json()
         setOrder(data)
-        console.log(order)
     }
 
     useEffect(() => {
