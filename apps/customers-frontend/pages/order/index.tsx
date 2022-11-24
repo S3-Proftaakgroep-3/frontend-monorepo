@@ -29,7 +29,7 @@ const Index: NextPage<null> = () => {
         newOrder = {
             tableId: sessionStorage.getItem("tableId")!,
             restaurantId: sessionStorage.getItem("restaurantId")!,
-            productList: order,
+            products: order,
             orderStatus: "Received"
         }
         

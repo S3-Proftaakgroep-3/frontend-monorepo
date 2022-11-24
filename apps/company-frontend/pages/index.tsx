@@ -36,6 +36,10 @@ const Home: NextPage = () => {
         console.log(order)
     }
 
+    useEffect(() => {
+        getOrder()
+    }, [])
+
   return (
         <div id={styles.page}>
             {
@@ -43,7 +47,6 @@ const Home: NextPage = () => {
                     return <CompanyOrderCard key={key} order={order}/>
                 })
             }
-            <input onClick={getOrder}/>
         </div>
     )
 }
