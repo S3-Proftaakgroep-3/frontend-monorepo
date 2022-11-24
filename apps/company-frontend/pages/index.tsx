@@ -1,8 +1,8 @@
 import type { NextPage } from 'next'
 import styles from '../styles/Home.module.css'
-import {IRestaurant, OrderCard,} from 'ui'
+import {CompanyOrderCard} from "ui/Components/Atoms/companyOrderCard";
 import * as React from "react";
-import {ICartItem} from "ui/Interfaces/ICartItem";
+import {IOrder} from "ui/Interfaces/IOrder";
 import {useEffect, useState} from "react";
 
 interface ContextTypes {
@@ -15,12 +15,12 @@ export async function getServerSideProps({ query }: ContextTypes) {
     const restaurantId = query.restaurant
 
     // Fetch
-    const res = await fetch(`https://mdma-order-service.herokuapp.com/api/order/${restaurantId}/all`)
+    const res = await fetch(`https://mdma-order-service.herokuapp.com/api/order/634d19164de0297c8b68ba66/all`)
     const data = await res.json()
 
     return {
         props: {
-            orders: data as ICartItem
+            orders: data as IOrder
         }
     }
 }
@@ -30,7 +30,7 @@ const Home: NextPage = () => {
     const [order, setOrder] = useState<any[]>([])
 
     const getOrder = async() => {
-        const orders = await fetch('https://mdma-order-service.herokuapp.com/api/order/all')
+        const orders = await fetch('https://mdma-order-service.herokuapp.com/api/order/634d19164de0297c8b68ba66/all')
         const data = await orders.json()
         setOrder(data)
         console.log(order)
@@ -39,10 +39,11 @@ const Home: NextPage = () => {
   return (
         <div id={styles.page}>
             {
-                order.map((orderItem: ICartItem, key: number) => {
-                    return <OrderCard key={key} item={orderItem}/>
+                order.map((order: IOrder, key: number) => {
+                    return <CompanyOrderCard key={key} order={order}/>
                 })
             }
+            <input onClick={getOrder}/>
         </div>
     )
 }
