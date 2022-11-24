@@ -13,13 +13,13 @@ import {router} from "next/client";
 const Index: NextPage<null> = () => {
     const [order, setOrder] = useState<any[]>([])
     const [totalPrice, setTotalPrice] = useState(0);
-    let tableId = "";
-    let restaurantId = "";
+    const [tableId, setTableId] = useState("");
+    const [restaurantId, setRestaurantId] = useState("");
 
     useEffect(() => {
         setOrder(JSON.parse(localStorage.getItem("order")!));
-        tableId = sessionStorage.getItem("tableId")!;
-        restaurantId = sessionStorage.getItem("restaurantId")!;
+        setTableId(sessionStorage.getItem("tableId")!);
+        setRestaurantId(sessionStorage.getItem("restaurantId")!);
     }, [])
     
     useEffect(() => {
