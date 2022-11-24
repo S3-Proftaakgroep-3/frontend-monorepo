@@ -1,0 +1,97 @@
+#row {
+    display: grid;
+    grid-template-columns: 10px 1fr 25px;
+    grid-template-rows: 25px auto;
+    row-gap: 5px;
+    padding: 20px;
+}
+
+#row ~ #row {
+    border-top: 1px solid #ECECEC;
+}
+
+/* Name container */
+
+.nameSizeContainer {
+    grid-area: 1 / 1 / 1 / 3;
+}
+
+#name, #size {
+    display: inline-block;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.nameSizeContainer__state_finished #name, .nameSizeContainer__state_finished #size {
+    font-size: 16px;
+    color: rgba(0, 0, 0, .35);
+}
+
+#nameBlock {
+    vertical-align: middle;
+    display: inline-block;
+    margin: 0 10px;
+    border-radius: 1px;
+    width: 3px;
+    height: 3px;
+    background-color: black;
+}
+
+.nameSizeContainer #nameBlock {
+    background-color: rgba(0, 0, 0, .35);
+}
+
+/* Button container */
+
+#btnContainer {
+    grid-area: 1 / 3;
+}
+
+.btn {
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 5px;
+}
+
+.btn:hover {
+    cursor: pointer;
+}
+
+#readyBtn {
+    background-color: #27F394;
+}
+
+#infoContainer {
+    grid-area: 2 / 2 / 2 / 4;
+}
+
+#extrasContainer {
+    font-size: 14px;
+    font-weight: 600;
+    color: #FF006F;
+}
+
+#extraWrap {
+    display: grid;
+    grid-template-columns: 18px auto;
+}
+
+#extraWrap p {
+    display: inline-block;
+}
+
+#messageWrap svg {
+    margin-right: 8px;
+    display: inline-block;
+}
+
+#message {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #2200FF;
+}

@@ -1,0 +1,26 @@
+#card {
+    width: 100%;
+    border-radius: 5px;
+    background-color: white;
+    overflow: hidden;
+}
+
+#cardHeader {
+    height: 42px;
+    padding: 12px 20px;
+    font-size: 14px;
+    color: white;
+    background-color: black;
+}
+
+#tableId {
+    display: inline-block;
+    font-weight: 600;
+}
+
+#timeAgo {
+    margin-left: 10px;
+    display: inline-block;
+    font-weight: 400;
+    color: rgba(255, 255, 255, .5);
+}
