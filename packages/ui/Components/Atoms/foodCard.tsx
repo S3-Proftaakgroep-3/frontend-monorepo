@@ -8,11 +8,15 @@ interface PropTypes {
     image: string,
     description: string,
     onClick: () => void
+    price: number
 }
 
-export const FoodCard = ({ name, description, onClick, image }: PropTypes) => {
+export const FoodCard = ({ name, description, onClick, image, price }: PropTypes) => {
     return (
         <div className={styles.card} onClick={onClick}>
+            <div className={styles.priceCard}>
+                <p className={classNames(fonts.s_primary)}>€{price.toFixed(2)}</p>
+            </div>
             <img className={styles.img} src={image} alt=""/>
             <div className={styles.gradient}/>
             <div className={styles.textContainer}>

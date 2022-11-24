@@ -25,7 +25,21 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    padding: 0 8% 15px;
+    padding: 0 15px 15px;
+}
+
+.priceCard {
+    top: 15px;
+    right: 15px;
+    position: absolute;
+    padding: .2em;
+    background-color: rgba(0,0,0,0.8);
+    border-radius: var(--border-radius);
+}
+
+.priceCard p {
+    color: white;
+    font-weight: 500;
 }
 
 .gradient {
