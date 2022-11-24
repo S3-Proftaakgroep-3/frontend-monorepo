@@ -1,54 +1,25 @@
-import type { NextPage } from 'next'
-import styles from '../styles/Home.module.css'
-import {CompanyOrderCard} from "ui/Components/Atoms/companyOrderCard";
+import {NextPage} from "next";
 import * as React from "react";
-import {IOrder} from "ui/Interfaces/IOrder";
-import {useEffect, useState} from "react";
+import {useRouter} from "next/router";
+import {useEffect} from "react";
 
-interface ContextTypes {
-    query: any
-}
+const Index: NextPage = () => {
+    const router = useRouter();
+    const {restaurantId} = router.query;
 
-export async function getServerSideProps({ query }: ContextTypes) {
-
-    // Query
-    const restaurantId = query.restaurant
-
-    // Fetch
-    const res = await fetch(`https://mdma-order-service.herokuapp.com/api/order/634d19164de0297c8b68ba66/all`)
-    const data = await res.json()
-
-    return {
-        props: {
-            orders: data as IOrder
-        }
+    const addItemsToSessionStorage = () => {
+        sessionStorage.setItem("restaurantId", restaurantId as string)
     }
-}
-
-const Home: NextPage = () => {
-
-    const [order, setOrder] = useState<any[]>([])
-
-    const getOrder = async() => {
-        const orders = await fetch('https://mdma-order-service.herokuapp.com/api/order/634d19164de0297c8b68ba66/all')
-        const data = await orders.json()
-        setOrder(data)
-        console.log(order)
-    }
-
     useEffect(() => {
-        getOrder()
-    }, [])
+        if (!router.isReady) return;
+        addItemsToSessionStorage()
+        router.push('/' + restaurantId)
+    })
 
-  return (
-        <div id={styles.page}>
-            {
-                order.map((order: IOrder, key: number) => {
-                    return <CompanyOrderCard key={key} order={order}/>
-                })
-            }
+    return (
+        <div>
+
         </div>
     )
 }
-
-export default Home
+export default Index
