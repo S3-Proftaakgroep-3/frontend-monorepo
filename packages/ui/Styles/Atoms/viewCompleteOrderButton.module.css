@@ -10,6 +10,11 @@
     cursor: pointer;
 }
 
+.buttonVisibility {
+    visibility: hidden;
+    opacity: 0;
+}
+
 .receipt {
     fill: var(--foreground-dark);
     transform: scale(.7);

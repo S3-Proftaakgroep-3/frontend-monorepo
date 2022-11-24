@@ -78,7 +78,7 @@ const Index: NextPage<null> = () => {
             <Toaster toastOptions={{
                 className: classNames(styles.toast)
             }}/>
-            <TopMenuSecondary restaurantId={restaurantId!} tableId={tableId!} label={"New order"}/>
+            <TopMenuSecondary allOrderVisible={false} restaurantId={restaurantId!} tableId={tableId!} label={"New order"}/>
             {
                 order != null &&
                 order.map((orderItem: ICartItem, key: number) => {

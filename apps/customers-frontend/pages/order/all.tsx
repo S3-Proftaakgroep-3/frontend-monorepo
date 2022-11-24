@@ -50,7 +50,7 @@ const All: NextPage<PropTypes> = ({orders}: PropTypes) => {
 
     return (
         <div id={styles.page}>
-            <TopMenuSecondary restaurantId={""} tableId={""} label={"Your orders"}/>
+            <TopMenuSecondary allOrderHidden={true} label={"Your orders"}/>
             {
                 orders != null && orders.length > 0 &&
                 orders.map((order: IOrder, key: number) => {
