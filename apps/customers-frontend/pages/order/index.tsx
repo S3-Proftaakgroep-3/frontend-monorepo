@@ -21,11 +21,13 @@ const Index: NextPage<null> = () => {
     }, [])
     
     useEffect(() => {
-        let productPrice = 0;
-        for (let i = 0; i < order.length; i++) {
-            productPrice += (order[i].price * order[i].quantity);
+        if (order != null) {
+            let productPrice = 0;
+            for (let i = 0; i < order.length; i++) {
+                productPrice += (order[i].price * order[i].quantity);
+            }
+            setTotalPrice(productPrice);
         }
-        setTotalPrice(productPrice);
     }, [order])
     
     const createOrder = async () => {
