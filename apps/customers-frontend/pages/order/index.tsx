@@ -5,6 +5,9 @@ import {NewOrderMenu, OrderCard, TopMenuSecondary, TopNavigation} from 'ui';
 import {ICartItem} from "ui/Interfaces/ICartItem";
 import {useEffect, useState} from "react";
 import {IOrder} from "ui/Interfaces/IOrder";
+import toast, {Toaster} from "react-hot-toast";
+import classNames from "classnames/dedupe";
+import {router} from "next/client";
 
 
 const Index: NextPage<null> = () => {
@@ -35,11 +38,16 @@ const Index: NextPage<null> = () => {
             orderStatus: "Received"
         }
         
-        await postOrder(newOrder)
+        if (newOrder.products != null) {
+            await postOrder(newOrder)
+        } else {
+            notifyError("Nothing to order.");
+        }
+
     }
 
     const postOrder = async (order: IOrder) => {
-        await fetch(`https://mdma-order-service.herokuapp.com/api/order/create`, {
+        await fetch(`http://localhost:8080/api/order/create`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -48,13 +56,28 @@ const Index: NextPage<null> = () => {
             body: JSON.stringify(order)
         }).finally(() => {
             localStorage.removeItem("order")
+            notifySuccess();
+        }).catch(() => {
+            notifyError("Something went wrong.");
         });
+    }
+
+    const notifySuccess = () => {
+        toast.success(`Order successfully placed.`);
+    }
+
+    const notifyError = (message: string) => {
+        toast.error(`${message}`);
     }
     
     return (
         <div id={styles.page}>
+            <Toaster toastOptions={{
+                className: classNames(styles.toast)
+            }}/>
             <TopMenuSecondary restaurantId={restaurantId!} tableId={tableId!} label={"New order"}/>
             {
+                order != null &&
                 order.map((orderItem: ICartItem, key: number) => {
                     return <OrderCard key={key} item={orderItem}/>
                 })

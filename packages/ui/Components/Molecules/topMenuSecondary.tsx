@@ -2,7 +2,6 @@ import styles from '../../Styles/Molecules/topMenuSecondary.module.css'
 import { OrderBackButton } from '../Atoms'
 import {ViewCompleteOrderButton} from "../Atoms/Buttons/viewCompleteOrderButton";
 import {useRouter} from "next/router";
-import {useEffect, useState} from "react";
 
 interface PropTypes {
     label: string,

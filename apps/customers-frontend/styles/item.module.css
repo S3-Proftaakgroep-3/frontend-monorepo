@@ -11,6 +11,12 @@
     overflow: hidden;
 }
 
+.toast {
+    z-index: 3;
+    color: black!important;
+    font-weight: bold;
+}
+
 .title {
    margin-bottom: 5px; 
 }
