@@ -6,72 +6,11 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
+    border-radius: var(--border-radius);
     align-items: center;
     grid-template-columns: 1fr 35px 40px;
     grid-template-rows: auto auto;
-    background: black;
-    color: white;
+    background: var(--background-light);
     padding: 10px 20px;
-}
-
-#btn {
-    position: relative;
-    width: 40px;
-    height: 40px;
-    border-radius: var(--border-radius);
-    background-color: var(--background-light);
-}
-
-#btn svg {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transition: .5s;
-    transform: translateX(-50%) translateY(-50%) rotate(-90deg);
-    opacity: .35;
-}
-
-#btn:hover {
-    background-color: var(--background-light-hover);
-    cursor: pointer;
-}
-
-#btn:hover svg {
-    opacity: 1;
-    cursor: pointer;
-}
-
-.orderMenu{
-    position: fixed;
-    left: 0;
-    bottom: 0;
-}
-
-.menu {
-    visibility: hidden;
-    opacity: 0;
-    pointer-events: none;
-    display: flex;
-    justify-content: center;
-    flex-flow: column;
-    height: 0;
-    transition: height .5s;
-}
-
-.open_menu {
-    opacity: 1;
-    visibility: visible;
-    height: auto;
-    pointer-events: all;
-}
-
-.open_menu p {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.rotate_arrow {
-    transform: translateX(-50%) translateY(-50%) rotate(90deg)!important;
-    transition: .5s;
+    font-weight: 600;
 }
