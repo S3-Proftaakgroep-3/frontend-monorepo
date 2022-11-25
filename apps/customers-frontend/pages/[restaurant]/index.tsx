@@ -7,7 +7,7 @@ import {
     SearchBar,
     BottomMenu,
     TopNavigation,
-    ICategory, IProduct, IRestaurant
+    ICategory, IProduct, IRestaurant, CompactFoodCard
 } from 'ui'
 import { useEffect, useState } from 'react';
 import {FoodCard} from "ui/Components/Atoms/foodCard";
@@ -53,6 +53,9 @@ const Index: NextPage<PropTypes> = ({ restaurant }: PropTypes) => {
     // State - searchbar text
     const [inputValue, setInputValue] = useState("");
     
+    //State - Compact card or big card
+    const [compactCard, setCompactCard] = useState(false);
+    
     // Router
     const router = useRouter()
 
@@ -79,49 +82,51 @@ const Index: NextPage<PropTypes> = ({ restaurant }: PropTypes) => {
     return (
         <div className={styles.page}>
             <TopNavigation/>
-
-            <SearchBar onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setInputValue(e.target.value);
-            }}/>
+            
+            <SearchBar onChange={(e: React.ChangeEvent<HTMLInputElement>) => {setInputValue(e.target.value);}}/>
             
             {/* Category selector */}
             <CategorySelector label='Categorieën'>
                 <CategoryBtn label="Alles" active={category === "Alles"} onClick={() => setCategory("Alles")}/>
                 {
                     categories?.map((categorie: ICategory, key: number) => {
-
-                        // Beverage categories
                         if(isBeverage && categorie.beverage){
                             return <CategoryBtn label={categorie.category} active={category === categorie.category} onClick={() => setCategory(categorie.category)} key={key}/>
                         } else if (!isBeverage && !categorie.beverage){ // Food categories
                             return <CategoryBtn label={categorie.category} active={category === categorie.category} onClick={() => setCategory(categorie.category)} key={key}/>
                         }
-                        
                     })
                 }
             </CategorySelector>
-
-            {/* Food cards */}
+            
             <div id={styles.foodCardContainer}>
-                {
-                    category === "Alles"
-                    ?   items?.map((item: IProduct, index: number) => {
-
-                            // Is beverage
-                            if(isBeverage && item.isBeverage) {
-                                return <FoodCard name={item.name} price={item.price} image={item.image} description={item.description} key={index} onClick={() => router.push(`/${restaurantId}/${item.id}`)}/>
-                            } else if (!isBeverage && !item.isBeverage) { // Is food
-                                return <FoodCard name={item.name} price={item.price} image={item.image} description={item.description} key={index} onClick={() => router.push(`/${restaurantId}/${item.id}`)}/>
+            {
+                category === "Alles"
+                ?   items?.map((item: IProduct, index: number) => {
+                        if(isBeverage && item.isBeverage) {
+                            if (compactCard) {
+                                return <CompactFoodCard item={item} key={index} onClick={() => router.push(`/${restaurantId}/${item.id}`)}/>
+                            } else {
+                                return <FoodCard item={item} key={index} onClick={() => router.push(`/${restaurantId}/${item.id}`)}/>
                             }
-                            
-                        })
-
-                    :   items?.map((item: IProduct, index: number) => {
-                            if(item.category === category){
-                                return <FoodCard name={item.name} price={item.price} image={item.image} description={item.description} key={index} onClick={() => router.push(`/${restaurantId}/${item.id}`)}/>
+                        } else if (!isBeverage && !item.isBeverage) {
+                            if (compactCard) {
+                                return <CompactFoodCard item={item} key={index} onClick={() => router.push(`/${restaurantId}/${item.id}`)}/>
+                            } else {
+                                return <FoodCard item={item} key={index} onClick={() => router.push(`/${restaurantId}/${item.id}`)}/>
                             }
-                        })
-                }
+                        }
+                    })
+                :   items?.map((item: IProduct, index: number) => {
+                        if(item.category === category){
+                            if (compactCard) {
+                                return <CompactFoodCard item={item} key={index} onClick={() => router.push(`/${restaurantId}/${item.id}`)}/>
+                            } else {
+                                return <FoodCard item={item} key={index} onClick={() => router.push(`/${restaurantId}/${item.id}`)}/>
+                            }
+                        }
+                    })
+            }
             </div>
             <BottomMenu setCategory={setCategory} isBeverage={isBeverage} setIsBeverage={setIsBeverage}/>
         </div>

@@ -10,7 +10,6 @@
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
     border-right: 10px solid white;
-    z-index: 999;
 }
 
 .selectorContainer::after{

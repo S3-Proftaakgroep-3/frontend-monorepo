@@ -2,26 +2,24 @@ import * as React from "react";
 import styles from '../../Styles/Atoms/foodCard.module.css'
 import fonts from '../../Styles/Utils/fonts.module.css'
 import classNames from "classnames/dedupe";
+import {IProduct} from "../../Interfaces";
 
 interface PropTypes {
-    name: string,
-    image: string,
-    description: string,
+    item: IProduct
     onClick: () => void
-    price: number
 }
 
-export const FoodCard = ({ name, description, onClick, image, price }: PropTypes) => {
+export const FoodCard = ({ item, onClick }: PropTypes) => {
     return (
         <div className={styles.card} onClick={onClick}>
             <div className={styles.priceCard}>
-                <p className={classNames(fonts.s_primary)}>€{price.toFixed(2)}</p>
+                <p className={classNames(fonts.s_primary)}>€{item.price.toFixed(2)}</p>
             </div>
-            <img className={styles.img} src={image} alt=""/>
+            <img className={styles.img} src={item.image} alt=""/>
             <div className={styles.gradient}/>
             <div className={styles.textContainer}>
                 <div className={styles.titleContainer}>
-                    <p className={fonts.xl_card}>{name}</p>
+                    <p className={fonts.xl_card}>{item.name}</p>
                     <div className={styles.svgWrap}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="13.594" height="13.262" viewBox="0 0 13.594 13.262">
                             <g id="Group_130" data-name="Group 130" transform="translate(-209.154 -539.125)">
@@ -31,7 +29,7 @@ export const FoodCard = ({ name, description, onClick, image, price }: PropTypes
                         </svg>
                     </div>
                 </div>
-                <p className={classNames(fonts.m_card, styles.description)}>{description}</p>
+                <p className={classNames(fonts.m_card, styles.description)}>{item.description}</p>
             </div>
         </div>
     )
