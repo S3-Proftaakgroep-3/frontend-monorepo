@@ -12,7 +12,6 @@ export const CompactFoodCard = (
     item: IProduct
     onClick: React.MouseEventHandler;
 }) => {
-    console.log(item)
     return (
         <div className={styles.card} onClick={onClick}>
             <img className={styles.img} src={item.image} alt=""/>

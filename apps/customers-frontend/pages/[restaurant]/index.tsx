@@ -12,6 +12,7 @@ import {
 import { useEffect, useState } from 'react';
 import {FoodCard} from "ui/Components/Atoms/foodCard";
 import { useRouter } from 'next/router';
+import {useReadLocalStorage} from "usehooks-ts";
 
 interface ContextTypes {
     query: any
@@ -40,6 +41,8 @@ const Index: NextPage<PropTypes> = ({ restaurant }: PropTypes) => {
     const allItems = restaurant.menu?.products;
     const [items, setItems] = useState(restaurant.menu?.products)
     const categories: ICategory[] = restaurant.categories
+    
+    const menuView = useReadLocalStorage("menuView");
 
     // State - Active category
     const [category, setCategory] = useState("Alles")
@@ -52,9 +55,6 @@ const Index: NextPage<PropTypes> = ({ restaurant }: PropTypes) => {
 
     // State - searchbar text
     const [inputValue, setInputValue] = useState("");
-    
-    //State - Compact card or big card
-    const [compactCard, setCompactCard] = useState(false);
     
     // Router
     const router = useRouter()
@@ -104,13 +104,13 @@ const Index: NextPage<PropTypes> = ({ restaurant }: PropTypes) => {
                 category === "Alles"
                 ?   items?.map((item: IProduct, index: number) => {
                         if(isBeverage && item.isBeverage) {
-                            if (compactCard) {
+                            if (menuView) {
                                 return <CompactFoodCard item={item} key={index} onClick={() => router.push(`/${restaurantId}/${item.id}`)}/>
                             } else {
                                 return <FoodCard item={item} key={index} onClick={() => router.push(`/${restaurantId}/${item.id}`)}/>
                             }
                         } else if (!isBeverage && !item.isBeverage) {
-                            if (compactCard) {
+                            if (menuView) {
                                 return <CompactFoodCard item={item} key={index} onClick={() => router.push(`/${restaurantId}/${item.id}`)}/>
                             } else {
                                 return <FoodCard item={item} key={index} onClick={() => router.push(`/${restaurantId}/${item.id}`)}/>
@@ -119,7 +119,7 @@ const Index: NextPage<PropTypes> = ({ restaurant }: PropTypes) => {
                     })
                 :   items?.map((item: IProduct, index: number) => {
                         if(item.category === category){
-                            if (compactCard) {
+                            if (menuView) {
                                 return <CompactFoodCard item={item} key={index} onClick={() => router.push(`/${restaurantId}/${item.id}`)}/>
                             } else {
                                 return <FoodCard item={item} key={index} onClick={() => router.push(`/${restaurantId}/${item.id}`)}/>
