@@ -1,6 +1,6 @@
 ﻿.buttonBackground {
-    width: 3em;
-    height: 3em;
+    width: 40px;
+    height: 40px;
     background-color: var(--background-light);
     border: none;
     border-radius: var(--border-radius);
@@ -17,5 +17,4 @@
 
 .receipt {
     fill: var(--foreground-dark);
-    transform: scale(.7);
 }
