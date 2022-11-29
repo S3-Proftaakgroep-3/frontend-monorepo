@@ -15,3 +15,23 @@
     width: 60px;
     height: 60px;
 }
+
+.viewBackground {
+    width: 40px;
+    height: 40px;
+    background-color: var(--background-light);
+    border: none;
+    border-radius: var(--border-radius);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.viewHidden {
+    display: none;
+}
+
+.svg {
+    fill: var(--foreground-dark);
+}
