@@ -24,7 +24,7 @@ export async function getServerSideProps({ query }: ContextTypes) {
     // Fetch
     const res = await fetch(`https://mdma-restaurant-service.herokuapp.com/api/restaurant/get?id=${restaurantId}`)
     const data = await res.json();
-
+    
     return {
         props: {
             restaurant: data as IRestaurant
@@ -37,6 +37,9 @@ interface PropTypes {
 }
 
 const Index: NextPage<PropTypes> = ({ restaurant }: PropTypes) => {
+    // Router
+    const router = useRouter()
+    
     // Restaurant data
     const allItems = restaurant.menu?.products;
     const [items, setItems] = useState(restaurant.menu?.products)
@@ -55,20 +58,20 @@ const Index: NextPage<PropTypes> = ({ restaurant }: PropTypes) => {
 
     // State - searchbar text
     const [inputValue, setInputValue] = useState("");
-    
-    // Router
-    const router = useRouter()
 
     useEffect(() => {
-        const filteredItem = allItems.filter((el: IProduct) => {
-            if (inputValue === '') {
-                return allItems;
-            }
-            else {
-                return el.name.toLowerCase().includes(inputValue.toLowerCase())
-            }
-        })
-        setItems(filteredItem);
+        if (allItems != null) {
+            const filteredItem = allItems.filter((el: IProduct) => {
+                if (inputValue === '') {
+                    return allItems;
+                } else {
+                    return el.name.toLowerCase().includes(inputValue.toLowerCase())
+                }
+            })
+            setItems(filteredItem);
+        } else {
+            router.push("/error")
+        }
     }, [inputValue]);
 
     useEffect(() => {

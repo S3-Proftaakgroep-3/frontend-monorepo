@@ -6,7 +6,7 @@
     width: 100%;
 }
 
-#menuBtnWrap {
+.menuBtnWrap {
     grid-area: 1 / 1;
 }
 
