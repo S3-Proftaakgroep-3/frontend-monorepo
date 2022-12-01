@@ -1,5 +1,5 @@
 import { NextPage } from "next"
-import styles from '../styles/dashboard.module.css'
+import styles from '../../styles/dashboard.module.css'
 import { NavBar, FullOrderCard } from "ui/Components"
 import {ICartItem} from "ui/Interfaces/ICartItem";
 
@@ -8,10 +8,13 @@ const fakeOrder = {
     time: '5min ago'
 }
 
-const Dashboard: NextPage = () => {
+const Received: NextPage = () => {
     return (
         <>
             <main id={styles.cardsContainer}>
+                <FullOrderCard fakeOrder={fakeOrder}/>
+                <FullOrderCard fakeOrder={fakeOrder}/>
+                <FullOrderCard fakeOrder={fakeOrder}/>
                 <FullOrderCard fakeOrder={fakeOrder}/>
             </main>
             <NavBar/>
@@ -19,4 +22,4 @@ const Dashboard: NextPage = () => {
     )
 }
 
-export default Dashboard
+export default Received

@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import { useState } from 'react'
+import { usePathName } from '../../../hooks/usePathName';
 import styles from '../../../Styles/Company/Atoms/orderCardRow.module.css'
 
 export const OrderCardRow = ({ dish }: {
@@ -29,6 +30,9 @@ export const OrderCardRow = ({ dish }: {
         setIsExpanded(isExpanded => !isExpanded)
     }
 
+    // Pathname
+    const pathName = usePathName(2)
+
     return (
         <div id={styles.row}>
 
@@ -44,20 +48,21 @@ export const OrderCardRow = ({ dish }: {
 
             {/* Button */}
             <div id={styles.btnContainer}>
-                {
-                    isFinished
+                {   
+                    pathName === 'progress' &&
+                    (isFinished
                     ? <button onClick={handleExpandBtn} id={styles.expandBtn} className={styles.btn}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="9.208" height="5.265" viewBox="0 0 9.208 5.265"><path d="M10.793,14.924l3.482-3.484a.655.655,0,0,1,.929,0,.664.664,0,0,1,0,.932L11.259,16.32a.657.657,0,0,1-.907.019L6.379,12.375a.658.658,0,1,1,.929-.932Z" transform="translate(-6.188 -11.246)"/></svg>
                     </button>
                     : <button onClick={handleFinishedBtn} id={styles.readyBtn} className={styles.btn}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="13.564" height="10.336" viewBox="0 0 13.564 10.336"><path d="M4.221,13.663.182,9.624a.621.621,0,0,1,0-.879l.879-.879a.621.621,0,0,1,.879,0L4.66,10.587l5.828-5.828a.621.621,0,0,1,.879,0l.879.879a.621.621,0,0,1,0,.879L5.1,13.663A.621.621,0,0,1,4.221,13.663Z" transform="translate(0.568 -4.077)" stroke="#27f394" strokeWidth={1}/></svg>
-                    </button>
+                    </button>)
                 }
             </div>
 
             {/* Info */}
             {
-                (!isFinished || isExpanded) &&
+                (!isFinished || isExpanded) && pathName !== 'received' &&
                 <div id={styles.infoContainer}>
 
                     {/* Extras */}

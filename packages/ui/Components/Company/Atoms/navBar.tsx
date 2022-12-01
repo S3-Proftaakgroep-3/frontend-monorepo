@@ -1,8 +1,37 @@
 import classNames from 'classnames/dedupe'
 import { useEffect, useState } from 'react'
 import styles from '../../../Styles/Company/Atoms/navBar.module.css'
+import { useRouter } from 'next/router'
+import Link from 'next/link'
 
 export const NavBar = () => {
+
+    // Router
+    const router = useRouter()
+
+    // State - pathname
+    const [isInProgress, setIsInProgress] = useState<boolean>(false)
+    const [isReady, setIsReady] = useState<boolean>(false)
+    const [isReceived, setIsReceived] = useState<boolean>(false)
+
+    useEffect(() => {
+
+        // If router is ready
+        if (router.isReady) {
+
+            // Pathname
+            const pathName = router.pathname.split('/')[2]
+
+            // Set is in progress
+            setIsInProgress(pathName === 'progress')
+
+            // Set is ready
+            setIsReady(pathName === 'ready')
+
+            // Set is received
+            setIsReceived(pathName === 'received')
+        }
+    }, [router.isReady])
 
     // State - current time
     const [time, setTime] = useState<string>('00:00')
@@ -12,7 +41,17 @@ export const NavBar = () => {
         const date = new Date();
         const HH = date.getHours();
         const MM = date.getMinutes();
-        const time = String(`${HH}:${MM}`)
+
+        // If minutes is a single diggit, append 0
+        let time: string
+
+        if (MM < 10) {
+            time = `${HH}:0${MM}`
+        } else {
+            time = `${HH}:${MM}`
+        }
+
+        
         return time
     }
 
@@ -35,9 +74,16 @@ export const NavBar = () => {
                 <ul id={styles.ul}>
                     <li className={ classNames(
                         styles.link,
-                        styles.link__state_active
-                    )}>In Progress</li>
-                    <li className={styles.link}>Ready</li>
+                        isInProgress && styles.link__state_active
+                    )}><Link href='/dashboard/progress'>In Progress</Link></li>
+                    <li className={ classNames(
+                        styles.link,
+                        isReady && styles.link__state_active
+                    )}><Link href='/dashboard/ready'>Ready</Link></li>
+                    <li className={ classNames(
+                        styles.link,
+                        isReceived && styles.link__state_active
+                    )}><Link href='/dashboard/received'>Received</Link></li>
                 </ul>
                 <p id={styles.time}>{time}</p>
             </nav>

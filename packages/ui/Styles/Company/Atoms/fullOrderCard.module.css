@@ -1,13 +1,15 @@
 #card {
-    width: 100%;
     border-radius: 5px;
     background-color: white;
     overflow: hidden;
 }
 
 #cardHeader {
+    display: grid;
+    grid-template-columns: auto auto 1fr auto;
+    align-items: center;
     height: 42px;
-    padding: 12px 20px;
+    padding: 0 20px;
     font-size: 14px;
     color: white;
     background-color: black;
@@ -23,4 +25,23 @@
     display: inline-block;
     font-weight: 400;
     color: rgba(255, 255, 255, .5);
+}
+
+.btn {
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    grid-area: 1 / 4;
+    width: 25px;
+    height: 25px;
+    border: none;
+    border-radius: 5px;
+}
+
+.btn:hover {
+    cursor: pointer;
+}
+
+#readyBtn {
+    background-color: #27F394;
 }
