@@ -84,7 +84,7 @@ const Index: NextPage<PropTypes> = ({ restaurant }: PropTypes) => {
 
     return (
         <div className={styles.page}>
-            <TopNavigation/>
+            <TopNavigation viewOptionVisible={true}/>
             
             <SearchBar onChange={(e: React.ChangeEvent<HTMLInputElement>) => {setInputValue(e.target.value);}}/>
             
