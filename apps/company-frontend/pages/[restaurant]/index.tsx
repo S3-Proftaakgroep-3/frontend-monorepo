@@ -40,8 +40,17 @@ const Home: NextPage<PropTypes> = ( {restaurant}: PropTypes ) => {
         setOrder(data)
     }
 
+    const urlEndpoint = "https://mdma-order-service.herokuapp.com/api/order/subscribe";
+    let eventSource = null;
+
     useEffect(() => {
-        getOrder()
+        getOrder();
+
+        eventSource = new EventSource(urlEndpoint);
+
+        eventSource.addEventListener("Latest's Orders", (event) => {
+            console.log(event.data)
+        })
     }, [])
 
     return (
