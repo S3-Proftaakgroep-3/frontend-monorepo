@@ -8,14 +8,29 @@ import {IOrder} from "ui/Interfaces/IOrder";
 import {SectionProductsPerOrder} from "ui/Components/Molecules/sectionProductsPerOrder";
 import * as React from "react";
 
-const fakeOrder = {
-    table: 18,
-    time: '5min ago'
+export async function getServerSideProps({ query }: ContextTypes) {
+
+    // Query
+    const restaurantId = query.restaurant
+
+    // Fetch
+    const res = await fetch(`https://mdma-restaurant-service.herokuapp.com/api/restaurant/get?id=${restaurantId}`)
+    const data = await res.json()
+
+    return {
+        props: {
+            restaurant: data as IRestaurant
+        }
+    }
 }
 
-const Ready: NextPage = () => {
+interface PropTypes {
+    restaurant: IRestaurant
+}
 
-    const urlEndpoint = "https://mdma-order-service.herokuapp.com/api/order/subscribe";
+const Ready: NextPage<PropTypes> = ( {restaurant}: PropTypes ) => {
+
+    const urlEndpoint = `https://localhost:8080/api/order/subscribe/${restaurant.id}`;
     let eventSource = null;
     const [orders, setOrders] = useState<any[]>([]);
 
