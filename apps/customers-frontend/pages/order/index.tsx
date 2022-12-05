@@ -8,6 +8,7 @@ import {IOrder} from "ui/Interfaces/IOrder";
 import toast, {Toaster} from "react-hot-toast";
 import classNames from "classnames/dedupe";
 import {router} from "next/client";
+import {useRouter} from "next/router";
 
 
 const Index: NextPage<null> = () => {
@@ -15,6 +16,7 @@ const Index: NextPage<null> = () => {
     const [totalPrice, setTotalPrice] = useState(0);
     const [tableId, setTableId] = useState("");
     const [restaurantId, setRestaurantId] = useState("");
+    const router = useRouter();
 
     useEffect(() => {
         setOrder(JSON.parse(localStorage.getItem("order")!));
@@ -59,6 +61,8 @@ const Index: NextPage<null> = () => {
             body: JSON.stringify(order)
         }).finally(() => {
             localStorage.removeItem("order")
+            setOrder([]);
+            router.push(`/order/all?tableId=${tableId}&restaurantId=${restaurantId}`)
             notifySuccess();
         }).catch(() => {
             notifyError("Something went wrong.");
