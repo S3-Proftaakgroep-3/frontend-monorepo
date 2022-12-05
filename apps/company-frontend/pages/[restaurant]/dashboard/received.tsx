@@ -43,7 +43,7 @@ const Received: NextPage<PropTypes> = ({orders}: PropTypes) => {
 
     useEffect(() => {
         if (pathName) {
-            const urlEndpoint = `https://mdmaorderservice.azurewebsites.net/api/order/subscribe/${pathName}`;
+            const urlEndpoint = `https://mdmaorderservice.azurewebsites.net/api/order/subscribe/${pathName}/status/received`;
             let eventSource = new EventSource(urlEndpoint);
 
             eventSource.addEventListener("Latest's Orders", (event) => {
