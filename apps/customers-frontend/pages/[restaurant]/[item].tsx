@@ -28,7 +28,7 @@ export async function getServerSideProps({ query }: ContextTypes) {
     const itemId = query.item
 
     // Fetch
-    const res = await fetch(`https://mdma-restaurant-service.herokuapp.com/api/restaurant/get/product?restaurantId=${restaurantId}&id=${itemId}`)
+    const res = await fetch(`https://mdmarestaurantservice.azurewebsites.net/api/restaurant/get/product?restaurantId=${restaurantId}&id=${itemId}`)
     const data = await res.json()
 
     return {

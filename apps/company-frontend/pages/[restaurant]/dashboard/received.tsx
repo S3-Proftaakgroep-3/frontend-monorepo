@@ -13,7 +13,7 @@ interface ContextTypes {
 export async function getServerSideProps({query}: ContextTypes) {
     const restaurantId = query.restaurant
 
-    const res = await fetch(`https://mdma-order-service.herokuapp.com/api/order/all/${restaurantId}/received`)
+    const res = await fetch(`https://mdmaorderservice.azurewebsites.net/api/order/all/${restaurantId}/received`)
     const data = await res.json();
 
     return {
@@ -43,7 +43,7 @@ const Received: NextPage<PropTypes> = ({orders}: PropTypes) => {
 
     useEffect(() => {
         if (pathName) {
-            const urlEndpoint = `https://mdma-order-service.herokuapp.com/api/order/subscribe/${pathName}`;
+            const urlEndpoint = `https://mdmaorderservice.azurewebsites.net/api/order/subscribe/${pathName}`;
             let eventSource = new EventSource(urlEndpoint);
 
             eventSource.addEventListener("Latest's Orders", (event) => {

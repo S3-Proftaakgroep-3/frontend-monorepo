@@ -50,7 +50,7 @@ const Index: NextPage<null> = () => {
     }
 
     const postOrder = async (order: IOrder) => {
-        await fetch(`http://localhost:8080/api/order/create`, {
+        await fetch(`https://mdmaorderservice.azurewebsites.net/api/order/create`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',

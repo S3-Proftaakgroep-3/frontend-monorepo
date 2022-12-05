@@ -15,7 +15,7 @@ export async function getServerSideProps({ query }: ContextTypes) {
     const restaurantId = query.restaurant
 
     // Fetch
-    const res = await fetch(`https://mdma-restaurant-service.herokuapp.com/api/restaurant/get?id=${restaurantId}`)
+    const res = await fetch(`https://mdmarestaurantservice.azurewebsites.net/api/restaurant/get?id=${restaurantId}`)
     const data = await res.json()
 
     return {
@@ -35,12 +35,12 @@ const Home: NextPage<PropTypes> = ( {restaurant}: PropTypes ) => {
     const [order, setOrder] = useState<any[]>([])
 
     const getOrder = async() => {
-        const orders = await fetch(`https://mdma-order-service.herokuapp.com/api/order/${restaurantId}/all`)
+        const orders = await fetch(`https://mdmaorderservice.azurewebsites.net/api/order/${restaurantId}/all`)
         const data = await orders.json()
         setOrder(data)
     }
 
-    const urlEndpoint = "https://mdma-order-service.herokuapp.com/api/order/subscribe";
+    const urlEndpoint = "https://mdmaorderservice.azurewebsites.net/api/order/subscribe";
     let eventSource = null;
 
     useEffect(() => {
