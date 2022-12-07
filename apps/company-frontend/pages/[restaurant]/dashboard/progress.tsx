@@ -1,31 +1,65 @@
 import { NextPage } from "next"
-import styles from '../../styles/dashboard.module.css'
+import styles from '../../../styles/dashboard.module.css'
 import { NavBar, FullOrderCard } from "ui/Components"
-import {ICartItem} from "ui/Interfaces/ICartItem";
+import {IOrder} from "ui/Interfaces/IOrder";
+import * as React from "react";
+import {useRouter} from "next/router";
+import {useEffect, useState} from "react";
 
-const fakeOrder = {
-    table: 18,
-    time: '5min ago'
+interface ContextTypes {
+    query: any
 }
 
-const Progress: NextPage = () => {
+export async function getServerSideProps({query}: ContextTypes) {
+    const restaurantId = query.restaurant
+
+    const res = await fetch(`https://mdmaorderservice.azurewebsites.net/api/order/all/${restaurantId}/preparing`)
+    const data = await res.json();
+
+    return {
+        props: {
+            orders: data as IOrder[]
+        }
+    }
+}
+
+interface PropTypes {
+    orders: IOrder[]
+}
+const Progress: NextPage<PropTypes> = ({orders}: PropTypes) => {
+    const router = useRouter();
+    const [pathName, setPathName] = useState<string | undefined>(undefined);
+    const [allOrders, setAllOrders] = useState<IOrder[]>(orders);
+
+    useEffect(() => {
+        if (router.isReady) {
+            const path = Array.isArray(router.query.restaurant) ? router.query.restaurant[0] : router.query.restaurant
+            if (path) {
+                setPathName(path)
+            }
+        }
+    }, [router.isReady])
+
+    useEffect(() => {
+        if (pathName) {
+            const urlEndpoint = `https://mdmaorderservice.azurewebsites.net/api/order/subscribe/${pathName}/status/preparing`;
+            let eventSource = new EventSource(urlEndpoint);
+
+            eventSource.addEventListener("Latest's Orders", (event) => {
+                setAllOrders(JSON.parse(event.data))
+            })
+        }
+    }, [pathName])
+    
     return (
         <>
             <main id={styles.cardsContainer}>
-                <FullOrderCard fakeOrder={fakeOrder}/>
-                <FullOrderCard fakeOrder={fakeOrder}/>
-                <FullOrderCard fakeOrder={fakeOrder}/>
-                <FullOrderCard fakeOrder={fakeOrder}/>
-                <FullOrderCard fakeOrder={fakeOrder}/>
-                <FullOrderCard fakeOrder={fakeOrder}/>
-                <FullOrderCard fakeOrder={fakeOrder}/>
-                <FullOrderCard fakeOrder={fakeOrder}/>
-                <FullOrderCard fakeOrder={fakeOrder}/>
-                <FullOrderCard fakeOrder={fakeOrder}/>
-                <FullOrderCard fakeOrder={fakeOrder}/>
-                <FullOrderCard fakeOrder={fakeOrder}/>
-                <FullOrderCard fakeOrder={fakeOrder}/>
-                <FullOrderCard fakeOrder={fakeOrder}/>
+                {
+                    allOrders != null && allOrders.length > 0 &&
+                    allOrders.map((order: IOrder, key: number) => {
+                        return <FullOrderCard key={key} order={order}/>
+                    })
+                }
             </main>
             <NavBar/>
         </>
