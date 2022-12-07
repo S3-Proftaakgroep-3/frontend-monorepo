@@ -2,18 +2,16 @@ import classNames from 'classnames';
 import { useState } from 'react'
 import { usePathName } from '../../../hooks/usePathName';
 import styles from '../../../Styles/Company/Atoms/orderCardRow.module.css'
+import {ICartItem} from "../../../Interfaces/ICartItem";
+import {IExtra} from "../../../Interfaces";
 
-export const OrderCardRow = ({ dish }: {
-    dish: {
-        name: string;
-        size: string;
-        extras: string[];
-        message: string;
-    }
+export const OrderCardRow = (
+{
+    dish 
+}: {
+    dish: string
 }) => {
-
-    const { name, size, extras, message } = dish
-
+    const [product] = useState(JSON.parse(dish))
     // State - Finished
     const [isFinished, setIsFinished] = useState(false)
 
@@ -31,19 +29,16 @@ export const OrderCardRow = ({ dish }: {
     }
 
     // Pathname
-    const pathName = usePathName(2)
+    const pathName = usePathName(3)
 
     return (
         <div id={styles.row}>
 
             {/* Name */}
-            <div className={classNames(
-                styles.nameSizeContainer, 
-                isFinished && styles.nameSizeContainer__state_finished
-            )}>
-                <p id={styles.name}>{name}</p>
+            <div className={classNames(styles.nameSizeContainer, isFinished && styles.nameSizeContainer__state_finished)}>
+                <p id={styles.name}>{product.name}</p>
                 <span id={styles.nameBlock}/>
-                <p id={styles.size}>{size}</p>
+                <p id={styles.size}>{product.size}</p>
             </div>
 
             {/* Button */}
@@ -64,16 +59,15 @@ export const OrderCardRow = ({ dish }: {
             {
                 (!isFinished || isExpanded) && pathName !== 'received' &&
                 <div id={styles.infoContainer}>
-
                     {/* Extras */}
                     <div id={styles.extrasContainer}>
                         {
-                            extras && extras.length > 0 &&
-                            extras.map((extra: string, index: number) => {
+                            product.extras && product.extras.length > 0 &&
+                            product.extras.map((extra: IExtra, index: number) => {
                                 return (
-                                    <div id={styles.extraWrap} key={extra}>
+                                    <div id={styles.extraWrap} key={index}>
                                         <p id={styles.index}>{index + 1}.</p>
-                                        <p>{extra}</p>
+                                        <p>{extra.name}</p>
                                     </div>
                                 )
                             })
@@ -82,8 +76,22 @@ export const OrderCardRow = ({ dish }: {
 
                     {/* Message */}
                     <div id={styles.messageWrap}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="8.817" height="8.817" viewBox="0 0 8.817 8.817"><g transform="translate(-658.5 -140)"><path d="M12.317,9.712a.869.869,0,0,1-.869.869H6.237L4.5,12.317V5.369A.869.869,0,0,1,5.369,4.5h6.08a.869.869,0,0,1,.869.869Z" transform="translate(654.5 136)" fill="none" stroke="#20f" strokeLinecap="round" strokeLinejoin="round" strokeWidth={1}/><path d="M-19154.076-13741.918l.383-7.257h7.223v5.548l-6.141.244Z" transform="translate(19813 13890)" fill="#20f"/></g></svg>
-                        <p id={styles.message}>{message}</p>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="8.817" height="8.817"
+                             viewBox="0 0 8.817 8.817">
+                            <g transform="translate(-658.5 -140)">
+                                <path
+                                    d="M12.317,9.712a.869.869,0,0,1-.869.869H6.237L4.5,12.317V5.369A.869.869,0,0,1,5.369,4.5h6.08a.869.869,0,0,1,.869.869Z"
+                                    transform="translate(654.5 136)" fill="none" stroke="#20f" strokeLinecap="round"
+                                    strokeLinejoin="round" strokeWidth={1}/>
+                                <path d="M-19154.076-13741.918l.383-7.257h7.223v5.548l-6.141.244Z"
+                                      transform="translate(19813 13890)" fill="#20f"/>
+                            </g>
+                        </svg>
+                        <p id={styles.message}>
+                            {
+                                product.message != "" ? product.message : "-"
+                            }
+                        </p>
                     </div>
                 </div>
             }

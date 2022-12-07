@@ -58,7 +58,7 @@ const Received: NextPage<PropTypes> = ({orders}: PropTypes) => {
                 {
                     allOrders != null && allOrders.length > 0 &&
                     allOrders.map((order: IOrder, key: number) => {
-                        return <FullOrderCard key={key} fakeOrder={allOrders}/>
+                        return <FullOrderCard key={key} order={order}/>
                     })
                 }
             </main>

@@ -5,7 +5,6 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 
 export const NavBar = () => {
-
     // Router
     const router = useRouter()
 
@@ -13,14 +12,15 @@ export const NavBar = () => {
     const [isInProgress, setIsInProgress] = useState<boolean>(false)
     const [isReady, setIsReady] = useState<boolean>(false)
     const [isReceived, setIsReceived] = useState<boolean>(false)
-
+    const [restaurantId, setRestaurantId] = useState("")
+    
     useEffect(() => {
-
         // If router is ready
         if (router.isReady) {
-
             // Pathname
-            const pathName = router.pathname.split('/')[2]
+            const pathName = router.pathname.split('/')[3]
+            
+            setRestaurantId(restaurantId);
 
             // Set is in progress
             setIsInProgress(pathName === 'progress')
@@ -30,6 +30,12 @@ export const NavBar = () => {
 
             // Set is received
             setIsReceived(pathName === 'received')
+
+            const path = Array.isArray(router.query.restaurant) ? router.query.restaurant[0] : router.query.restaurant
+            
+            if (path) {
+                setRestaurantId(path)
+            }
         }
     }, [router.isReady])
 
@@ -72,18 +78,9 @@ export const NavBar = () => {
         <header id={styles.header}>
             <nav id={styles.nav}>
                 <ul id={styles.ul}>
-                    <li className={ classNames(
-                        styles.link,
-                        isInProgress && styles.link__state_active
-                    )}><Link href='/dashboard/progress'>In Progress</Link></li>
-                    <li className={ classNames(
-                        styles.link,
-                        isReady && styles.link__state_active
-                    )}><Link href='/dashboard/ready'>Ready</Link></li>
-                    <li className={ classNames(
-                        styles.link,
-                        isReceived && styles.link__state_active
-                    )}><Link href='/dashboard/received'>Received</Link></li>
+                    <li className={ classNames(styles.link, isInProgress && styles.link__state_active)}><Link href={`/${restaurantId}/dashboard/progress`}>In Progress</Link></li>
+                    <li className={ classNames(styles.link, isReady && styles.link__state_active)}><Link href={`/${restaurantId}/dashboard/ready`}>Ready</Link></li>
+                    <li className={ classNames(styles.link, isReceived && styles.link__state_active)}><Link href={`/${restaurantId}/dashboard/received`}>Received</Link></li>
                 </ul>
                 <p id={styles.time}>{time}</p>
             </nav>
