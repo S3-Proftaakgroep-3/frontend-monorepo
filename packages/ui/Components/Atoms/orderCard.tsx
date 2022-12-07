@@ -3,6 +3,8 @@ import fonts from '../../Styles/Utils/fonts.module.css'
 import {useState} from "react";
 import classNames from "classnames/dedupe";
 import {ICartItem} from "../../Interfaces/ICartItem";
+import * as React from "react";
+import {IExtra} from "../../Interfaces";
 
 interface PropTypes {
     item: ICartItem
@@ -35,6 +37,18 @@ export const OrderCard = ({ item }: PropTypes) => {
                 openMenu && styles.open_menu
             )} >
                 <p className={fonts.s_secondary}>Size: {item.size}</p>
+                <p className={fonts.s_secondary}>Extras:
+                { 
+                    item.extras != null &&
+                    item.extras.map((extra: IExtra, key: number, extras) => {
+                        if (key + 1 == extras.length) {
+                            return ` ${extra.name}`
+                        } else {
+                            return ` ${extra.name},`
+                        }
+                    })
+                }
+                </p>
                 {(() => {
                     if (item.message != "") {
                         return <p className={fonts.s_secondary}>Message: {item.message}</p>

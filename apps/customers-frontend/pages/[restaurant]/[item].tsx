@@ -1,19 +1,11 @@
 import type {NextPage} from 'next'
 import * as React from "react";
+import {useState} from "react";
 import styles from '../../styles/item.module.css'
 import fonts from '../../styles/fonts.module.css'
 import classNames from 'classnames/dedupe'
-import {
-    Allergies,
-    Button,
-    CategoryBtn,
-    CategorySelector,
-    IProduct,
-    Textarea,
-    TopMenuBackLogo
-} from 'ui';
-import { useState } from 'react';
-import { AllergieCard } from 'ui/Components/Atoms/allergieCard';
+import {Allergies, Button, CategoryBtn, CategorySelector, IExtra, IProduct, Textarea, TopMenuBackLogo} from 'ui';
+import {AllergieCard} from 'ui/Components/Atoms/allergieCard';
 import {ICartItem} from "ui/Interfaces/ICartItem";
 import toast from 'react-hot-toast';
 import {useRouter} from "next/router";
@@ -44,9 +36,14 @@ interface PropTypes {
 
 const Item: NextPage<PropTypes> = ({ item }: PropTypes) => {
     const router = useRouter();
-    let order = [] as ICartItem[]
+    let order = [] as ICartItem[];
 
-    function addToCart() {
+    // State - size
+    const [size, setSize] = useState(item.sizes[0]);
+    const [message, setMessage] = useState("");
+    const [extras, setExtras] = useState<IExtra[]>([])
+
+    const addToCart = () => {
         let cartItem: ICartItem
         order = JSON.parse(localStorage.getItem("order")!)
         
@@ -58,8 +55,15 @@ const Item: NextPage<PropTypes> = ({ item }: PropTypes) => {
             name: item.name,
             price: item.price,
             message: message,
+            extras: extras,
             size: size,
             quantity: 1
+        }
+        
+        if (cartItem.extras != null) {
+            for (let i = 0; i < cartItem.extras!.length; i++) {
+                cartItem.price += cartItem.extras[i].price;
+            }
         }
         
         let sameProductFound: boolean = false;
@@ -68,8 +72,10 @@ const Item: NextPage<PropTypes> = ({ item }: PropTypes) => {
         if (order.length > 0) {
             for (let i = 0; i < order.length; i++) {
                 if (cartItem.name == order[i].name && cartItem.size == order[i].size && cartItem.price == order[i].price && cartItem.message == order[i].message) {
-                    sameProductFound = true;
-                    sameProductIndex = i;
+                    if (JSON.stringify(order[i].extras) == JSON.stringify(cartItem.extras)) {
+                        sameProductFound = true;
+                        sameProductIndex = i;
+                    }
                 }
             }
         }
@@ -84,50 +90,78 @@ const Item: NextPage<PropTypes> = ({ item }: PropTypes) => {
         router.back();
         notify(cartItem.name);
     }
+    
+    const addExtraOptions = (extra: IExtra) => {
+        const alreadyIn = checkIfExtraAlreadyIn(extra);
+
+        if (!alreadyIn) {
+            setExtras([...extras, extra])
+        } else {
+            setExtras(extras.filter(item => item != extra))
+        }
+    }
+    
+    const checkIfExtraAlreadyIn = (extra: IExtra) => {
+        let alreadyIn: boolean = false;
+        if (extras.length > 0) {
+            for (let i = 0; i < extras.length; i++) {
+                if (extras[i].name == extra.name) {
+                    alreadyIn = true;
+                }
+            }
+        }
+        return alreadyIn;
+    }
 
     const notify = (item: string) => {
         toast.success(`Added ${item} to order.`);
     }
 
-    // Placeholder data
-    const price: number = item.price
-    const title: string = item.name
-    const sizes: string[] = item.sizes
-    const description: string = item.description
-
-    const allergies: string[] = item.allergies;
-
-    // State - size
-    const [size, setSize] = useState(sizes[0])
-    const [message, setMessage] = useState("")
-
     return (
         <div id={styles.page}>
             <TopMenuBackLogo/>
+            
+            {/*Item info*/}
             <div id={styles.imgWrap}>
                 <img
                     src={item.image} className={styles.img}
                     alt={item.name}
                 />
             </div>
-            <p className={classNames(fonts.xl_primary, styles.title)}>{title}</p>
-            <p className={classNames(fonts.m_secondary, styles.description)}>{description}</p>
-            <p className={classNames(styles.price)}>{`€${price.toFixed(2)}`}</p>
+            <p className={classNames(fonts.xl_primary, styles.title)}>{item.name}</p>
+            <p className={classNames(fonts.m_secondary, styles.description)}>{item.description}</p>
+            <p className={classNames(styles.price)}>{`€${item.price.toFixed(2)}`}</p>
 
+            {/*Size options sections*/}
             <div className={styles.optionWrap}>
                 <CategorySelector label='Size'>
                     {
-                        sizes.map((possibleSize: string, key: number) => {
+                        item.sizes.map((possibleSize: string, key: number) => {
                             return <CategoryBtn key={key} label={possibleSize} active={size === possibleSize} onClick={() => setSize(possibleSize)}></CategoryBtn>
                         })
                     }
                 </CategorySelector>
             </div>
 
+            {/*Extra options section*/}
+            <div className={styles.optionWrap}>
+                {
+                    item.extras != null &&
+                    <CategorySelector label='Extra options'>
+                        {
+                            item.extras.map((extra: IExtra, key: number) => {
+                                return <CategoryBtn key={key} label={extra.name + " + €" + extra.price.toFixed(2)} active={extras.includes(extra)} onClick={() => {addExtraOptions(extra)}}></CategoryBtn>
+                            })
+                        }
+                    </CategorySelector>
+                }
+            </div>
+
+            {/*Allergies sections*/}
             <div className={styles.optionWrap}>
                 <Allergies>
-                    { allergies != null
-                        ? allergies.map((allergy: string, key: number) => {
+                    { item.allergies != null
+                        ? item.allergies.map((allergy: string, key: number) => {
                             return <AllergieCard label={allergy} key={key}></AllergieCard>
                         })
                         : <p className={classNames(fonts.s_secondary)}>No allergies</p>
@@ -135,6 +169,7 @@ const Item: NextPage<PropTypes> = ({ item }: PropTypes) => {
                 </Allergies>
             </div>
 
+            {/*Message section*/}
             <div className={styles.optionWrap}>
                 <Textarea onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     setMessage(e.target.value)
@@ -142,6 +177,7 @@ const Item: NextPage<PropTypes> = ({ item }: PropTypes) => {
                 id='message' label='Message' placeholder='Uw bericht...' rows={5} />
             </div>
 
+            {/*Bottom menu*/}
             <div id={styles.bottomMenu}>
                 <Button onClick={() => {addToCart()}} label='Add to order' style='primary'/>
             </div>

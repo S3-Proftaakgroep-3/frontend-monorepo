@@ -5,7 +5,7 @@ import classNames from 'classnames/dedupe'
 interface PropTypes {
     label: string,
     active: boolean,
-    onClick: () => void
+    onClick: React.MouseEventHandler
 }
 
 export const CategoryBtn = ({ label, active, onClick }: PropTypes) => {
