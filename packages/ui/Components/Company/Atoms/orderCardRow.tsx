@@ -9,9 +9,9 @@ export const OrderCardRow = (
 {
     dish 
 }: {
-    dish: string
+    dish: ICartItem
 }) => {
-    const [product] = useState(JSON.parse(dish))
+    const [product] = useState(dish)
     // State - Finished
     const [isFinished, setIsFinished] = useState(false)
 

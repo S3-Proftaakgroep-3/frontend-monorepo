@@ -30,7 +30,7 @@ export const FullOrderCard = ({ order }: any) => {
                 {
                     order.products != null &&
                     order.products.map((product: ICartItem) => {
-                        return <OrderCardRow dish={JSON.stringify(product)}/>
+                        return <OrderCardRow dish={product}/>
                     })
                 }
             </div>
