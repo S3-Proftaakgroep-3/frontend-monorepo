@@ -5,6 +5,8 @@ import {IOrder} from "ui/Interfaces/IOrder";
 import * as React from "react";
 import {useRouter} from "next/router";
 import {useEffect, useState} from "react";
+import {useReadLocalStorage} from "usehooks-ts";
+import GoogleHelper from "../../../helpers/GoogleHelper";
 
 interface ContextTypes {
     query: any
@@ -30,6 +32,13 @@ const Progress: NextPage<PropTypes> = ({orders}: PropTypes) => {
     const router = useRouter();
     const [pathName, setPathName] = useState<string | undefined>(undefined);
     const [allOrders, setAllOrders] = useState<IOrder[]>(orders);
+    const googleHelper = new GoogleHelper()
+
+    const google: any = useReadLocalStorage("google");
+
+    useEffect(() => {
+        googleHelper.CheckIfOK(google)
+    }, [google])
 
     useEffect(() => {
         if (router.isReady) {
