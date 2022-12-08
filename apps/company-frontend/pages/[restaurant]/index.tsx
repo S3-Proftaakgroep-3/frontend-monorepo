@@ -40,17 +40,8 @@ const Home: NextPage<PropTypes> = ( {restaurant}: PropTypes ) => {
         setOrder(data)
     }
 
-    const urlEndpoint = "https://mdmaorderservice.azurewebsites.net/api/order/subscribe";
-    let eventSource = null;
-
     useEffect(() => {
         getOrder();
-
-        eventSource = new EventSource(urlEndpoint);
-
-        eventSource.addEventListener("Latest's Orders", (event) => {
-            console.log(event.data)
-        })
     }, [])
 
     return (

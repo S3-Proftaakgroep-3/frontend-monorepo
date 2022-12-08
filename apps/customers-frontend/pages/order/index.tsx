@@ -41,7 +41,7 @@ const Index: NextPage<null> = () => {
             tableId: sessionStorage.getItem("tableId")!,
             restaurantId: sessionStorage.getItem("restaurantId")!,
             products: order,
-            orderStatus: "Received"
+            orderStatus: "Preparing"
         }
         
         if (newOrder.products != null) {

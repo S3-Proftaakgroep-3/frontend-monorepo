@@ -1,26 +1,14 @@
-import { useEffect } from 'react'
 import { usePathName } from '../../../hooks/usePathName'
 import styles from '../../../Styles/Company/Atoms/fullOrderCard.module.css'
 import { OrderCardRow } from './orderCardRow'
+import {ICartItem} from "../../../Interfaces/ICartItem";
 
-const fakeDish = {
-    name: "Pizza Margherita",
-    size: "M",
-    extras: [
-        "Extra kaas",
-        "Jalapinõs"
-    ],
-    message: "Gelieve niet gesneden :)"
-}
-
-export const FullOrderCard = ({ fakeOrder }: any) => {
-
-    const { 
-        table,
+export const FullOrderCard = ({ order }: any) => {
+    const {
         time
-    } = fakeOrder
+    } = order
 
-    const pathName = usePathName(2)
+    const pathName = usePathName(3)
 
     const handleReadyBtn = () => {
         console.log('Order marked as received!')
@@ -29,7 +17,7 @@ export const FullOrderCard = ({ fakeOrder }: any) => {
     return (
         <section id={styles.card}>
             <div id={styles.cardHeader}>
-                <p id={styles.tableId}>{`Tafel ${table}`}</p>
+                <p id={styles.tableId}>{`Tafel ${order.tableId}`}</p>
                 <p id={styles.timeAgo}>{time}</p>
                 {
                     pathName === 'ready' &&
@@ -39,8 +27,12 @@ export const FullOrderCard = ({ fakeOrder }: any) => {
                 }
             </div>
             <div>
-                <OrderCardRow dish={fakeDish}/>
-                <OrderCardRow dish={fakeDish}/>
+                {
+                    order.products != null &&
+                    order.products.map((product: ICartItem) => {
+                        return <OrderCardRow dish={product}/>
+                    })
+                }
             </div>
         </section>
     )

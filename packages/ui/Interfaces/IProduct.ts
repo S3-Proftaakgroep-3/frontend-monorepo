@@ -1,4 +1,4 @@
-import {Sizes} from "../Enums";
+import {IExtra} from "./IExtra";
 
 export interface IProduct{
     id: string,
@@ -8,6 +8,7 @@ export interface IProduct{
     price: number,
     sizes: string[],
     category: string,
+    extras: IExtra[];
     active: boolean,
     isBeverage: boolean,
     allergies: string[]
