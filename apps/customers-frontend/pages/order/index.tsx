@@ -62,7 +62,7 @@ const Index: NextPage<null> = () => {
         }).finally(() => {
             localStorage.removeItem("order")
             setOrder([]);
-            router.push(`/order/all?tableId=${tableId}&restaurantId=${restaurantId}`)
+            router.push(`/${restaurantId}`)
             notifySuccess();
         }).catch(() => {
             notifyError("Something went wrong.");
