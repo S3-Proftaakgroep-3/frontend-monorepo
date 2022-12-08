@@ -1,7 +1,7 @@
 #row {
     display: grid;
     grid-template-columns: 10px 1fr 25px;
-    grid-template-rows: 25px auto;
+    grid-template-rows: min-content auto;
     row-gap: 5px;
     padding: 20px;
 }
@@ -62,6 +62,7 @@
 }
 
 #readyBtn {
+    height: 25px;
     background-color: #27F394;
 }
 

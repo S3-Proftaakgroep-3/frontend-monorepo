@@ -7,7 +7,7 @@ const Ready: NextPage = () => {
     return (
         <>
             <main id={styles.cardsContainer}>
-
+                <p>No orders marked as ready yet.</p>
             </main>
             <NavBar/>
         </>
