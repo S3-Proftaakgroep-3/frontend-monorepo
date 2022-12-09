@@ -52,3 +52,17 @@
     font-weight: 600;
     font-size: 14px;
 }
+
+#email{
+    grid-area: 1 / 2;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+#logout{
+    padding: 0 10px;
+}
+
+#logout:hover{
+    cursor: pointer;
+}
