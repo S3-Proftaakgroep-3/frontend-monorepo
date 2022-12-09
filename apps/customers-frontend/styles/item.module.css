@@ -56,3 +56,24 @@
 .img{
     object-fit: cover;
 }
+
+.numberInput {
+    margin-left: 10px;
+    width: 20%;
+    height: 52px;
+    text-align: center;
+    background: var(--background-light);
+    border-radius: var(--border-radius);
+    max-width: 50px;
+}
+
+.buttonContainer {
+    margin-left: 10px;
+    width: 15%;
+    height: 52px;
+    max-width: 50px;
+}
+
+.buttonContainer Button {
+    height: 45%;
+}
