@@ -78,9 +78,14 @@ export const NavBar = () => {
         <header id={styles.header}>
             <nav id={styles.nav}>
                 <ul id={styles.ul}>
-                    <li className={ classNames(styles.link, isInProgress && styles.link__state_active)}><Link href={`/${restaurantId}/dashboard/progress`}>In Progress</Link></li>
-                    <li className={ classNames(styles.link, isReady && styles.link__state_active)}><Link href={`/${restaurantId}/dashboard/ready`}>Ready</Link></li>
-                    <li className={ classNames(styles.link, isReceived && styles.link__state_active)}><Link href={`/${restaurantId}/dashboard/received`}>Received</Link></li>
+                    {
+                        restaurantId != "" &&
+                        <div>
+                            <li className={ classNames(styles.link, isInProgress && styles.link__state_active)}><Link href={`/${restaurantId}/dashboard/progress`}>In Progress</Link></li>
+                            <li className={ classNames(styles.link, isReady && styles.link__state_active)}><Link href={`/${restaurantId}/dashboard/ready`}>Ready</Link></li>
+                            <li className={ classNames(styles.link, isReceived && styles.link__state_active)}><Link href={`/${restaurantId}/dashboard/received`}>Received</Link></li>
+                        </div>
+                    }
                 </ul>
                 <p id={styles.time}>{time}</p>
             </nav>
