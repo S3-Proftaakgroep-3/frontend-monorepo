@@ -13,6 +13,7 @@ const Login: NextPage = () => {
     const [jwt, setJwt] = useLocalStorage("google", null)
     function onSuccess(res: any){
         setJwt(res.credential);
+        // TODO: Need to get the current restaurantID the correct way, communicate with the team
         router.push('/634d19164de0297c8b68ba66/dashboard/progress')
     }
 

@@ -4,7 +4,7 @@ import styles from '../../../Styles/Company/Atoms/navBar.module.css'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 
-export const NavBar = () => {
+export const NavBar = ({email}: any) => {
     // Router
     const router = useRouter()
 
@@ -15,6 +15,7 @@ export const NavBar = () => {
     const [restaurantId, setRestaurantId] = useState("")
     
     useEffect(() => {
+        console.log(email)
         // If router is ready
         if (router.isReady) {
             // Pathname
@@ -77,6 +78,7 @@ export const NavBar = () => {
     return (
         <header id={styles.header}>
             <nav id={styles.nav}>
+                <p id={styles.email}>{email}</p>
                 <ul id={styles.ul}>
                     <li className={ classNames(styles.link, isInProgress && styles.link__state_active)}><Link href={`/${restaurantId}/dashboard/progress`}>In Progress</Link></li>
                     <li className={ classNames(styles.link, isReady && styles.link__state_active)}><Link href={`/${restaurantId}/dashboard/ready`}>Ready</Link></li>

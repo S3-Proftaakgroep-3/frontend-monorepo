@@ -1,6 +1,6 @@
-import { NextPage } from "next"
+import {NextPage} from "next"
 import styles from '../../../styles/dashboard.module.css'
-import { NavBar, FullOrderCard } from "ui/Components"
+import {NavBar, FullOrderCard} from "ui/Components"
 import {IOrder} from "ui/Interfaces/IOrder";
 import * as React from "react";
 import {useRouter} from "next/router";
@@ -28,17 +28,27 @@ export async function getServerSideProps({query}: ContextTypes) {
 interface PropTypes {
     orders: IOrder[]
 }
-const Progress: NextPage<PropTypes> = ({orders}: PropTypes) => {
-    const router = useRouter();
-    const [pathName, setPathName] = useState<string | undefined>(undefined);
-    const [allOrders, setAllOrders] = useState<IOrder[]>(orders);
-    const googleHelper = new GoogleHelper()
 
+const Progress: NextPage<PropTypes> = ({orders}: PropTypes) => {
+    // Router
+    const router = useRouter();
+
+    // Google
+    const googleHelper = new GoogleHelper()
+    const [loggedInEmail, setLoggedInEmail] = useState("");
     const google: any = useReadLocalStorage("google");
 
+    // Use this to check if user is logged in, when not logged in you get redirected back to login page
     useEffect(() => {
-        googleHelper.CheckIfOK(google)
-    }, [google])
+        if (googleHelper.CheckIfLoggedIn(google)) {
+            setLoggedInEmail(googleHelper.GetLoggedInUser(google));
+            return;
+        }
+        router.push("/login");
+    }, [])
+
+    const [pathName, setPathName] = useState<string | undefined>(undefined);
+    const [allOrders, setAllOrders] = useState<IOrder[]>(orders);
 
     useEffect(() => {
         if (router.isReady) {
@@ -59,18 +69,19 @@ const Progress: NextPage<PropTypes> = ({orders}: PropTypes) => {
             })
         }
     }, [pathName])
-    
+
     return (
         <>
             <main id={styles.cardsContainer}>
                 {
-                    allOrders != null && allOrders.length > 0 &&
-                    allOrders.map((order: IOrder, key: number) => {
-                        return <FullOrderCard key={key} order={order}/>
-                    })
+                    // Do this to prevent seeing data before redirecting back to login
+                    loggedInEmail == "" ? <div></div> : allOrders != null && allOrders.length > 0 &&
+                        allOrders.map((order: IOrder, key: number) => {
+                            return <FullOrderCard key={key} order={order}/>
+                        })
                 }
             </main>
-            <NavBar/>
+            <NavBar email={loggedInEmail}/>
         </>
     )
 }
