@@ -42,6 +42,8 @@ const Item: NextPage<PropTypes> = ({ item }: PropTypes) => {
     const [size, setSize] = useState(item.sizes[0]);
     const [message, setMessage] = useState("");
     const [extras, setExtras] = useState<IExtra[]>([])
+    
+    const [quantity, setQuantity] = useState(1)
 
     const addToCart = () => {
         let cartItem: ICartItem
@@ -57,7 +59,7 @@ const Item: NextPage<PropTypes> = ({ item }: PropTypes) => {
             message: message,
             extras: extras,
             size: size,
-            quantity: 1
+            quantity: quantity
         }
         
         if (cartItem.extras != null) {
@@ -81,7 +83,7 @@ const Item: NextPage<PropTypes> = ({ item }: PropTypes) => {
         }
         
         if (sameProductFound) {
-            order[sameProductIndex].quantity += 1;
+            order[sameProductIndex].quantity += quantity;
         } else {
             order?.push(cartItem)
         }
@@ -180,6 +182,11 @@ const Item: NextPage<PropTypes> = ({ item }: PropTypes) => {
             {/*Bottom menu*/}
             <div id={styles.bottomMenu}>
                 <Button onClick={() => {addToCart()}} label='Add to order' style='primary'/>
+                <input className={classNames(styles.numberInput, fonts.m_secondary)} value={quantity} onChange={(e) => setQuantity(Number(e.target.value))} type={"number"}/>
+                <div className={styles.buttonContainer}>
+                    <Button onClick={() => {setQuantity(quantity + 1)}} label={"+"} style={"secondary"}/>
+                    <Button onClick={() => {quantity - 1 > 0 && setQuantity(quantity - 1)}} label={"-"} style={"secondary"}/>
+                </div>
             </div>
 
         </div>
