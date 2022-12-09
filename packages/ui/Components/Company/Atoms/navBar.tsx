@@ -15,7 +15,6 @@ export const NavBar = ({email, handleLogout}: any) => {
     const [restaurantId, setRestaurantId] = useState("")
 
     useEffect(() => {
-        console.log(email)
         // If router is ready
         if (router.isReady) {
             // Pathname
