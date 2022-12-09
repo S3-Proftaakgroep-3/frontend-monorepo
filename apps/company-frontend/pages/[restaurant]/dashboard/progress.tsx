@@ -47,6 +47,13 @@ const Progress: NextPage<PropTypes> = ({orders}: PropTypes) => {
         router.push("/login");
     }, [])
 
+    const handleLogout = () => {
+        setLoggedInEmail("")
+        localStorage.removeItem("google")
+        router.push('/login')
+    }
+    // End of Google
+
     const [pathName, setPathName] = useState<string | undefined>(undefined);
     const [allOrders, setAllOrders] = useState<IOrder[]>(orders);
 
@@ -81,7 +88,7 @@ const Progress: NextPage<PropTypes> = ({orders}: PropTypes) => {
                         })
                 }
             </main>
-            <NavBar email={loggedInEmail}/>
+            <NavBar email={loggedInEmail} handleLogout={handleLogout}/>
         </>
     )
 }

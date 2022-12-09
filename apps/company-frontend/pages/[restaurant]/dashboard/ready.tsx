@@ -24,6 +24,13 @@ const Ready: NextPage = () => {
         router.push("/login");
     }, [])
 
+    const handleLogout = () => {
+        setLoggedInEmail("")
+        localStorage.removeItem("google")
+        router.push('/login')
+    }
+    // End of Google
+
     return (
         <>
             <main id={styles.cardsContainer}>
@@ -31,7 +38,7 @@ const Ready: NextPage = () => {
                     loggedInEmail == "" ? <div></div> : <p>No orders marked as ready yet.</p>
                 }
             </main>
-            <NavBar email={loggedInEmail}/>
+            <NavBar email={loggedInEmail} handleLogout={handleLogout}/>
         </>
     )
 }
