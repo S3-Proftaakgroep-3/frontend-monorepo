@@ -13,15 +13,23 @@ interface ContextTypes {
 }
 
 export async function getServerSideProps({query}: ContextTypes) {
-    const restaurantId = query.restaurantId
-    const tableId = query.tableId
+    try {
+        const restaurantId = query.restaurantId
+        const tableId = query.tableId
 
-    const res = await fetch(`https://mdmaorderservice.azurewebsites.net/api/order/restaurantId/${restaurantId}/tableId/${tableId}`)
-    const data = await res.json();
+        const res = await fetch(`https://mdmaorderservice.azurewebsites.net/api/order/restaurantId/${restaurantId}/tableId/${tableId}`)
+        const data = await res.json();
 
-    return {
-        props: {
-            orders: data as IOrder[]
+        return {
+            props: {
+                orders: data as IOrder[]
+            }
+        }
+    } catch {
+        return {
+            redirect: {
+                destination: "/error"
+            }
         }
     }
 }
