@@ -61,9 +61,12 @@
     cursor: pointer;
 }
 
+#expandBtn {
+    background-color: #27F394;
+}
+
 #readyBtn {
     height: 25px;
-    background-color: #27F394;
 }
 
 #infoContainer {

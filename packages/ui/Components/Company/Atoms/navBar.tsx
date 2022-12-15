@@ -4,7 +4,7 @@ import styles from '../../../Styles/Company/Atoms/navBar.module.css'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 
-export const NavBar = () => {
+export const NavBar = ({email, handleLogout}: any) => {
     // Router
     const router = useRouter()
 
@@ -13,7 +13,7 @@ export const NavBar = () => {
     const [isReady, setIsReady] = useState<boolean>(false)
     const [isReceived, setIsReceived] = useState<boolean>(false)
     const [restaurantId, setRestaurantId] = useState("")
-    
+
     useEffect(() => {
         // If router is ready
         if (router.isReady) {
@@ -72,13 +72,23 @@ export const NavBar = () => {
         }, 5000)
     }, [])
 
+    function logOut(){
+        localStorage.removeItem("google");
+    }
+
     return (
         <header id={styles.header}>
             <nav id={styles.nav}>
+                <p id={styles.email}>{email} <strong id={styles.logout} onClick={event => handleLogout(100)}>Log Out</strong></p>
                 <ul id={styles.ul}>
-                    <li className={ classNames(styles.link, isInProgress && styles.link__state_active)}><Link href={`/${restaurantId}/dashboard/progress`}>In Progress</Link></li>
-                    <li className={ classNames(styles.link, isReady && styles.link__state_active)}><Link href={`/${restaurantId}/dashboard/ready`}>Ready</Link></li>
-                    <li className={ classNames(styles.link, isReceived && styles.link__state_active)}><Link href={`/${restaurantId}/dashboard/received`}>Received</Link></li>
+                    {
+                        restaurantId != "" &&
+                        <div>
+                            <li className={ classNames(styles.link, isInProgress && styles.link__state_active)}><Link href={`/${restaurantId}/dashboard/progress`}>In Progress</Link></li>
+                            <li className={ classNames(styles.link, isReady && styles.link__state_active)}><Link href={`/${restaurantId}/dashboard/ready`}>Ready</Link></li>
+                            <li className={ classNames(styles.link, isReceived && styles.link__state_active)}><Link href={`/${restaurantId}/dashboard/received`}>Received</Link></li>
+                        </div>
+                    }
                 </ul>
                 <p id={styles.time}>{time}</p>
             </nav>

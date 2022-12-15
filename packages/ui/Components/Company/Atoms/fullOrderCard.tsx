@@ -41,8 +41,8 @@ export const FullOrderCard = ({ order }: any) => {
             <div>
                 {
                     order.products != null &&
-                    order.products.map((product: ICartItem) => {
-                        return <OrderCardRow dishesNotReady={dishesNotReady} setDishesNotReady={setDishesNotReady} dish={product}/>
+                    order.products.map((product: ICartItem, index: number) => {
+                        return <OrderCardRow dishesNotReady={dishesNotReady} setDishesNotReady={setDishesNotReady} dish={product} key={index}/>
                     })
                 }
             </div>
