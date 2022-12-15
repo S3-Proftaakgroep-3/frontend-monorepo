@@ -1,9 +1,6 @@
 import {NextPage} from "next";
 import {GoogleLogin} from "@react-oauth/google";
 import * as React from "react";
-import { useGoogleOneTapLogin } from '@react-oauth/google';
-import {useState} from "react";
-import jwtDecode from "jwt-decode";
 import {useRouter} from "next/router";
 import {useLocalStorage} from "usehooks-ts";
 

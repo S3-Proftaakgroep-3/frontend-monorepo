@@ -51,6 +51,7 @@ const Progress: NextPage<PropTypes> = ({orders, restaurantId}: PropTypes) => {
     // Use this to check if user is logged in, when not logged in you get redirected back to login page
     useEffect(() => {
         googleHelper.CheckIfLoggedIn(google, restaurantId).then((isLoggedIn: boolean) => {
+            console.log(isLoggedIn)
             if(isLoggedIn) {
                 setLoggedInEmail(googleHelper.GetLoggedInUser(google));
                 return;
@@ -58,7 +59,6 @@ const Progress: NextPage<PropTypes> = ({orders, restaurantId}: PropTypes) => {
                 router.push("/login");
             }
         })
-        router.push("/login");
     }, [])
 
     const handleLogout = () => {
