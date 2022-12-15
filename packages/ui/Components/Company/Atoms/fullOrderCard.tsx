@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 
 export const FullOrderCard = ({ order }: any) => {
     const {
-        time
+       time
     } = order
 
     const pathName = usePathName(3)
@@ -15,14 +15,28 @@ export const FullOrderCard = ({ order }: any) => {
     const [dishesNotReady, setDishesNotReady] = useState<number>(order.products.length)
 
     const handleReadyBtn = () => {
-        console.log('Order marked as received.')
+        updateOrderStatus();
+    }
+
+    const updateOrderStatus = () => {
+        fetch(`http://localhost:8093/api/order/update`, {
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(order)
+        }).finally(() => {
+            console.log("Updated")
+        }).catch((e) => {
+            console.log(e.error)
+        });
     }
 
     // If all dishes are ready
     useEffect(() => {
-
         if (dishesNotReady <= 0) {
-            console.log('This order is ready!')
+            updateOrderStatus()
         }
     }, [dishesNotReady])
 
