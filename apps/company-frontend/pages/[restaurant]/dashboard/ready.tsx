@@ -1,15 +1,46 @@
-import { NextPage } from "next"
+import {NextPage} from "next"
 import styles from '../../../styles/dashboard.module.css'
-import { NavBar } from "ui/Components"
+import {NavBar, FullOrderCard} from "ui/Components"
+import {useRouter} from "next/router";
+import {useEffect, useState} from "react";
+import {IOrder} from "ui/Interfaces/IOrder";
 import * as React from "react";
 import GoogleHelper from "../../../helpers/GoogleHelper";
-import {useEffect, useState} from "react";
-import {useRouter} from "next/router";
 import {useReadLocalStorage} from "usehooks-ts";
 
-const Ready: NextPage = () => {
+interface ContextTypes {
+    query: any
+}
+
+export async function getServerSideProps({query}: ContextTypes) {
+    try {
+        const restaurantId = query.restaurant
+
+        const res = await fetch(`https://mdmaorderservice.azurewebsites.net/api/order/all/${restaurantId}/ready`)
+        const data = await res.json();
+
+        return {
+            props: {
+                orders: data as IOrder[]
+            }
+        }
+    } catch {
+        return {
+            redirect: {
+                destination: "/error"
+            }
+        }
+    }
+}
+
+interface PropTypes {
+    orders: IOrder[]
+}
+
+const Ready: NextPage<PropTypes> = ({orders}: PropTypes) => {
     // Router
     const router = useRouter();
+
     // Google
     const googleHelper = new GoogleHelper()
     const [loggedInEmail, setLoggedInEmail] = useState("");
@@ -17,7 +48,7 @@ const Ready: NextPage = () => {
 
     // Use this to check if user is logged in, when not logged in you get redirected back to login page
     useEffect(() => {
-        if (googleHelper.CheckIfLoggedIn(google)){
+        if (googleHelper.CheckIfLoggedIn(google)) {
             setLoggedInEmail(googleHelper.GetLoggedInUser(google));
             return;
         }
@@ -31,11 +62,41 @@ const Ready: NextPage = () => {
     }
     // End of Google
 
+    const [pathName, setPathName] = useState<string | undefined>(undefined);
+    const [allOrders, setAllOrders] = useState<IOrder[]>(orders);
+
+    useEffect(() => {
+        if (router.isReady) {
+            const path = Array.isArray(router.query.restaurant) ? router.query.restaurant[0] : router.query.restaurant
+            if (path) {
+                setPathName(path)
+            }
+        }
+    }, [router.isReady])
+
+    useEffect(() => {
+        if (pathName) {
+            const urlEndpoint = `https://mdmaorderservice.azurewebsites.net/api/order/subscribe/${pathName}/status/ready`;
+            let eventSource = new EventSource(urlEndpoint);
+
+            eventSource.addEventListener("Latest's Orders", (event) => {
+                setAllOrders(JSON.parse(event.data))
+            })
+        }
+    }, [pathName])
+
     return (
         <>
             <main id={styles.cardsContainer}>
                 {
-                    loggedInEmail == "" ? <div></div> : <p>No orders marked as ready yet.</p>
+                    // Do this to prevent seeing data before redirecting back to login
+                    loggedInEmail == "" ? <div></div> : allOrders != null && allOrders.length > 0 &&
+                        allOrders.map((order: IOrder, key: number) => {
+                            return <FullOrderCard key={key} order={order}/>
+                        })
+                }
+                {
+                    allOrders.length == 0 && <p>No orders marked as ready yet.</p>
                 }
             </main>
             <NavBar email={loggedInEmail} handleLogout={handleLogout}/>

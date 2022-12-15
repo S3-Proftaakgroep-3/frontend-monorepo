@@ -95,6 +95,9 @@ const Progress: NextPage<PropTypes> = ({orders}: PropTypes) => {
                             return <FullOrderCard key={key} order={order}/>
                         })
                 }
+                {
+                    allOrders.length == 0 && <p>No orders marked as in progress yet.</p>
+                }
             </main>
             <NavBar email={loggedInEmail} handleLogout={handleLogout}/>
         </>
