@@ -3,15 +3,44 @@ import {GoogleLogin} from "@react-oauth/google";
 import * as React from "react";
 import {useRouter} from "next/router";
 import {useLocalStorage} from "usehooks-ts";
+import toast from "react-hot-toast";
+import jwtDecode from "jwt-decode";
+import {useEffect, useState} from "react";
 
+interface GoogleEmail {
+    email: string
+}
 
 const Login: NextPage = () => {
     const router = useRouter()
     const [jwt, setJwt] = useLocalStorage("google", null)
-    function onSuccess(res: any){
+    const [restaurantId, setRestaurantId] = useState(null)
+
+    async function onSuccess(res: any) {
         setJwt(res.credential);
-        // TODO: Need to get the current restaurantID the correct way, communicate with the team
-        router.push('/634d19164de0297c8b68ba66/dashboard/progress')
+
+        const decode: GoogleEmail = jwtDecode(res.credential);
+        try {
+            fetch(`https://mdmaaccountservice.azurewebsites.net/api/account/${decode.email}`).then(async (data) => {
+                const result = await data.json()
+                setRestaurantId(result.restaurantId)
+            })
+
+        } catch {
+            router.push("/login")
+        }
+    }
+
+    useEffect(() => {
+        if (router.isReady) {
+            if (restaurantId != null) {
+                router.push(`/${restaurantId}/dashboard/preparing`)
+            }
+        }
+    }, [restaurantId])
+
+    const notifyFailed = () => {
+        toast.error(`Failed to login.`);
     }
 
     return(
@@ -20,7 +49,7 @@ const Login: NextPage = () => {
                 onSuccess(credentialResponse)
             }}
             onError={() => {
-                console.log('Login Failed');
+                notifyFailed()
             }}
         />
     )
