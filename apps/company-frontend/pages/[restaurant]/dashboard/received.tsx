@@ -21,7 +21,8 @@ export async function getServerSideProps({query}: ContextTypes) {
 
         return {
             props: {
-                orders: data as IOrder[]
+                orders: data as IOrder[],
+                restaurantId: restaurantId as string
             }
         }
     } catch {
@@ -34,10 +35,11 @@ export async function getServerSideProps({query}: ContextTypes) {
 }
 
 interface PropTypes {
-    orders: IOrder[]
+    orders: IOrder[],
+    restaurantId: string
 }
 
-const Received: NextPage<PropTypes> = ({orders}: PropTypes) => {
+const Received: NextPage<PropTypes> = ({orders, restaurantId}: PropTypes) => {
     // Router
     const router = useRouter();
 
@@ -48,11 +50,14 @@ const Received: NextPage<PropTypes> = ({orders}: PropTypes) => {
 
     // Use this to check if user is logged in, when not logged in you get redirected back to login page
     useEffect(() => {
-        if (googleHelper.CheckIfLoggedIn(google)) {
-            setLoggedInEmail(googleHelper.GetLoggedInUser(google));
-            return;
-        }
-        router.push("/login");
+        googleHelper.CheckIfLoggedIn(google, restaurantId).then((isLoggedIn: boolean) => {
+            if(isLoggedIn) {
+                setLoggedInEmail(googleHelper.GetLoggedInUser(google));
+                return;
+            } else {
+                router.push("/login");
+            }
+        })
     }, [])
 
     const handleLogout = () => {

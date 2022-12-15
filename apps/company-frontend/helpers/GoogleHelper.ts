@@ -5,22 +5,25 @@ interface GoogleEmail {
 }
 
 export default class GoogleHelper {
+
+
     /**
      * Check if the user logged in is the right one
      * @param google
+     * @param restaurantId
      * @constructor
      */
-    public CheckIfLoggedIn(google: any): boolean {
-        // Check if google is null
+    public async CheckIfLoggedIn(google: any, restaurantId: string): Promise<boolean> {
+        // Check if Google is null
         if (google == null) {
             return false;
         }
 
         const decode: GoogleEmail = jwtDecode(google);
 
-        // TODO: Right check, buts needs to go inside database, I cant get in
         if (decode.email != "") {
-            return true;
+            const result = await fetch(`https://mdmaaccountservice.azurewebsites.net/api/account/check/${restaurantId}/${decode.email}`);
+            return await result.json();
         }
 
         return false;

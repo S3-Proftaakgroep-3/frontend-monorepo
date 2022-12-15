@@ -7,6 +7,7 @@ import {IOrder} from "ui/Interfaces/IOrder";
 import * as React from "react";
 import GoogleHelper from "../../../helpers/GoogleHelper";
 import {useReadLocalStorage} from "usehooks-ts";
+import restaurant from "customers-frontend/pages/[restaurant]";
 
 interface ContextTypes {
     query: any
@@ -21,7 +22,8 @@ export async function getServerSideProps({query}: ContextTypes) {
 
         return {
             props: {
-                orders: data as IOrder[]
+                orders: data as IOrder[],
+                restaurantId: restaurantId as string
             }
         }
     } catch {
@@ -35,9 +37,10 @@ export async function getServerSideProps({query}: ContextTypes) {
 
 interface PropTypes {
     orders: IOrder[]
+    restaurantId: string
 }
 
-const Ready: NextPage<PropTypes> = ({orders}: PropTypes) => {
+const Ready: NextPage<PropTypes> = ({orders, restaurantId}: PropTypes) => {
     // Router
     const router = useRouter();
 
@@ -48,11 +51,14 @@ const Ready: NextPage<PropTypes> = ({orders}: PropTypes) => {
 
     // Use this to check if user is logged in, when not logged in you get redirected back to login page
     useEffect(() => {
-        if (googleHelper.CheckIfLoggedIn(google)) {
-            setLoggedInEmail(googleHelper.GetLoggedInUser(google));
-            return;
-        }
-        router.push("/login");
+        googleHelper.CheckIfLoggedIn(google, restaurantId).then((isLoggedIn: boolean) => {
+            if(isLoggedIn) {
+                setLoggedInEmail(googleHelper.GetLoggedInUser(google));
+                return;
+            } else {
+                router.push("/login");
+            }
+        })
     }, [])
 
     const handleLogout = () => {
