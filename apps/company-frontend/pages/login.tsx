@@ -34,7 +34,7 @@ const Login: NextPage = () => {
     useEffect(() => {
         if (router.isReady) {
             if (restaurantId != null) {
-                router.push(`/${restaurantId}/dashboard/preparing`)
+                router.push(`/${restaurantId}/dashboard/progress`)
             }
         }
     }, [restaurantId])
