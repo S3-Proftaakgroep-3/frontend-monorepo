@@ -7,9 +7,13 @@ import {IExtra} from "../../../Interfaces";
 
 export const OrderCardRow = (
 {
-    dish 
+    dish,
+    dishesNotReady,
+    setDishesNotReady
 }: {
-    dish: ICartItem
+    dish: ICartItem,
+    dishesNotReady: number,
+    setDishesNotReady: React.Dispatch<React.SetStateAction<number>>
 }) => {
     const [product] = useState(dish)
     // State - Finished
@@ -20,7 +24,12 @@ export const OrderCardRow = (
 
     // onClick - ready button
     const handleFinishedBtn = () => {
+
+        // Mark as ready
         setIsFinished(true)
+
+        // Decrement dishes not ready
+        setDishesNotReady(dishesNotReady => dishesNotReady - 1)
     }
 
     // onClick - expand button

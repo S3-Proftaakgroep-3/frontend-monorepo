@@ -2,6 +2,7 @@ import { usePathName } from '../../../hooks/usePathName'
 import styles from '../../../Styles/Company/Atoms/fullOrderCard.module.css'
 import { OrderCardRow } from './orderCardRow'
 import {ICartItem} from "../../../Interfaces/ICartItem";
+import { useEffect, useState } from 'react';
 
 export const FullOrderCard = ({ order }: any) => {
     const {
@@ -10,9 +11,20 @@ export const FullOrderCard = ({ order }: any) => {
 
     const pathName = usePathName(3)
 
+    // State - number of dishes not ready
+    const [dishesNotReady, setDishesNotReady] = useState<number>(order.products.length)
+
     const handleReadyBtn = () => {
-        console.log('Order marked as received!')
+        console.log('Order marked as received.')
     }
+
+    // If all dishes are ready
+    useEffect(() => {
+
+        if (dishesNotReady <= 0) {
+            console.log('This order is ready!')
+        }
+    }, [dishesNotReady])
 
     return (
         <section id={styles.card}>
@@ -30,7 +42,7 @@ export const FullOrderCard = ({ order }: any) => {
                 {
                     order.products != null &&
                     order.products.map((product: ICartItem) => {
-                        return <OrderCardRow dish={product}/>
+                        return <OrderCardRow dishesNotReady={dishesNotReady} setDishesNotReady={setDishesNotReady} dish={product}/>
                     })
                 }
             </div>

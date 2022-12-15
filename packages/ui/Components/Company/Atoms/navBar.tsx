@@ -19,8 +19,6 @@ export const NavBar = () => {
         if (router.isReady) {
             // Pathname
             const pathName = router.pathname.split('/')[3]
-            
-            setRestaurantId(restaurantId);
 
             // Set is in progress
             setIsInProgress(pathName === 'progress')
