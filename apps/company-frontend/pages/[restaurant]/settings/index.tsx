@@ -2,7 +2,15 @@ import {NextPage} from "next";
 import styles from "../../../styles/settings.module.css"
 import {useEffect, useState} from "react";
 import {Button, ColorPicker} from "ui";
+import {useRouter} from "next/router";
 
+interface WhiteLabelInterface{
+    restaurantId: string,
+    backgroundColour: string,
+    primaryColour: string,
+    textColour: string,
+    logoString: string,
+}
 const Settings: NextPage<null> = () => {
     const [bgColor, setBgColor] = useState("");
     const [primaryColor, setPrimaryColor] = useState("");
@@ -15,6 +23,19 @@ const Settings: NextPage<null> = () => {
         document.documentElement.style.setProperty('--text-color', textColor);
     }, [bgColor, primaryColor, textColor])
 
+    const router = useRouter()
+    const [restaurantId, setRestaurantId] = useState<string>('')
+
+    useEffect(() => {
+
+        if (router.isReady) {
+            const id: string = router.pathname.split('/')[0]
+            console.log(id)
+            setRestaurantId(id)
+        }
+    }, [router.isReady])
+
+
     const changeBgColor = (e: any) => {
         setBgColor(e)
     }
@@ -25,7 +46,25 @@ const Settings: NextPage<null> = () => {
         setTextColor(e)
     }
 
-    function saveDataToDataBase(){
+    const saveDataToDataBase = async () => {
+        const whiteLabel: WhiteLabelInterface = {
+            restaurantId: restaurantId,
+            backgroundColour: bgColor,
+            primaryColour: primaryColor,
+            textColour: textColor,
+            logoString: "",
+        }
+
+        console.log(whiteLabel)
+
+        // await fetch(`https://mdmaorderservice.azurewebsites.net/api/order/create`, {
+        //     method: 'POST',
+        //     headers: {
+        //         'Accept': 'application/json',
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify(whiteLabel)
+        // })
 
     }
 
@@ -35,8 +74,7 @@ const Settings: NextPage<null> = () => {
                 <div className={styles.inputSection}>
                     <ColorPicker onChange={(e: any) => {changeBgColor(e)}} label='Background color' explanation='Background, highlights'/>
                     <ColorPicker onChange={(e: any) => {changePrimaryColor(e)}} label='Primary color' explanation='Button, highlights'/>
-                    <ColorPicker onChange={(e: any) => {changeTextColor(e)}} label='Accent color' explanation='Text, highlights'/>
-
+                    <ColorPicker onChange={(e: any) => {changeTextColor(e)}} label='Text color' explanation='Text, highlights'/>
                     <Button label={"Save"} onClick={saveDataToDataBase} style={"primary"}></Button>
                 </div>
             </div>
