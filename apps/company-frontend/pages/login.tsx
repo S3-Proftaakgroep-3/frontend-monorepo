@@ -18,11 +18,10 @@ const Login: NextPage = () => {
 
     async function onSuccess(res: any) {
         setJwt(res.credential);
-
         const decode: GoogleEmail = jwtDecode(res.credential);
         try {
             fetch(`https://mdmaaccountservice.azurewebsites.net/api/account/${decode.email}`).then(async (data) => {
-                const result = await data.json()
+                const result = await data.json();
                 setRestaurantId(result.restaurantId)
             })
 

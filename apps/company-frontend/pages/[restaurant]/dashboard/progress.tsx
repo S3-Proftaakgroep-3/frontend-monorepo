@@ -21,7 +21,8 @@ export async function getServerSideProps({query}: ContextTypes) {
 
         return {
             props: {
-                orders: data as IOrder[]
+                orders: data as IOrder[],
+                restaurantId: restaurantId as String
             }
         }
     } catch {
