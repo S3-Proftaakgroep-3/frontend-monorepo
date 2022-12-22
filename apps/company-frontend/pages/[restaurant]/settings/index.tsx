@@ -1,19 +1,19 @@
 import {NextPage} from "next";
 import styles from "../../../styles/settings.module.css"
 import {useEffect, useState} from "react";
-import {ColorPicker} from "ui";
+import {Button, ColorPicker} from "ui";
 
 const Settings: NextPage<null> = () => {
     const [bgColor, setBgColor] = useState("");
     const [primaryColor, setPrimaryColor] = useState("");
-    const [accentColor, setAccentColor] = useState("");
+    const [textColor, setTextColor] = useState("");
     const [image, setImage] = useState("");
 
     useEffect(() => {
         document.documentElement.style.setProperty('--bg-color', bgColor);
         document.documentElement.style.setProperty('--primary-color', primaryColor);
-        document.documentElement.style.setProperty('--accent-color', accentColor);
-    }, [bgColor, primaryColor, accentColor])
+        document.documentElement.style.setProperty('--text-color', textColor);
+    }, [bgColor, primaryColor, textColor])
 
     const changeBgColor = (e: any) => {
         setBgColor(e)
@@ -21,8 +21,12 @@ const Settings: NextPage<null> = () => {
     const changePrimaryColor = (e: any) => {
         setPrimaryColor(e)
     }
-    const changeAccentColor = (e: any) => {
-        setAccentColor(e)
+    const changeTextColor = (e: any) => {
+        setTextColor(e)
+    }
+
+    function saveDataToDataBase(){
+
     }
 
     return(
@@ -31,9 +35,10 @@ const Settings: NextPage<null> = () => {
                 <div className={styles.inputSection}>
                     <ColorPicker onChange={(e: any) => {changeBgColor(e)}} label='Background color' explanation='Background, highlights'/>
                     <ColorPicker onChange={(e: any) => {changePrimaryColor(e)}} label='Primary color' explanation='Button, highlights'/>
-                    <ColorPicker onChange={(e: any) => {changeAccentColor(e)}} label='Accent color' explanation='Icons, highlights'/>
-                </div>
+                    <ColorPicker onChange={(e: any) => {changeTextColor(e)}} label='Accent color' explanation='Text, highlights'/>
 
+                    <Button label={"Save"} onClick={saveDataToDataBase} style={"primary"}></Button>
+                </div>
             </div>
             <div className={styles.section}>
                 <div className={styles.mobile}>
