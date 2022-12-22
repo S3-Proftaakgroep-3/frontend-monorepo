@@ -13,7 +13,7 @@
 #nav {
     width: 100%;
     display: grid;
-    grid-template-columns: 50px 1fr auto 1fr 50px;
+    grid-template-columns: 50px 1fr auto 1fr 40px 50px;
     padding: 50px;
 }
 
@@ -47,8 +47,12 @@
     text-decoration: none;
 }
 
-#time {
+#settings {
     grid-area: 1 / 5;
+}
+
+#time {
+    grid-area: 1 / 6;
     font-weight: 600;
     font-size: 14px;
 }
