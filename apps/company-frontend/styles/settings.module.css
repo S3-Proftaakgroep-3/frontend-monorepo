@@ -15,6 +15,12 @@
     flex-direction: column;
 }
 
+.inputSection{
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
 .mobile{
     position: relative;
     width: 360px;
@@ -52,7 +58,7 @@
 .hamburger > div {
     width: 35px;
     height: 5px;
-    background-color: var(--accent-color);
+    background: var(--primary-color);
     margin: 6px 0;
 }
 
@@ -79,4 +85,5 @@
     position: absolute;
     bottom: 10px;
     right: 10px;
+    color: var(--text-color);
 }

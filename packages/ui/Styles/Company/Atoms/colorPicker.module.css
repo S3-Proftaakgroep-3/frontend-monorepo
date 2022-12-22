@@ -1,3 +1,7 @@
+.wrapper{
+    margin: 10px;
+}
+
 #label {
     display: inline-grid;
     grid-template-columns: auto auto;
