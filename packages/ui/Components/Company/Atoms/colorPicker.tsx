@@ -3,16 +3,18 @@ import styles from '../../../Styles/Company/Atoms/colorPicker.module.css'
 
 export const ColorPicker = ({
     label,
-    explanation
+    explanation,
+    onChange,
 }: {
     label: string,
-    explanation: string
+    explanation: string,
+    onChange: any,
 }) => {
 
     const [color, setColor] = useState<string>('#000000')
 
     return (
-        <div>
+        <div className={styles.wrapper}>
 
             <label id={styles.label} htmlFor={label}>
                 <p id={styles.primaryText}>{label}</p>
@@ -28,6 +30,7 @@ export const ColorPicker = ({
                     className={styles.input}
                     type='color'
                     onChange={(e) => {
+                        onChange(e.target.value)
                         setColor(e.target.value)
                     }}
                 />
