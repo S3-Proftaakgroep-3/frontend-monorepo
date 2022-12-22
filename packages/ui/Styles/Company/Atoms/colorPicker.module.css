@@ -1,0 +1,47 @@
+#label {
+    display: inline-grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto;
+    row-gap: 5px;
+    column-gap: 8px;
+    align-items: center;
+}
+
+#primaryText {
+    grid-area: 1 / 1;
+    font-size: 16px;
+    font-weight: 600;
+    color: black;
+}
+
+#secondaryText {
+    grid-area: 1 / 2;
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, .35);
+}
+
+#colorWrap {
+    grid-area: 2 / 1 / 2 / 3;
+    display: grid;
+    width: 80px;
+    height: 40px;
+    border: 2px solid black;
+    padding: 3px;
+    border-radius: 3px;
+}
+
+#colorWrap:hover {
+    cursor: pointer;
+}
+
+#color {
+    border-radius: 3px;
+}
+
+.input {
+    grid-area: 2 / 1;
+    visibility: hidden;
+    user-select: none;
+    transform: translateY(10px);
+}

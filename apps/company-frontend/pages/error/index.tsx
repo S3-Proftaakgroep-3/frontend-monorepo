@@ -1,6 +1,6 @@
 ﻿import type {NextPage} from 'next'
 import styles from '../../styles/error.module.css'
-import fonts from '/ui/Styles/Utils/fonts.module.css'
+import fonts from "ui/Styles/Utils/fonts.module.css"
 import * as React from "react";
 import {TopNavigation} from 'ui'
 
