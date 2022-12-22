@@ -1,0 +1,82 @@
+.settingsPage{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.section{
+    width: 40%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.mobile{
+    position: relative;
+    width: 360px;
+    height: 640px;
+    margin: auto;
+    border: 16px black solid;
+    border-top-width: 60px;
+    border-bottom-width: 60px;
+    border-radius: 36px;
+}
+
+/* All the content will be stored here */
+.content {
+    position: relative;
+    width: 330px;
+    height: 520px;
+    background: var(--bg-color);
+}
+
+.image{
+    position: absolute;
+    left: 50%;
+    top: 10px;
+    height: 50px;
+    transform: translateX(-50%);
+}
+
+.hamburger{
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    height: 40px;
+}
+
+.hamburger > div {
+    width: 35px;
+    height: 5px;
+    background-color: var(--accent-color);
+    margin: 6px 0;
+}
+
+.cardSection{
+    position: absolute;
+    width: 90%;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.card{
+    margin: 10px 0;
+    text-align: center;
+    width: 100%;
+    height: 150px;
+    background: white;
+
+}
+
+.button{
+    background: var(--primary-color);
+    padding: 5px;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
