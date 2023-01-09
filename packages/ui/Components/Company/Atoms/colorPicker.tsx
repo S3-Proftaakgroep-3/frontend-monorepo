@@ -5,17 +5,18 @@ export const ColorPicker = ({
     label,
     explanation,
     onChange,
+    initialColor
 }: {
     label: string,
     explanation: string,
     onChange: any,
+    initialColor: any
 }) => {
 
-    const [color, setColor] = useState<string>('#000000')
+    const [color, setColor] = useState(initialColor)
 
     return (
         <div className={styles.wrapper}>
-
             <label id={styles.label} htmlFor={label}>
                 <p id={styles.primaryText}>{label}</p>
                 <p id={styles.secondaryText}>{`(${explanation})`}</p>
