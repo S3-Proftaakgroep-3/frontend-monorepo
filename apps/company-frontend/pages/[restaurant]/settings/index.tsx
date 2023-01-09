@@ -67,22 +67,22 @@ const Settings: NextPage<Proptypes> = ({whitelabelData}: Proptypes) => {
     }
 
     const saveDataToDataBase = async () => {
-        const whiteLabel: WhiteLabelInterface = {
-            restaurantId: restaurantId,
+        const whiteLabel: any = {
+            restaurantId: whitelabelData.restaurantId,
             backgroundColour: bgColor,
             primaryColour: primaryColor,
             textColour: textColor,
-            logoString: "",
+            imageString: "",
         }
 
-        // await fetch(`https://mdmaorderservice.azurewebsites.net/api/order/create`, {
-        //     method: 'POST',
-        //     headers: {
-        //         'Accept': 'application/json',
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify(whiteLabel)
-        // })
+        await fetch(`https://mdmawhitelabelservice.azurewebsites.net/api/whitelabel/update`, {
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(whiteLabel)
+        })
     }
 
     return(
@@ -122,7 +122,6 @@ const Settings: NextPage<Proptypes> = ({whitelabelData}: Proptypes) => {
             </div>
         </div>
     )
-
 }
 
 export default Settings;
