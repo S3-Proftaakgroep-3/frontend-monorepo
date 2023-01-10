@@ -3,6 +3,7 @@ import styles from "../../../styles/settings.module.css"
 import {useEffect, useState} from "react";
 import {Button, ColorPicker} from "ui";
 import {useRouter} from "next/router";
+import toast from "react-hot-toast";
 
 interface WhiteLabelInterface{
     restaurantId: string,
@@ -66,13 +67,21 @@ const Settings: NextPage<Proptypes> = ({whitelabelData}: Proptypes) => {
         setTextColor(e)
     }
 
+    const notifySuccess = (message: string) => {
+        toast.success(message);
+    }
+
+    const notifyError = (message: string) => {
+        toast.error(message);
+    }
+
     const saveDataToDataBase = async () => {
         const whiteLabel: any = {
             restaurantId: whitelabelData.restaurantId,
             backgroundColour: bgColor,
             primaryColour: primaryColor,
             textColour: textColor,
-            imageString: "",
+            imageString: "https://www.woneninoss.nl/wp-content/uploads/2015/03/logo-gemeente-oss.jpg",
         }
 
         await fetch(`https://mdmawhitelabelservice.azurewebsites.net/api/whitelabel/update`, {
@@ -82,6 +91,10 @@ const Settings: NextPage<Proptypes> = ({whitelabelData}: Proptypes) => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(whiteLabel)
+        }).catch((error: string) => {
+            notifyError(`Something went wrong, ${error}`)
+        }).finally(() => {
+            notifySuccess("Settings have successfully been updated!");
         })
     }
 
